@@ -90,8 +90,7 @@ def GetOpId2TensorNamesUsedByMeAndDownstream(
     for op_call in block_op_calls.input_op_calls:
         op_id2used[op_call.op.op_id] = input_tensor_names
     body_op_id2used_tensor_names = GetOpId2DefinedTensorNamesUsedByMeAndDownstreams(
-        in_out_names_sigs,
-        output_tensor_names
+        in_out_names_sigs, output_tensor_names
     )
     assert len(block_op_calls.body_op_calls) == len(in_out_names_sigs)
     counter = itertools.count()
@@ -120,7 +119,9 @@ def GetOpId2DefinedTensorNamesUsedByMeAndDownstreams(
     for in_out_names_sig in reversed(in_out_names_sigs):
         used_by_downstream.difference_update(in_out_names_sig.out_names)
         used_by_downstream.update(in_out_names_sig.in_names)
-        op_id2used_by_me_and_downstreams[in_out_names_sig.op_id] = list(used_by_downstream)
+        op_id2used_by_me_and_downstreams[in_out_names_sig.op_id] = list(
+            used_by_downstream
+        )
     return op_id2used_by_me_and_downstreams
 
 

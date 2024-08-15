@@ -91,7 +91,7 @@ class PaddleFuncBodyGenerator:
             self.func,
             free_vars,
             args,
-            get_local_name
+            get_local_name,
         )
         self.block_op_calls = BlockOpCallsExtractor().Extract(
             self.func, free_vars, args

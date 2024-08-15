@@ -85,8 +85,7 @@ class FoldTokensPass(Pass):
         indexes = indexes.numpy().tolist()
         while pattern_length > 1:
             disjoint_range_starts = [
-                start
-                for start in self.GetDisjoint(pattern_length, indexes)
+                start for start in self.GetDisjoint(pattern_length, indexes)
             ]
             if len(disjoint_range_starts) > 1:
                 break
@@ -242,6 +241,7 @@ class RecursiveFoldTokensPass(Pass):
             body_rp_expr=token_tensor,
         )
 
+
 class UnflattenAndSubThresholdPass(Pass):
     def __init__(
         self,
@@ -283,6 +283,7 @@ class UnflattenAndSubThresholdPass(Pass):
             ],
             body_rp_expr=[x - threshold for x in threshold_fold_rp_expr.body_rp_expr],
         )
+
 
 class FoldIfTokenIdGreatEqualPass(Pass):
     def __init__(
