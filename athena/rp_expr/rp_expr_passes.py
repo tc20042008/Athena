@@ -48,8 +48,8 @@ class FlattenTokenListPass(Pass):
 
 
 class FoldTokensPass(Pass):
-    def __init__(self, id_allocator: TokenIdAllocator):
-        self.max_windows_size = 8
+    def __init__(self, id_allocator: TokenIdAllocator, window_size=8):
+        self.window_size = window_size
         self.random_feature_size = 2
         self.id_allocator = id_allocator
         size = id_allocator.NextTokenId()
@@ -142,7 +142,7 @@ class FoldTokensPass(Pass):
         return new_token_id, output_tensor
 
     def GetConv(self, num_tokens):
-        windows_size = min(num_tokens, self.max_windows_size)
+        windows_size = min(num_tokens, self.window_size)
 
         def GetWeight():
             weight = paddle.uniform(
@@ -210,11 +210,13 @@ class FoldTokensPass(Pass):
 
 
 class RecursiveFoldTokensPass(Pass):
-    def __init__(self, id_allocator: TokenIdAllocator):
+    def __init__(self, id_allocator: TokenIdAllocator, window_size=8):
         self.id_allocator = id_allocator
+        self.window_size = window_size
 
     def __call__(self, token_tensor: NaiveTokenRpExpr):
-        success, ret = FoldTokensPass(self.id_allocator)(token_tensor)
+        fold_pass = FoldTokensPass(self.id_allocator, self.window_size)
+        success, ret = fold_pass(token_tensor)
         if not success:
             return False, token_tensor
         symbol_token_ids = ret.symbol_token_ids
@@ -223,7 +225,8 @@ class RecursiveFoldTokensPass(Pass):
         counter = itertools.count()
         kLimit = 9999999
         while True:
-            success, ret = FoldTokensPass(self.id_allocator)(token_tensor)
+            fold_pass = FoldTokensPass(self.id_allocator, self.window_size)
+            success, ret = fold_pass(token_tensor)
             if not success:
                 token_tensor = ret
                 break
@@ -239,6 +242,47 @@ class RecursiveFoldTokensPass(Pass):
             body_rp_expr=token_tensor,
         )
 
+class UnflattenAndSubThresholdPass(Pass):
+    def __init__(
+        self,
+        id_allocator: TokenIdAllocator,
+        threshold_start_token_id: int,
+    ):
+        self.id_allocator = id_allocator
+        self.threshold_start_token_id = threshold_start_token_id
+
+    def __call__(self, lists_token_rp_expr: LetsTokenRpExpr):
+        threshold_fold_pass = FoldIfTokenIdGreatEqualPass(
+            id_allocator=self.id_allocator,
+            threshold_start_token_id=self.threshold_start_token_id,
+        )
+        success, threshold_fold_rp_expr = threshold_fold_pass(
+            lists_token_rp_expr.body_rp_expr
+        )
+        assert success
+        return True, self.MergeAndUnflatten(
+            lists_token_rp_expr, threshold_fold_rp_expr, self.threshold_start_token_id
+        )
+
+    def MergeAndUnflatten(self, fold_rp_expr, threshold_fold_rp_expr, threshold):
+        assert len(threshold_fold_rp_expr.body_rp_expr) == threshold
+        return LetsListTokenRpExpr(
+            symbol_token_ids=[
+                x - threshold
+                for x in (
+                    fold_rp_expr.symbol_token_ids
+                    + threshold_fold_rp_expr.symbol_token_ids
+                )
+            ],
+            symbol_token_tensors=[
+                x - threshold
+                for x in (
+                    fold_rp_expr.symbol_token_tensors
+                    + threshold_fold_rp_expr.symbol_token_tensors
+                )
+            ],
+            body_rp_expr=[x - threshold for x in threshold_fold_rp_expr.body_rp_expr],
+        )
 
 class FoldIfTokenIdGreatEqualPass(Pass):
     def __init__(

@@ -158,7 +158,15 @@ def GetOutputUnittests(original_programs_file, example_inputs_file):
         generator = OpExampleInputMetaScriptGenerator(
             ir_program_group, example_inputs_meta_getter
         )
+        print(
+            "OpExampleInputMetaScriptGenerator Generating pir_programs:", ", ".join(type(x).__name__ for x in ir_program_group),
+            file=sys.stderr
+        )
         name, unittest = generator.Generate()
+        print(
+            "OpExampleInputMetaScriptGenerator Generated pir_programs:", ", ".join(type(x).__name__ for x in ir_program_group),
+            file=sys.stderr
+        )
         yield name, unittest
 
 

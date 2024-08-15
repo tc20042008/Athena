@@ -35,6 +35,7 @@ flags.DEFINE_string(
     "length_slice", "2:33", "syntax is like python list slice: 0:1, 30:40."
 )
 flags.DEFINE_string("output_dir", "./output-dir", "output directory.")
+flags.DEFINE_integer("window_size", 64, "pattern window size.")
 
 
 def main(argv):
@@ -100,7 +101,7 @@ def GetOutputUnittests(original_programs_file, op_example_inputs_file):
         [MakeStmtPrimitiveId(stmt) for stmt in seq_stmts]
         for _, seq_stmts in program_seq_stmts_list
     ]
-    rp_expr_parser = RpExprParser()
+    rp_expr_parser = RpExprParser(FLAGS.window_size)
     lets_list_rp_expr, token_id2primitive_id = rp_expr_parser(stmts_primitive_ids_list)
     print("\n".join(lets_list_rp_expr.DebugStrings(token_id2primitive_id)))
     trees = MakeNestedIndexRangeFromLetsListTokenRpExpr(lets_list_rp_expr)
