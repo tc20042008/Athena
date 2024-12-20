@@ -80,9 +80,9 @@ void api_trivial_reduce(const int64_t num, const float* input, float* output) {
         PointerType.float_ptr,
       ]),
       Project(
-        nested_files=Directory(
-          ["trivial_reduce.cu", FileContent(code)],
-          ["make.sh", FileContent(compile_cmd)]
+        nested_files=Project.Directory(
+          ["trivial_reduce.cu", Project.FileContent(code)],
+          ["make.sh", Project.FileContent(compile_cmd)]
         ),
         compile_cmd="sh make.sh",
         so_relative_path="libtrivial_reduce.so"
