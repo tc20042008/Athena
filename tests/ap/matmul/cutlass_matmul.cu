@@ -9,12 +9,12 @@
 // Example from https://github.com/NVIDIA/cutlass/blob/main/examples/12_gemm_bias_relu/gemm_bias_relu.cu
 
 //template <typename TShape, typename WShape, typename IShape, int NumStages>
-cutlass::Status CutlassMatmulAddFp16(const GemmEpilogueParams& params) {
+cutlass::Status CutlassMatmulAdd(const GemmEpilogueParams& params) {
   using ElementAccumulator = float;                   // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
   using ElementInputA = cutlass::half_t;              // <- data type of elements in input matrix A
   using ElementInputB = cutlass::half_t;              // <- data type of elements in input matrix B
-  using ElementOutput = float;                        // <- data type of elements in output matrix D
+  using ElementOutput = cutlass::half_t;              // <- data type of elements in output matrix D
 
   using TShape = cutlass::gemm::GemmShape<256, 128, 32>;// threadblock tile
   using WShape = cutlass::gemm::GemmShape<64, 64, 32>;  // warp tile
@@ -62,10 +62,10 @@ cutlass::Status CutlassMatmulAddFp16(const GemmEpilogueParams& params) {
 
   /// Arguments
   cutlass::gemm::GemmCoord problem_size{params.m, params.n, params.k};
-  cutlass::half_t *input = (cutlass::half_t *)(params.input);
-  cutlass::half_t *weight = (cutlass::half_t *)(params.weight);
-  cutlass::half_t *bias = (cutlass::half_t *)(params.bias);
-  cutlass::half_t *output = (cutlass::half_t *)(params.output);
+  ElementInputA *input = (ElementInputA *)(params.input);
+  ElementInputB *weight = (ElementInputB *)(params.weight);
+  ElementOutput *bias = (ElementOutput *)(params.bias);
+  ElementOutput *output = (ElementOutput *)(params.output);
 
   /// Only available in RRR format
   int64_t batch_stride_C = problem_size.n();

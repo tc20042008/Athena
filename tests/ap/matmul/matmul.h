@@ -51,5 +51,5 @@ struct GemmEpilogueParams {
   void *workspace = nullptr;
 };
 
-void NativeMatmulAddFp16(const GemmEpilogueParams& params);
-cutlass::Status CutlassMatmulAddFp16(const GemmEpilogueParams& params);
+void NativeMatmulAdd(const GemmEpilogueParams& params);
+cutlass::Status CutlassMatmulAdd(const GemmEpilogueParams& params);

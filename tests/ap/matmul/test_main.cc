@@ -8,40 +8,82 @@
 
 
 template <typename T>
-T* Allocate(size_t numel, bool set_zero) {
+T* AllocateAndInit(size_t numel, bool random, T value = 0) {
   T* addr = nullptr;
-  size_t nbytes = sizeof(T) * numel;
 
   // Allocate device memory.
-  CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&addr), nbytes));
+  CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&addr), numel * sizeof(T)));
 
-  if (set_zero) {
-    CHECK_CUDA(cudaMemset(addr, 0, numel));
-  } else {
-    srand((unsigned)time(0));
-    std::vector<float> data;
-    data.resize(numel);
+  std::vector<float> data;
+  data.resize(numel);
 
+  if (random) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<> d(5, 2);
     for (size_t i = 0; i < numel; ++i) {
-      data[i] = d(gen);
+      data[i] = static_cast<float>(d(gen));
     }
-    if (std::is_same<T, float>::value) {
-      CHECK_CUDA(cudaMemcpy(addr, data.data(), nbytes, cudaMemcpyHostToDevice));
-    } else if (std::is_same<T, half>::value) {
-      float* tmp_addr = nullptr;
-      CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&tmp_addr), nbytes));
-      CHECK_CUDA(cudaMemcpy(tmp_addr, data.data(), nbytes, cudaMemcpyHostToDevice));
-      ConvertToHalf(tmp_addr, addr, numel);
-      cudaFree(tmp_addr);
-    } else {
-      std::cerr << "Unsupported!" << std::endl;
+  } else {
+    for (size_t i = 0; i < numel; ++i) {
+      data[i] = static_cast<float>(value);
     }
   }
 
+  if (std::is_same<T, float>::value) {
+    std::cout << "-- AllocateAndInit: dtype=float, numel=" << numel << std::endl;
+    CHECK_CUDA(cudaMemcpy(addr, data.data(), numel * sizeof(T), cudaMemcpyHostToDevice));
+  } else if (std::is_same<T, half>::value) {
+    std::cout << "-- AllocateAndInit: dtype=half, numel=" << numel << std::endl;
+    float* tmp_addr = nullptr;
+    CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&tmp_addr), numel * sizeof(float)));
+    CHECK_CUDA(cudaMemcpy(tmp_addr, data.data(), numel * sizeof(float), cudaMemcpyHostToDevice));
+    ConvertToHalf(tmp_addr, addr, numel);
+    cudaFree(tmp_addr);
+  } else {
+    std::cerr << "Unsupported!" << std::endl;
+  }
+
   return addr;
+}
+
+template <typename T>
+void Print(T* addr, size_t numel) {
+  std::vector<float> data;
+  data.resize(numel);
+
+  if (std::is_same<T, float>::value) {
+    CHECK_CUDA(cudaMemcpy(data.data(), addr, numel * sizeof(T), cudaMemcpyDeviceToHost));
+  } else if (std::is_same<T, half>::value) {
+    float* tmp_addr = nullptr;
+    CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&tmp_addr), numel * sizeof(float)));
+    ConvertToFloat(addr, tmp_addr, numel);
+    CHECK_CUDA(cudaMemcpy(data.data(), tmp_addr, numel * sizeof(float), cudaMemcpyDeviceToHost));
+    cudaFree(tmp_addr);
+  } else {
+    std::cerr << "Unsupported!" << std::endl;
+  }
+
+  std::cout << std::endl;
+  for (size_t i = 0; i < 10; ++i) {
+    if (i > 0) {
+      std::cout << ", ";
+    }
+    std::cout << data[i];
+  }
+  std::cout << std::endl;
+}
+
+template <typename T>
+void RunAndCheckAccuracy(GemmEpilogueParams &params) {
+  std::cout << "we are tunning for problem: [" << params.m << ", " << params.n
+            << ", " << params.k << "]" << std::endl;
+
+  CHECK_CUDA(
+      cudaMemset(params.output, 0, sizeof(T) * params.m * params.n));
+  CHECK_CUTLASS(CutlassMatmulAdd(params));
+
+  Print<T>(reinterpret_cast<T*>(params.output), params.m * params.n);
 }
 
 int ProfileBestConfig(GemmEpilogueParams &params, bool profile) {
@@ -57,7 +99,7 @@ int ProfileBestConfig(GemmEpilogueParams &params, bool profile) {
       cudaMemset(params.output, 0, sizeof(half) * params.m * params.n));
 
   std::cout << "============ Call CUTLASS MatMul ============\n";
-  cutlass::Status status = CutlassMatmulAddFp16(params);
+  cutlass::Status status = CutlassMatmulAdd(params);
   std::cout << "=============================================\n";
   if (status != cutlass::Status::kSuccess) {
     return -1;
@@ -65,7 +107,7 @@ int ProfileBestConfig(GemmEpilogueParams &params, bool profile) {
 
   if (profile) {
     for (int i = 0; i < kWarmupIters; i++) {
-      status = CutlassMatmulAddFp16(params);
+      status = CutlassMatmulAdd(params);
     }
     CHECK_CUDA(cudaDeviceSynchronize());
 
@@ -75,7 +117,7 @@ int ProfileBestConfig(GemmEpilogueParams &params, bool profile) {
     CHECK_CUDA(cudaEventCreate(&end));
     CHECK_CUDA(cudaEventRecord(beg));
     for (int i = 0; i < kRepeatIters; i++) {
-      status = CutlassMatmulAddFp16(params);
+      status = CutlassMatmulAdd(params);
     }
     CHECK_CUDA(cudaEventRecord(end));
     CHECK_CUDA(cudaEventSynchronize(end));
@@ -122,12 +164,15 @@ int main(int argc, const char *arg[]) {
   params.ldb = params.n;
   params.ldd = params.n;
 
-  params.input = Allocate<half>(params.m * params.k, false);
-  params.weight = Allocate<half>(params.k * params.n, false);
-  params.bias = Allocate<half>(params.n, false);
-  params.output = Allocate<half>(params.m * params.n, true);
+  using DType = half;
 
-  ProfileBestConfig(params, false);
+  params.input = AllocateAndInit<DType>(params.m * params.k, false, 1.);
+  params.weight = AllocateAndInit<DType>(params.k * params.n, false, 1.);
+  params.bias = AllocateAndInit<DType>(params.n, false, 1000.);
+  params.output = AllocateAndInit<DType>(params.m * params.n, false, 0.);
+
+  RunAndCheckAccuracy<DType>(params);
+  // ProfileBestConfig(params, false);
 
   cudaFree(params.input);
   cudaFree(params.weight);
