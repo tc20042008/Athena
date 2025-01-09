@@ -91,9 +91,6 @@ int main(int argc, const char *arg[]) {
   params.m = 256;
   params.n = 256;
   params.k = 256;
-  params.lda = params.k;
-  params.ldb = params.n;
-  params.ldd = params.n;
 
   using DType = half;
 

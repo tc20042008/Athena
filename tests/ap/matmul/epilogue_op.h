@@ -18,13 +18,8 @@ struct ScaleFunctor {
   };
 
   __forceinline__ __host__ __device__
-  T operator()(T x, T scale) const {
-    return x * scale;
-  }
-
-  __forceinline__ __host__ __device__
-  T operator()(T x, Arguments args = Arguments()) const {
-    return this->operator()(x, args.scale);
+  T operator()(T x, Arguments args) const {
+    return x * args.scale;
   }
 };
 

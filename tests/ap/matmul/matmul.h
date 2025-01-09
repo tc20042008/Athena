@@ -42,9 +42,6 @@ struct GemmEpilogueParams {
   int m;
   int n;
   int k;
-  int lda;
-  int ldb;
-  int ldd;
   cudaStream_t stream;
   bool is_vec_bias = true;
   int sm_version = 80;
