@@ -52,6 +52,7 @@ public:
   using ElementOutput = ElementOutput_;
   using ElementAccumulator = ElementAccumulator_;
   using ElementCompute = ElementCompute_;
+  using UnaryArguments = typename GenericUnaryTraits<UnaryOp<ElementCompute>>::Arguments;
 
   static bool const kIsHeavy = IsHeavy;
   static int const kElementsPerAccess = ElementsPerAccess;
@@ -66,12 +67,13 @@ public:
   static FloatRoundStyle const kRound = Round;
 
   /// Host-constructable parameters structure
-  struct Params : GenericUnaryTraits<UnaryOp<ElementCompute>>::Arguments {
+  struct Params {
     ElementCompute alpha;                  ///< scales accumulators
     ElementCompute beta;                   ///< scales source tensor
     ElementCompute const *alpha_ptr;       ///< pointer to accumulator scalar - if not null, loads it from memory
     ElementCompute const *beta_ptr;        ///< pointer to source scalar - if not null, loads it from memory
-  
+    UnaryArguments unary_args; 
+
     //
     // Methods
     //
@@ -86,8 +88,9 @@ public:
     CUTLASS_HOST_DEVICE
     Params(
       ElementCompute alpha,
-      ElementCompute beta = ElementCompute(0)
-    ): alpha(alpha), beta(beta), alpha_ptr(nullptr), beta_ptr(nullptr) { }
+      ElementCompute beta = ElementCompute(0),
+      UnaryArguments unary_args_ = UnaryArguments{}
+    ): alpha(alpha), beta(beta), alpha_ptr(nullptr), beta_ptr(nullptr), unary_args(unary_args_) {}
   
     CUTLASS_HOST_DEVICE
     Params(
@@ -174,7 +177,7 @@ public:
       if (!skip_elementwise_) {
         CUTLASS_PRAGMA_UNROLL
         for (int i = 0; i < kElementsPerAccess; ++i) {
-          intermediate[i] = unary_op(intermediate[i], params_);
+          intermediate[i] = unary_op(intermediate[i], params_.unary_args);
         }
       }
     } else {
@@ -218,7 +221,7 @@ public:
       if (!skip_elementwise_) {
         CUTLASS_PRAGMA_UNROLL
         for (int i = 0; i < kElementsPerAccess; ++i) {
-          intermediate[i] = unary_op(intermediate[i], params_);
+          intermediate[i] = unary_op(intermediate[i], params_.unary_args);
         }
       }
     } else {

@@ -94,8 +94,8 @@ cutlass::Status CutlassMatmulAdd(const GemmEpilogueParams& params) {
   typename GemmFunc::Arguments arguments{
       cutlass::gemm::GemmUniversalMode::kGemm,
       problem_size,   // <- problem size of matrix multiplication
-      1,              // <- k-dimension split factor
-      {alpha, beta},  // <- alpha, beta
+      1,              // <- batch_count, k-dimension split factor
+      {alpha, beta, {0.1}},  // <- epilogue, alpha, beta
       input,          // <- reference to matrix A on device
       weight,         // <- reference to matrix B on device
       bias,           // <- reference to matrix C on device
