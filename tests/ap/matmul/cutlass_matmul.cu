@@ -1,12 +1,12 @@
-#include "cutlass/epilogue/thread/linear_combination_bias_relu.h"
+// #include "cutlass/epilogue/thread/linear_combination_bias_relu.h"
+#include "cutlass_epilogue/thread/linear_combination_unary.h"
 #include "cutlass/util/device_memory.h"
 
 // #include "cutlass/gemm/device/gemm_universal.h"
 #include "cutlass_gemm/device/gemm_universal.h"
 
 #include "matmul.h"
-
-// Example from https://github.com/NVIDIA/cutlass/blob/main/examples/12_gemm_bias_relu/gemm_bias_relu.cu
+#include "epilogue_op.h"
 
 //template <typename TShape, typename WShape, typename IShape, int NumStages>
 cutlass::Status CutlassMatmulAdd(const GemmEpilogueParams& params) {
@@ -21,18 +21,25 @@ cutlass::Status CutlassMatmulAdd(const GemmEpilogueParams& params) {
   using IShape = cutlass::gemm::GemmShape<16, 8, 16>;   // MMA Op tile
   constexpr int NumStages = 3;
 
+#if 0
   // Epilogue operation as LinearCombinationRelu:
   //  d_ij = max(0, alpha * sum_k(a_ik * b_kj) + c_ij)
   //
   // - sum_k(a_ik * b_kj), the intermedia result of matrix product, A * B
   // - c_ij, the bias 
   using EpilogueOp = cutlass::epilogue::thread::LinearCombinationRelu<
-      ElementOutput,                                        // <- data type of output matrix
-      128 / cutlass::sizeof_bits<ElementOutput>::value,     // the number of elements per vectorized memory access.i
-                                                            // For half precision, it's 8 elements. This becomes
-                                                            // the vector width of math instructions in epilogue too.
-      ElementAccumulator,                                   // <- data type of accumulator
-      ElementComputeEpilogue,                               // <- data type for alpha in linear combination function
+      ElementOutput,
+      128 / cutlass::sizeof_bits<ElementOutput>::value,
+      ElementAccumulator,
+      ElementComputeEpilogue,
+      cutlass::epilogue::thread::ScaleType::NoBetaScaling>; // <- alpha x C + bias
+#endif
+  using EpilogueOp = cutlass::epilogue::thread::LinearCombinationUnary<
+      ap::ScaleFunctor,
+      ElementOutput,
+      128 / cutlass::sizeof_bits<ElementOutput>::value,
+      ElementAccumulator,
+      ElementComputeEpilogue,
       cutlass::epilogue::thread::ScaleType::NoBetaScaling>; // <- alpha x C + bias
 
   // how threadblocks are scheduled on GPU
