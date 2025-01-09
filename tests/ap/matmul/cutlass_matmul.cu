@@ -2,8 +2,7 @@
 #include "cutlass_epilogue/thread/linear_combination_unary.h"
 #include "cutlass/util/device_memory.h"
 
-// #include "cutlass/gemm/device/gemm_universal.h"
-#include "cutlass_gemm/device/gemm_universal.h"
+#include "cutlass/gemm/device/gemm_universal.h"
 
 #include "matmul.h"
 #include "epilogue_op.h"
