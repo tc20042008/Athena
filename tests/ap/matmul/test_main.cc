@@ -81,78 +81,9 @@ void RunAndCheckAccuracy(GemmEpilogueParams &params) {
 
   CHECK_CUDA(
       cudaMemset(params.output, 0, sizeof(T) * params.m * params.n));
-  CHECK_CUTLASS(CutlassMatmulAdd(params));
+  CHECK_CUTLASS(CutlassMatmulAddUnary(params));
 
   Print<T>(reinterpret_cast<T*>(params.output), params.m * params.n);
-}
-
-int ProfileBestConfig(GemmEpilogueParams &params, bool profile) {
-  std::cout << "we are tunning for problem: [" << params.m << ", " << params.n
-            << ", " << params.k << "]" << std::endl;
-
-  constexpr int kWarmupIters = 10;
-  constexpr int kRepeatIters = 10;
-  float min_time = 100000.f;
-  int min_time_index = -1;
-
-  CHECK_CUDA(
-      cudaMemset(params.output, 0, sizeof(half) * params.m * params.n));
-
-  std::cout << "============ Call CUTLASS MatMul ============\n";
-  cutlass::Status status = CutlassMatmulAdd(params);
-  std::cout << "=============================================\n";
-  if (status != cutlass::Status::kSuccess) {
-    return -1;
-  }
-
-  if (profile) {
-    for (int i = 0; i < kWarmupIters; i++) {
-      status = CutlassMatmulAdd(params);
-    }
-    CHECK_CUDA(cudaDeviceSynchronize());
-
-    cudaEvent_t beg, end;
-    float elapsed_time = 0.0f;
-    CHECK_CUDA(cudaEventCreate(&beg));
-    CHECK_CUDA(cudaEventCreate(&end));
-    CHECK_CUDA(cudaEventRecord(beg));
-    for (int i = 0; i < kRepeatIters; i++) {
-      status = CutlassMatmulAdd(params);
-    }
-    CHECK_CUDA(cudaEventRecord(end));
-    CHECK_CUDA(cudaEventSynchronize(end));
-    CHECK_CUDA(cudaEventElapsedTime(&elapsed_time, beg, end));
-
-    // if (elapsed_time < min_time && status == cutlass::Status::kSuccess) {
-    //   min_time = elapsed_time;
-    //   min_time_index = i;
-
-    //   if (params.data_type == GemmEpilogueDataType::fp16) {
-    //     // debug code
-    //     std::cout << "fp16_" << OpType2String(op_type) << ": tactic " << i
-    //               << " has max diff "
-    //               << gemm_epilogue_diff_gpu<half>(params, op_type)
-    //               << " compared with baseline,"
-    //               << "cost_time: " << elapsed_time << "ms." << std::endl;
-    //   } else if (params.data_type == GemmEpilogueDataType::bf16) {
-    //     // debug code
-    //     std::cout << "bf16_" << OpType2String(op_type) << ": tactic " << i
-    //               << " has max diff "
-    //               << gemm_epilogue_diff_gpu<__nv_bfloat16>(params, op_type)
-    //               << " compared with baseline,"
-    //               << "cost_time: " << elapsed_time << "ms." << std::endl;
-    //   } else if (params.data_type == GemmEpilogueDataType::fp32) {
-    //     // debug code
-    //     std::cout << "fp32_" << OpType2String(op_type) << ": tactic " << i
-    //               << " has max diff "
-    //               << gemm_epilogue_diff_gpu<float>(params, op_type)
-    //               << " compared with baseline,"
-    //               << "cost_time: " << elapsed_time << "ms." << std::endl;
-    //   }
-    // }
-  }
-
-  return 0;
 }
 
 int main(int argc, const char *arg[]) {
@@ -172,7 +103,6 @@ int main(int argc, const char *arg[]) {
   params.output = AllocateAndInit<DType>(params.m * params.n, false, 0.);
 
   RunAndCheckAccuracy<DType>(params);
-  // ProfileBestConfig(params, false);
 
   cudaFree(params.input);
   cudaFree(params.weight);
@@ -181,4 +111,3 @@ int main(int argc, const char *arg[]) {
 
   return 0;
 }
-
