@@ -8,7 +8,7 @@
 
 
 template <typename T>
-T* AllocateAndInit(size_t numel, bool random, T value = 0) {
+T* AllocateAndInit(size_t numel, bool random, T value = 0, std::vector<float> ref = std::vector<float>{}) {
   T* addr = nullptr;
 
   // Allocate device memory.
@@ -25,8 +25,14 @@ T* AllocateAndInit(size_t numel, bool random, T value = 0) {
       data[i] = static_cast<float>(d(gen));
     }
   } else {
-    for (size_t i = 0; i < numel; ++i) {
-      data[i] = static_cast<float>(value);
+    if (ref.size() == numel) {
+      for (size_t i = 0; i < numel; ++i) {
+        data[i] = ref[i];
+      }
+    } else {
+      for (size_t i = 0; i < numel; ++i) {
+        data[i] = static_cast<float>(value);
+      }
     }
   }
 
@@ -48,7 +54,9 @@ T* AllocateAndInit(size_t numel, bool random, T value = 0) {
 }
 
 template <typename T>
-void Print(T* addr, size_t numel) {
+void Print(T* addr, size_t m, size_t n) {
+  size_t numel = m * n;
+
   std::vector<float> data;
   data.resize(numel);
 
@@ -65,11 +73,26 @@ void Print(T* addr, size_t numel) {
   }
 
   std::cout << std::endl;
-  for (size_t i = 0; i < 10; ++i) {
-    if (i > 0) {
-      std::cout << ", ";
+  for (size_t i = 0; i < 2; ++i) {
+    for (size_t j = 0; j < 5; ++j) {
+      std::cout << data[i * n + j] << ", ";
     }
-    std::cout << data[i];
+    std::cout << " ...";
+    for (size_t j = n - 5; j < n; ++j) {
+      std::cout << ", " << data[i * n + j];
+    }
+    std::cout << std::endl;
+  }
+  std::cout << "..." << std::endl;
+  for (size_t i = m - 2; i < m; ++i) {
+    for (size_t j = 0; j < 5; ++j) {
+      std::cout << data[i * n + j] << ", ";
+    }
+    std::cout << " ...";
+    for (size_t j = n - 5; j < n; ++j) {
+      std::cout << ", " << data[i * n + j];
+    }
+    std::cout << std::endl;
   }
   std::cout << std::endl;
 }
@@ -78,7 +101,7 @@ template <typename T>
 void TestMatmulAddUnary() {
   GemmEpilogueParams params;
   params.m = 256;
-  params.n = 256;
+  params.n = 512;
   params.k = 256;
 
   std::cout << "we are tunning for problem: [" << params.m << ", " << params.n
@@ -86,14 +109,21 @@ void TestMatmulAddUnary() {
 
   params.input = AllocateAndInit<T>(params.m * params.k, false, 1.);
   params.weight = AllocateAndInit<T>(params.k * params.n, false, 1.);
-  params.bias = AllocateAndInit<T>(params.n, false, 1000.);
+
+  std::vector<float> bias_ref;
+  bias_ref.resize(params.n);
+  for (size_t i = 0; i < bias_ref.size(); ++i) {
+    bias_ref[i] = static_cast<float>(1000 * (i % 10));
+  }
+  params.bias = AllocateAndInit<T>(params.n, false, 0., bias_ref);
+
   params.output = AllocateAndInit<T>(params.m * params.n, false, 0.);
 
   CHECK_CUDA(
       cudaMemset(params.output, 0, sizeof(T) * params.m * params.n));
   CHECK_CUTLASS(CutlassMatmulAddUnary(params));
 
-  Print<T>(reinterpret_cast<T*>(params.output), params.m * params.n);
+  Print<T>(reinterpret_cast<T*>(params.output), params.m, params.n);
 
   cudaFree(params.input);
   cudaFree(params.weight);
@@ -105,7 +135,7 @@ template <typename T>
 void TestMatmulAddBinary() {
   GemmBroadcastEpilogueParams params;
   params.m = 256;
-  params.n = 256;
+  params.n = 512;
   params.k = 256;
 
   std::cout << "we are tunning for problem: [" << params.m << ", " << params.n
@@ -113,10 +143,22 @@ void TestMatmulAddBinary() {
 
   params.input = AllocateAndInit<T>(params.m * params.k, false, 1.);
   params.weight = AllocateAndInit<T>(params.k * params.n, false, 1.);
-  params.bias = AllocateAndInit<T>(params.n, false, 1000.);
-  params.output = AllocateAndInit<T>(params.m * params.n, false, 0.);
 
-  params.broadcast = AllocateAndInit<T>(params.m, false, 10000.);
+  std::vector<float> bias_ref;
+  bias_ref.resize(params.n);
+  for (size_t i = 0; i < bias_ref.size(); ++i) {
+    bias_ref[i] = static_cast<float>(1000 * (i % 10));
+  }
+  params.bias = AllocateAndInit<T>(params.n, false, 0., bias_ref);
+
+  std::vector<float> broadcast_ref;
+  broadcast_ref.resize(params.m);
+  for (size_t i = 0; i < broadcast_ref.size(); ++i) {
+    broadcast_ref[i] = static_cast<float>(10000 * (i % 5));
+  }
+  params.broadcast = AllocateAndInit<T>(params.m, false, 0., broadcast_ref);
+
+  params.output = AllocateAndInit<T>(params.m * params.n, false, 0.);
   params.broadcast_out = AllocateAndInit<T>(params.m * params.n, false, 0.);
 
   CHECK_CUDA(
@@ -125,7 +167,7 @@ void TestMatmulAddBinary() {
       cudaMemset(params.broadcast_out, 0, sizeof(T) * params.m * params.n));
   CHECK_CUTLASS(CutlassMatmulAddBinary(params));
 
-  Print<T>(reinterpret_cast<T*>(params.output), params.m * params.n);
+  Print<T>(reinterpret_cast<T*>(params.output), params.m, params.n);
 
   cudaFree(params.input);
   cudaFree(params.weight);
