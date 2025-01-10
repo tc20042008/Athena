@@ -11,6 +11,14 @@ struct ReluFunctor {
 };
 
 template <typename T>
+struct IdentityFunctor {
+  __forceinline__ __host__ __device__
+  T operator()(T x) const {
+    return x;
+  }
+};
+
+template <typename T>
 struct ScaleFunctor {
   struct Arguments {
     using scale_type = T;

@@ -75,36 +75,71 @@ void Print(T* addr, size_t numel) {
 }
 
 template <typename T>
-void RunAndCheckAccuracy(GemmEpilogueParams &params) {
+void TestMatmulAddUnary() {
+  GemmEpilogueParams params;
+  params.m = 256;
+  params.n = 256;
+  params.k = 256;
+
   std::cout << "we are tunning for problem: [" << params.m << ", " << params.n
             << ", " << params.k << "]" << std::endl;
+
+  params.input = AllocateAndInit<T>(params.m * params.k, false, 1.);
+  params.weight = AllocateAndInit<T>(params.k * params.n, false, 1.);
+  params.bias = AllocateAndInit<T>(params.n, false, 1000.);
+  params.output = AllocateAndInit<T>(params.m * params.n, false, 0.);
 
   CHECK_CUDA(
       cudaMemset(params.output, 0, sizeof(T) * params.m * params.n));
   CHECK_CUTLASS(CutlassMatmulAddUnary(params));
 
   Print<T>(reinterpret_cast<T*>(params.output), params.m * params.n);
-}
-
-int main(int argc, const char *arg[]) {
-  GemmEpilogueParams params;
-  params.m = 256;
-  params.n = 256;
-  params.k = 256;
-
-  using DType = half;
-
-  params.input = AllocateAndInit<DType>(params.m * params.k, false, 1.);
-  params.weight = AllocateAndInit<DType>(params.k * params.n, false, 1.);
-  params.bias = AllocateAndInit<DType>(params.n, false, 1000.);
-  params.output = AllocateAndInit<DType>(params.m * params.n, false, 0.);
-
-  RunAndCheckAccuracy<DType>(params);
 
   cudaFree(params.input);
   cudaFree(params.weight);
   cudaFree(params.bias);
   cudaFree(params.output);
+}
+
+template <typename T>
+void TestMatmulAddBinary() {
+  GemmBroadcastEpilogueParams params;
+  params.m = 256;
+  params.n = 256;
+  params.k = 256;
+
+  std::cout << "we are tunning for problem: [" << params.m << ", " << params.n
+            << ", " << params.k << "]" << std::endl;
+
+  params.input = AllocateAndInit<T>(params.m * params.k, false, 1.);
+  params.weight = AllocateAndInit<T>(params.k * params.n, false, 1.);
+  params.bias = AllocateAndInit<T>(params.n, false, 1000.);
+  params.output = AllocateAndInit<T>(params.m * params.n, false, 0.);
+
+  params.broadcast = AllocateAndInit<T>(params.m, false, 10000.);
+  params.broadcast_out = AllocateAndInit<T>(params.m * params.n, false, 0.);
+
+  CHECK_CUDA(
+      cudaMemset(params.output, 0, sizeof(T) * params.m * params.n));
+  CHECK_CUDA(
+      cudaMemset(params.broadcast_out, 0, sizeof(T) * params.m * params.n));
+  CHECK_CUTLASS(CutlassMatmulAddBinary(params));
+
+  Print<T>(reinterpret_cast<T*>(params.output), params.m * params.n);
+
+  cudaFree(params.input);
+  cudaFree(params.weight);
+  cudaFree(params.bias);
+  cudaFree(params.output);
+  cudaFree(params.broadcast);
+  cudaFree(params.broadcast_out);
+}
+
+int main(int argc, const char *arg[]) {
+  using DType = half;
+
+  TestMatmulAddUnary<DType>();
+  TestMatmulAddBinary<DType>();
 
   return 0;
 }
