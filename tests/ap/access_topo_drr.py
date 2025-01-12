@@ -9,10 +9,10 @@ class DrrPass:
 
 
 class register_drr_pass:
-  def __init__(self, pass_name, nice):
+  def __init__(self, pass_name, tag):
     self.pass_name = pass_name
-    self.nice = nice
+    self.tag = tag
 
   def __call__(self, drr_pass_cls):
-    Registry.access_topo_drr_pass(self.pass_name, self.nice, drr_pass_cls)
+    Registry.access_topo_drr_pass(self.pass_name, self.tag, drr_pass_cls)
     return drr_pass_cls

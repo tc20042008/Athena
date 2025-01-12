@@ -237,7 +237,7 @@
           [
             "self",
             "pass_name",
-            "nice"
+            "tag"
           ],
           [
             "__builtin_let__",
@@ -268,7 +268,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "nice"
+                    "str": "tag"
                   }
                 ]
               ],
@@ -277,9 +277,9 @@
                 [
                   "___26",
                   {
-                    "str": "nice"
+                    "str": "tag"
                   },
-                  "nice"
+                  "tag"
                 ]
               ]
             ],
@@ -350,7 +350,7 @@
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "nice"
+                    "str": "tag"
                   }
                 ]
               ],

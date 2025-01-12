@@ -1,5 +1,184 @@
 import abstract_drr
+import access_topo_drr
 import trivial_reduce_tpl
+
+def ReturnTrue(o, t, ir_helper):
+  return True
+
+
+@access_topo_drr.register_drr_pass("init_id_down_spider", tag="init_id_down_spider")
+class InitIdDownSpiderAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.data_op = o.ap_native_op("pd_op.data")
+    o.data_op(
+      [],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    t.declare_internal_native_ir_value("input")
+    o.new_data_op = o.ap_native_op("pd_op.data")
+    def NameGetter(o, t):
+      return o.data_op.name
+    o.new_data_op.name = NameGetter.__function__
+    def ShapeGetter(o, t):
+      return o.data_op.shape
+    o.new_data_op.shape = ShapeGetter.__function__
+    def DtypeGetter(o, t):
+      return o.data_op.dtype
+    o.new_data_op.dtype = DtypeGetter.__function__
+    def PlaceGetter(o, t):
+      return o.data_op.place
+    o.new_data_op.place = PlaceGetter.__function__
+    o.new_data_op(
+      [],
+      [t.input]
+    )
+    o.id_down_spider = o.ap_native_op("ap_op.id_down_spider")
+    o.id_down_spider(
+      [t.input],
+      [t.output]
+    )
+
+@access_topo_drr.register_drr_pass("down_spider_relu", tag="default")
+class DoubleReluAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.spider0 = o.ap_native_op("ap_op.id_down_spider")
+    o.spider0(
+      [t.input],
+      [t.tmp]
+    )
+    o.relu1 = o.ap_native_op("pd_op.relu")
+    o.relu1(
+      [t.tmp],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.fustion_op = o.ap_native_op("ap_op.id_down_spider")
+    o.fustion_op(
+      [t.input],
+      [t.output]
+    )
+
+
+@access_topo_drr.register_drr_pass("down_spider_add", tag="default")
+class DoubleReluAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.spider0 = o.ap_native_op("ap_op.id_down_spider")
+    o.spider0(
+      [t.input],
+      [t.tmp0]
+    )
+    o.spider1 = o.ap_native_op("ap_op.id_down_spider")
+    o.spider1(
+      [t.input],
+      [t.tmp1]
+    )
+    o.add = o.ap_native_op("pd_op.add")
+    o.add(
+      [t.tmp0, t.tmp1],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.fustion_op = o.ap_native_op("ap_op.id_down_spider")
+    o.fustion_op(
+      [t.input],
+      [t.output]
+    )
+        
+@access_topo_drr.register_drr_pass("pd_op_exp", tag="default")
+class PdOpExpAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.exp_op = o.ap_native_op("pd_op.exp")
+    o.exp_op(
+      [t.input],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.fustion_op = o.ap_native_op("pd_op.relu")
+    o.fustion_op(
+      [t.input],
+      [t.output]
+    )
+
+@access_topo_drr.register_drr_pass("pd_op_sin", tag="default")
+class PdOpSinAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.sin_op = o.ap_native_op("pd_op.sin")
+    o.sin_op(
+      [t.input],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.fustion_op = o.ap_native_op("pd_op.relu")
+    o.fustion_op(
+      [t.input],
+      [t.output]
+    )
+
+@access_topo_drr.register_drr_pass("cinn_op_yield_store", tag="default")
+class CinnOpYieldStoreAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.exp_op = o.ap_native_op("cinn_op.yield_store")
+    o.exp_op(
+      [t.input],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.fustion_op = o.ap_native_op("pd_op.relu")
+    o.fustion_op(
+      [t.input],
+      [t.output]
+    )
+
+@access_topo_drr.register_drr_pass("pd_op_subtract", tag="default")
+class PdOpSubtractAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.source_op = o.ap_native_op("pd_op.subtract")
+    o.source_op(
+      [t.input0, t.input1],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.result_op = o.ap_native_op("pd_op.add")
+    o.result_op(
+      [t.input0, t.input1],
+      [t.output]
+    )
 
 @abstract_drr.register_drr_pass("trivial_fusion", nice=0)
 class TrivialFusionDemo(abstract_drr.DrrPass):
@@ -31,8 +210,39 @@ class TrivialFusionDemo(abstract_drr.DrrPass):
       [t.output1]
     )
 
-def Constraint(o, t):
-  return True
+def DataDownSpiderYield(o, t):
+  o.data_op = o.ap_native_op("pd_op.data")
+  o.data_op(
+    [],
+    [t.data_op_out]
+  )
+  o.id_down_spider_op = o.ap_native_op("ap_op.id_down_spider")
+  o.id_down_spider_op(
+    [t.data_op_out],
+    [t.id_down_spider_op_out]
+  )
+  o.yield_op = o.ap_native_op("cf.yield")
+  o.yield_op(
+    [t.id_down_spider_op_out],
+    []
+  )
+
+def Constraint(o, t, ir_helper):
+  program = ir_helper.copy_fused_ops_to_program(o.trivial_op)
+  print("before-access_topo_pass", program)
+  init_pass_manager = ir_helper.create_pass_manager()
+  init_pass_manager.add_pass(ir_helper.create_access_topo_drr_one_step_pass("init_id_down_spider"))
+  init_pass_manager.run(program)
+  print("after-init-access_topo_pass", program)
+  pass_manager = ir_helper.create_pass_manager()
+  pass_manager.add_pass(ir_helper.create_access_topo_drr_pass("default"))
+  pass_manager.add_pass(ir_helper.create_dce_pass())
+  pass_manager.run(program)
+  print("after-apply-access_topo_pass", program)
+  matched = ir_helper.match(program, DataDownSpiderYield.__function__)
+  print("DataDownSpiderYield matched: ", matched)
+  return matched
+
 
 def CodeGen(ctx, o, t):
   trivial_op_code_gen_class = ctx.make_fusion_op_code_gen_class(
