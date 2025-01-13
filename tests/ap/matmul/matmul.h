@@ -29,19 +29,14 @@
     }                                                                               \
   }
 
-
-void ConvertToHalf(const float* x, half* y, int64_t numel);
-void ConvertToFloat(const half* x, float* y, int64_t numel);
-
-
 struct GemmEpilogueParams {
   int m;
   int n;
   int k;
 
-  void *input;
-  void *weight;
-  void *bias;
+  const void *input;
+  const void *weight;
+  const void *bias;
   void *output;
 
   cudaStream_t stream;
@@ -53,6 +48,3 @@ struct GemmBroadcastEpilogueParams : GemmEpilogueParams {
   void* broadcast;
   void* broadcast_out;
 };
-
-cutlass::Status CutlassMatmulAddUnary(const GemmEpilogueParams& params);
-cutlass::Status CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params);

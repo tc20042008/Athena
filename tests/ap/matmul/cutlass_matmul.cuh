@@ -1,3 +1,5 @@
+#pragma once
+
 // #include "cutlass/epilogue/thread/linear_combination_bias_relu.h"
 #include "cutlass/epilogue/thread/linear_combination_bias_elementwise.h"
 #include "cutlass_epilogue/thread/linear_combination_unary.h"
@@ -7,15 +9,15 @@
 #include "cutlass/gemm/device/gemm_universal_with_broadcast.h"
 
 #include "matmul.h"
-#include "epilogue_op.h"
 
 //template <typename TShape, typename WShape, typename IShape, int NumStages>
-cutlass::Status CutlassMatmulAddUnary(const GemmEpilogueParams& params) {
-  using ElementAccumulator = float;                   // <- data type of accumulator
+template <typename ElementT, typename ElementComputeT, template<typename T> class UnaryFunctor>
+void CutlassMatmulAddUnary(const GemmEpilogueParams& params, typename UnaryFunctor<ElementComputeT>::Arguments unary_args) {
+  using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
-  using ElementInputA = cutlass::half_t;              // <- data type of elements in input matrix A
-  using ElementInputB = cutlass::half_t;              // <- data type of elements in input matrix B
-  using ElementOutput = cutlass::half_t;              // <- data type of elements in output matrix D
+  using ElementInputA = ElementT;                     // <- data type of elements in input matrix A
+  using ElementInputB = ElementT;                     // <- data type of elements in input matrix B
+  using ElementOutput = ElementT;                     // <- data type of elements in output matrix D
 
   using TShape = cutlass::gemm::GemmShape<256, 128, 32>;// threadblock tile
   using WShape = cutlass::gemm::GemmShape<64, 64, 32>;  // warp tile
@@ -25,21 +27,22 @@ cutlass::Status CutlassMatmulAddUnary(const GemmEpilogueParams& params) {
   // how threadblocks are scheduled on GPU
   using SwizzleThreadBlock = cutlass::gemm::threadblock::GemmIdentityThreadblockSwizzle<>;
 
-#if 0
   // Epilogue operation as LinearCombinationRelu:
   //  d_ij = max(0, alpha * sum_k(a_ik * b_kj) + c_ij)
   //
   // - sum_k(a_ik * b_kj), the intermedia result of matrix product, A * B
   // - c_ij, the bias 
-  using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationRelu<
-      ElementOutput,
-      128 / cutlass::sizeof_bits<ElementOutput>::value,
-      ElementAccumulator,
-      ElementComputeEpilogue,
-      cutlass::epilogue::thread::ScaleType::NoBetaScaling>; // <- alpha x C + bias
-#endif
+  // using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationRelu<
+  //     ElementOutput,
+  //     128 / cutlass::sizeof_bits<ElementOutput>::value,
+  //     ElementAccumulator,
+  //     ElementComputeEpilogue,
+  //     cutlass::epilogue::thread::ScaleType::NoBetaScaling>; // <- alpha x C + bias
+
+  // Epilogue operation as LinearCombinationUnary:
+  //  d_ij = unary_op(alpha * sum_k(a_ik * b_kj) + c_ij)
   using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationUnary<
-      ap::ScaleFunctor,
+      UnaryFunctor,
       ElementOutput,
       128 / cutlass::sizeof_bits<ElementOutput>::value,
       ElementAccumulator,
@@ -69,9 +72,10 @@ cutlass::Status CutlassMatmulAddUnary(const GemmEpilogueParams& params) {
 
   /// Arguments
   cutlass::gemm::GemmCoord problem_size{params.m, params.n, params.k};
-  ElementInputA *input = reinterpret_cast<ElementInputA *>(params.input);
-  ElementInputB *weight = reinterpret_cast<ElementInputB *>(params.weight);
-  ElementOutput *bias = reinterpret_cast<ElementOutput *>(params.bias);
+
+  const ElementInputA *input = reinterpret_cast<const ElementInputA *>(params.input);
+  const ElementInputB *weight = reinterpret_cast<const ElementInputB *>(params.weight);
+  const ElementOutput *bias = reinterpret_cast<const ElementOutput *>(params.bias);
   ElementOutput *output = reinterpret_cast<ElementOutput *>(params.output);
 
   /// Only available in RRR format
@@ -80,8 +84,6 @@ cutlass::Status CutlassMatmulAddUnary(const GemmEpilogueParams& params) {
 
   ElementComputeEpilogue alpha = static_cast<ElementComputeEpilogue>(1);
   ElementComputeEpilogue beta = static_cast<ElementComputeEpilogue>(1);
-
-  ap::ScaleFunctor<ElementComputeEpilogue>::Arguments unary_args{0.1};
 
   typename GemmFunc::Arguments arguments{
       cutlass::gemm::GemmUniversalMode::kGemm,
@@ -115,10 +117,9 @@ cutlass::Status CutlassMatmulAddUnary(const GemmEpilogueParams& params) {
 
   status = device_gemm();
   CHECK_CUTLASS(status);
-  return status;
 }
 
-cutlass::Status CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
+void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
   using ElementAccumulator = float;                   // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
   using ElementInputA = cutlass::half_t;
@@ -181,9 +182,9 @@ cutlass::Status CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params
 
   /// Arguments
   cutlass::gemm::GemmCoord problem_size{params.m, params.n, params.k};
-  ElementInputA *input = reinterpret_cast<ElementInputA *>(params.input);
-  ElementInputB *weight = reinterpret_cast<ElementInputB *>(params.weight);
-  ElementOutputC *bias = reinterpret_cast<ElementOutputC *>(params.bias);
+  const ElementInputA *input = reinterpret_cast<const ElementInputA *>(params.input);
+  const ElementInputB *weight = reinterpret_cast<const ElementInputB *>(params.weight);
+  const ElementOutputC *bias = reinterpret_cast<const ElementOutputC *>(params.bias);
   ElementOutputZ *output = reinterpret_cast<ElementOutputZ *>(params.output);
   ElementOutputC *broadcast = reinterpret_cast<ElementOutputC *>(params.broadcast);
   ElementOutputT *broadcast_out = reinterpret_cast<ElementOutputT *>(params.broadcast_out);
@@ -238,5 +239,4 @@ cutlass::Status CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params
   //
   status = device_gemm();
   CHECK_CUTLASS(status);
-  return status;
 }

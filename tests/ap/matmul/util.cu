@@ -18,17 +18,17 @@ __global__ void ConvertToFloatKernel(const half* x, float* y, int64_t numel) {
   }
 }
 
-void ConvertToHalf(const float* x, half* y, int64_t numel) {
+void ConvertToHalf(cudaStream_t stream, const float* x, half* y, int64_t numel) {
   int block_dim = 256;
   int grid_dim = (numel + 255) / 256;
-  ConvertToHalfKernel<<<grid_dim, block_dim>>>(x, y, numel);
+  ConvertToHalfKernel<<<grid_dim, block_dim, 0, stream>>>(x, y, numel);
   CHECK_CUDA(cudaGetLastError());
 }
 
-void ConvertToFloat(const half* x, float* y, int64_t numel) {
+void ConvertToFloat(cudaStream_t stream, const half* x, float* y, int64_t numel) {
   int block_dim = 256;
   int grid_dim = (numel + 255) / 256;
-  ConvertToFloatKernel<<<grid_dim, block_dim>>>(x, y, numel);
+  ConvertToFloatKernel<<<grid_dim, block_dim, 0, stream>>>(x, y, numel);
   CHECK_CUDA(cudaGetLastError());
 }
 

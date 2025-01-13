@@ -21,8 +21,7 @@ struct IdentityFunctor {
 template <typename T>
 struct ScaleFunctor {
   struct Arguments {
-    using scale_type = T;
-    T scale = static_cast<T>(1);
+    float scale = static_cast<float>(1);
   };
 
   __forceinline__ __host__ __device__
