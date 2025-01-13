@@ -24,9 +24,9 @@ extern "C" {
 void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int m, int n, int k) {
   GemmEpilogueParams params;
 
-  params.m = 256;
-  params.n = 512;
-  params.k = 256;
+  params.m = m;
+  params.n = n;
+  params.k = k;
 
   params.input = input;
   params.weight = weight;
@@ -40,6 +40,26 @@ void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* we
 
   //EpilogueArguments<float> unary_args{0.1};
   //CutlassMatmulAddUnary<cutlass::half_t, EpilogueFunctor>(params, unary_args);
+}
+
+void MatmulAddBinaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* broadcast, void* broadcast_out, void* output, int m, int n, int k) {
+  GemmBroadcastEpilogueParams params;
+
+  params.m = m;
+  params.n = n;
+  params.k = k;
+
+  params.input = input;
+  params.weight = weight;
+  params.bias = bias;
+  params.output = output;
+
+  params.broadcast = broadcast;
+  params.broadcast_out = broadcast_out;
+
+  params.stream = stream;
+
+  CutlassMatmulAddBinary<cutlass::half_t, float>(params);
 }
 
 }

@@ -119,14 +119,15 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, typename UnaryFunct
   CHECK_CUTLASS(status);
 }
 
+template <typename ElementT, typename ElementComputeT>
 void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
-  using ElementAccumulator = float;                   // <- data type of accumulator
+  using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
-  using ElementInputA = cutlass::half_t;
-  using ElementInputB = cutlass::half_t;
-  using ElementOutputC = cutlass::half_t;
-  using ElementOutputZ = cutlass::half_t;
-  using ElementOutputT = cutlass::half_t;
+  using ElementInputA = ElementT;
+  using ElementInputB = ElementT;
+  using ElementOutputC = ElementT;
+  using ElementOutputZ = ElementT;
+  using ElementOutputT = ElementT;
 
   using TShape = cutlass::gemm::GemmShape<256, 128, 32>;// threadblock tile
   using WShape = cutlass::gemm::GemmShape<64, 64, 32>;  // warp tile
