@@ -5,7 +5,7 @@
 #include <type_traits>
 
 #include "kernel.h"
-#include "util.h"
+#include "test_util.h"
 
 
 template <typename T>
@@ -55,8 +55,8 @@ T* AllocateAndInit(cudaStream_t stream, size_t numel, bool random, T value = 0, 
 }
 
 template <typename T>
-void Print(cudaStream_t stream, T* addr, size_t m, size_t n) {
-  size_t numel = m * n;
+void Print(cudaStream_t stream, T* addr, size_t batch_count, size_t m, size_t n) {
+  size_t numel = batch_count * m * n;
 
   std::vector<float> data;
   data.resize(numel);
@@ -102,14 +102,17 @@ void Print(cudaStream_t stream, T* addr, size_t m, size_t n) {
 
 template <typename T>
 void TestMatmulAddUnary(cudaStream_t stream) {
-  int m = 256;
-  int n = 512;
-  int k = 256;
+  int batch_count = 4;
+  int m = 65536;
+  int n = 32;
+  int k = 128;
+
+  bool transpose_b = false;
 
   std::cout << "we are running for problem: [" << m << ", " << n
             << ", " << k << "]" << std::endl;
 
-  T* input = AllocateAndInit<T>(stream, m * k, false, 1.);
+  T* input = AllocateAndInit<T>(stream, batch_count * m * k, false, 1.);
   T* weight = AllocateAndInit<T>(stream, k * n, false, 1.);
 
   std::vector<float> bias_ref;
@@ -119,13 +122,13 @@ void TestMatmulAddUnary(cudaStream_t stream) {
   }
   T* bias = AllocateAndInit<T>(stream, n, false, 0., bias_ref);
 
-  T* output = AllocateAndInit<T>(stream, m * n, false, 0.);
+  T* output = AllocateAndInit<T>(stream, batch_count * m * n, false, 0.);
   CHECK_CUDA(cudaStreamSynchronize(stream));
 
-  CHECK_CUDA(cudaMemsetAsync(output, 0, sizeof(T) * m * n, stream));
-  MatmulAddUnaryKernel(stream, input, weight, bias, output, m, n, k);
+  CHECK_CUDA(cudaMemsetAsync(output, 0, sizeof(T) * batch_count * m * n, stream));
+  MatmulAddUnaryKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
 
-  Print<T>(stream, reinterpret_cast<T*>(output), m, n);
+  Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
 
   cudaFree(input);
   cudaFree(weight);
@@ -135,9 +138,11 @@ void TestMatmulAddUnary(cudaStream_t stream) {
 
 template <typename T>
 void TestMatmulAddBinary(cudaStream_t stream) {
+  int batch_count = 1;
   int m = 256;
   int n = 512;
   int k = 256;
+  bool need_broadcast = false;
 
   std::cout << "we are running for problem: [" << m << ", " << n
             << ", " << k << "]" << std::endl;
@@ -152,12 +157,21 @@ void TestMatmulAddBinary(cudaStream_t stream) {
   }
   T* bias = AllocateAndInit<T>(stream, n, false, 0., bias_ref);
 
+  int64_t broadcast_numel = need_broadcast ? m : m * n;
   std::vector<float> broadcast_ref;
-  broadcast_ref.resize(m);
-  for (size_t i = 0; i < broadcast_ref.size(); ++i) {
-    broadcast_ref[i] = static_cast<float>(10000 * (i % 5));
+  broadcast_ref.resize(broadcast_numel);
+  if (need_broadcast) {
+    for (size_t i = 0; i < broadcast_ref.size(); ++i) {
+      broadcast_ref[i] = static_cast<float>(10000 * (i % 5));
+    }
+  } else {
+    for (size_t i = 0; i < m; ++i) {
+      for (size_t j = 0; j < n; ++j) {
+        broadcast_ref[i * n + j] = static_cast<float>(10000 * (i % 5));
+      }
+    }
   }
-  T* broadcast = AllocateAndInit<T>(stream, m, false, 0., broadcast_ref);
+  T* broadcast = AllocateAndInit<T>(stream, broadcast_numel, false, 0., broadcast_ref);
 
   T* output = AllocateAndInit<T>(stream, m * n, false, 0.);
   T* broadcast_out = AllocateAndInit<T>(stream, m * n, false, 0.);
@@ -167,9 +181,9 @@ void TestMatmulAddBinary(cudaStream_t stream) {
       cudaMemsetAsync(output, 0, sizeof(T) * m * n, stream));
   CHECK_CUDA(
       cudaMemsetAsync(broadcast_out, 0, sizeof(T) * m * n, stream));
-  MatmulAddBinaryKernel(stream, input, weight, bias, broadcast, broadcast_out, output, m, n, k);
+  MatmulAddBinaryKernel(stream, input, weight, bias, broadcast, broadcast_out, output, m, n, k, need_broadcast);
 
-  Print<T>(stream, reinterpret_cast<T*>(output), m, n);
+  Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
 
   cudaFree(input);
   cudaFree(weight);

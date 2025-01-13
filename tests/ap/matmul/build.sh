@@ -4,6 +4,7 @@ CUDA_ROOT=/usr/local/cuda
 CUTLASS_DIR=/work/abstract_pass/Athena/tests/ap/matmul/cutlass
 SOURCE_DIR=/work/abstract_pass/Athena/tests/ap/matmul
 
+rm -rf libmatmul_kernel.so
 rm -rf test_main
 
 nvcc -std=c++17 -O3 \
@@ -21,4 +22,4 @@ nvcc -std=c++17 -O3 \
     -I ${CUTLASS_DIR}/include \
     -I ${CUTLASS_DIR}/tools/util/include \
     -L./ -lmatmul_kernel -lcuda -lcudart \
-    util.cu test_main.cc -o test_main
+    test_util.cu test_main.cc -o test_main

@@ -21,9 +21,10 @@ struct EpilogueFunctor {
 
 extern "C" {
 
-void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int m, int n, int k) {
+void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
   GemmEpilogueParams params;
 
+  params.batch_count = batch_count;
   params.m = m;
   params.n = n;
   params.k = k;
@@ -36,10 +37,14 @@ void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* we
   params.stream = stream;
 
   ap::ScaleFunctor<float>::Arguments unary_args{1.0};
-  CutlassMatmulAddUnary<cutlass::half_t, float, EpilogueFunctor>(params, unary_args);
+  if (transpose_b) {
+    CutlassMatmulAddUnary<cutlass::half_t, float, EpilogueFunctor, false, true>(params, unary_args);
+  } else {
+    CutlassMatmulAddUnary<cutlass::half_t, float, EpilogueFunctor, false, false>(params, unary_args);
+  }
 }
 
-void MatmulAddBinaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* broadcast, void* broadcast_out, void* output, int m, int n, int k) {
+void MatmulAddBinaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* broadcast, void* broadcast_out, void* output, int m, int n, int k, bool need_broadcast) {
   GemmBroadcastEpilogueParams params;
 
   params.m = m;
@@ -51,10 +56,11 @@ void MatmulAddBinaryKernel(cudaStream_t stream, const void* input, const void* w
   params.bias = bias;
   params.output = output;
 
+  params.stream = stream;
+
+  params.need_broadcast = need_broadcast;
   params.broadcast = broadcast;
   params.broadcast_out = broadcast_out;
-
-  params.stream = stream;
 
   CutlassMatmulAddBinary<cutlass::half_t, float>(params);
 }

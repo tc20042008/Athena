@@ -1,8 +1,7 @@
 #include <cuda.h>
 #include <cuda_fp16.h>
 
-#include "matmul.h"
-
+#include "test_util.h"
 
 __global__ void ConvertToHalfKernel(const float* x, half* y, int64_t numel) {
   int64_t idx = blockIdx.x * blockDim.x + threadIdx.x;

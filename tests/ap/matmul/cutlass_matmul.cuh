@@ -11,7 +11,7 @@
 #include "matmul.h"
 
 //template <typename TShape, typename WShape, typename IShape, int NumStages>
-template <typename ElementT, typename ElementComputeT, template<typename T> class UnaryFunctor>
+template <typename ElementT, typename ElementComputeT, template<typename T> class UnaryFunctor, bool TransposeA = false, bool TransposeB = false>
 void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename UnaryFunctor<ElementComputeT>::Arguments& unary_args) {
   using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
@@ -27,20 +27,11 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
   // how threadblocks are scheduled on GPU
   using SwizzleThreadBlock = cutlass::gemm::threadblock::GemmIdentityThreadblockSwizzle<>;
 
-  // Epilogue operation as LinearCombinationRelu:
-  //  d_ij = max(0, alpha * sum_k(a_ik * b_kj) + c_ij)
+  // Epilogue operation as LinearCombinationUnary:
+  //  d_ij = unary_op(alpha * sum_k(a_ik * b_kj) + c_ij)
   //
   // - sum_k(a_ik * b_kj), the intermedia result of matrix product, A * B
   // - c_ij, the bias 
-  // using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationRelu<
-  //     ElementOutput,
-  //     128 / cutlass::sizeof_bits<ElementOutput>::value,
-  //     ElementAccumulator,
-  //     ElementComputeEpilogue,
-  //     cutlass::epilogue::thread::ScaleType::NoBetaScaling>; // <- alpha x C + bias
-
-  // Epilogue operation as LinearCombinationUnary:
-  //  d_ij = unary_op(alpha * sum_k(a_ik * b_kj) + c_ij)
   using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationUnary<
       UnaryFunctor,
       ElementOutput,
@@ -51,9 +42,9 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
 
   using GemmFunc = cutlass::gemm::device::GemmUniversal<
       ElementInputA,
-      cutlass::layout::RowMajor,
+      typename MatrixLayout<TransposeA>::Type,
       ElementInputB,
-      cutlass::layout::RowMajor,
+      typename MatrixLayout<TransposeB>::Type,
       ElementOutput,
       cutlass::layout::RowMajor,
       ElementAccumulator,
@@ -108,15 +99,12 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
   // size_t workspace_size = DeviceKernelName::get_workspace_size(arguments);
   // cutlass::device_memory::allocation<uint8_t> workspace(workspace_size);
 
-  cutlass::Status status = device_gemm.can_implement(arguments);
-  CHECK_CUTLASS(status);
+  CHECK_CUTLASS(device_gemm.can_implement(arguments));
 
   // status = device_gemm.initialize(arguments, workspace.get());
-  status = device_gemm.initialize(arguments, params.workspace);
-  CHECK_CUTLASS(status);
+  CHECK_CUTLASS(device_gemm.initialize(arguments, params.workspace));
 
-  status = device_gemm();
-  CHECK_CUTLASS(status);
+  CHECK_CUTLASS(device_gemm());
 }
 
 template <typename ElementT, typename ElementComputeT>
@@ -150,6 +138,22 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
     128 / cutlass::sizeof_bits<ElementOutputC>::value,
     ap::IdentityFunctor<ElementComputeEpilogue>
   >;  
+
+  // Epilogue operation as LinearCombinationResidualBlock:
+  //  Y = GEMM(AB, C1)
+  //  UnaryOp(BinaryOp2(BinaryOp1(ActivationOp(Y), residual1), residual2))
+  // using EpilogueOp = cutlass::epilogue::thread::LinearCombinationResidualBlock<  
+  //   ElementOutput,                        // Element type for output matrix
+  //   ElementAccumulator,                   // Element type from internal accumulation
+  //   ElementCompute,                       // Element type from internal accumulation
+  //   ElementC,                             // Element type for C1/C2/D matrix operands
+  //   AlignmentC,                           // Memory access granularity of C and D matrix in units of elements
+  //   cutlass::epilogue::thread::Identity,  // Activation
+  //   cutlass::plus,                        // Binary operation 1
+  //   cutlass::epilogue::thread::Identity,  // Unary operation
+  //   cutlass::plus                         // Binary operation 2
+  //   >;
+
   // using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationResidualBlock<
   //   ElementOutputC,
   //   ElementAccumulator,
@@ -192,7 +196,9 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
 
   /// Only available in RRR format
   const int64_t batch_stride_C = params.is_C_bias ? problem_size.n() : problem_size.m() * problem_size.n();
+  const int64_t batch_stride_Broadcast = params.need_broadcast ? problem_size.m() : problem_size.m() * problem_size.n();
   const int64_t ldc_bias = params.is_C_bias ? 0 : static_cast<int64_t>(params.n);
+  const int64_t ldr_broadcast = params.need_broadcast ? 0 : problem_size.n();
 
   ElementComputeEpilogue alpha = static_cast<ElementComputeEpilogue>(1);
   ElementComputeEpilogue beta = static_cast<ElementComputeEpilogue>(1);
@@ -212,13 +218,13 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
       problem_size.n() * problem_size.k(),  // <- batch_stride_B
       batch_stride_C,                       // <- batch_stride_C
       problem_size.m() * problem_size.n(),  // <- batch_stride_D
-      problem_size.m(),                     // <- batch_stride_Vector, need broadcast
+      batch_stride_Broadcast,               // <- batch_stride_Vector, need broadcast
       problem_size.m() * problem_size.n(),  // <- batch_stride_Tensor
       problem_size.k(),                     // <- lda
       problem_size.n(),                     // <- ldb
       ldc_bias,                             // <- ldc
       problem_size.n(),                     // <- ldd
-      0,                                    // <- ldr, must be zero
+      ldr_broadcast,                        // <- ldr, must be zero
       problem_size.n()                      // <- ldt
   }; 
 
@@ -228,16 +234,13 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
   // size_t workspace_size = GemmFunc::get_workspace_size(arguments);
   // cutlass::device_memory::allocation<uint8_t> workspace(workspace_size);
 
-  cutlass::Status status = device_gemm.can_implement(arguments);
-  CHECK_CUTLASS(status);
+  CHECK_CUTLASS(device_gemm.can_implement(arguments));
 
   // status = device_gemm.initialize(arguments, workspace.get());
-  status = device_gemm.initialize(arguments, params.workspace);
-  CHECK_CUTLASS(status);
+  CHECK_CUTLASS(device_gemm.initialize(arguments, params.workspace));
 
   //
   // Run the GEMM
   //
-  status = device_gemm();
-  CHECK_CUTLASS(status);
+  CHECK_CUTLASS(device_gemm());
 }

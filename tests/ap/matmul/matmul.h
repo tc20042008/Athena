@@ -7,6 +7,7 @@
 #include <cuda_fp16.h>
 
 #include "cutlass/cutlass.h"
+#include "cutlass/layout/matrix.h"
 
 #define CHECK_CUTLASS(status)                                             \
   {                                                                       \
@@ -30,6 +31,7 @@
   }
 
 struct GemmEpilogueParams {
+  int batch_count;
   int m;
   int n;
   int k;
@@ -45,6 +47,17 @@ struct GemmEpilogueParams {
 };
 
 struct GemmBroadcastEpilogueParams : GemmEpilogueParams {
+  bool need_broadcast;
   void* broadcast;
   void* broadcast_out;
+};
+
+template <bool Transposed>
+struct MatrixLayout {
+  using Type = cutlass::layout::RowMajor;
+};
+
+template <>
+struct MatrixLayout<true> {
+  using Type = cutlass::layout::ColumnMajor;
 };
