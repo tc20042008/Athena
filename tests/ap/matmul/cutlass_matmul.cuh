@@ -12,7 +12,7 @@
 
 //template <typename TShape, typename WShape, typename IShape, int NumStages>
 template <typename ElementT, typename ElementComputeT, template<typename T> class UnaryFunctor>
-void CutlassMatmulAddUnary(const GemmEpilogueParams& params, typename UnaryFunctor<ElementComputeT>::Arguments unary_args) {
+void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename UnaryFunctor<ElementComputeT>::Arguments& unary_args) {
   using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
   using ElementInputA = ElementT;                     // <- data type of elements in input matrix A
