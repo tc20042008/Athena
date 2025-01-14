@@ -8,7 +8,7 @@
 // };
  
 template <typename T>
-struct EpilogueFunctor {
+struct UnaryEpilogueFunctor {
   using Arguments = typename ap::ScaleFunctor<T>::Arguments;
 
   __forceinline__ __host__ __device__
@@ -36,11 +36,17 @@ void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* we
 
   params.stream = stream;
 
-  ap::ScaleFunctor<float>::Arguments unary_args{1.0};
+  std::cout << "-- [MatmulAddUnaryKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] input: " << input << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] weight: " << weight << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] bias: " << bias << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] output: " << output << std::endl;
+
+  UnaryEpilogueFunctor<float>::Arguments unary_args{1.0};
   if (transpose_b) {
-    CutlassMatmulAddUnary<cutlass::half_t, float, EpilogueFunctor, false, true>(params, unary_args);
+    CutlassMatmulAddUnary<cutlass::half_t, float, UnaryEpilogueFunctor, false, true>(params, unary_args);
   } else {
-    CutlassMatmulAddUnary<cutlass::half_t, float, EpilogueFunctor, false, false>(params, unary_args);
+    CutlassMatmulAddUnary<cutlass::half_t, float, UnaryEpilogueFunctor, false, false>(params, unary_args);
   }
 }
 

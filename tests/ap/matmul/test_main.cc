@@ -108,19 +108,20 @@ void TestMatmulAddUnary(cudaStream_t stream) {
   int k = 128;
 
   bool transpose_b = false;
-
-  std::cout << "we are running for problem: [" << m << ", " << n
-            << ", " << k << "]" << std::endl;
+  bool add_bias = false;
 
   T* input = AllocateAndInit<T>(stream, batch_count * m * k, false, 1.);
   T* weight = AllocateAndInit<T>(stream, k * n, false, 1.);
 
-  std::vector<float> bias_ref;
-  bias_ref.resize(n);
-  for (size_t i = 0; i < bias_ref.size(); ++i) {
-    bias_ref[i] = static_cast<float>(1000 * (i % 10));
+  T* bias = nullptr;
+  if (add_bias) {
+    std::vector<float> bias_ref;
+    bias_ref.resize(n);
+    for (size_t i = 0; i < bias_ref.size(); ++i) {
+      bias_ref[i] = static_cast<float>(1000 * (i % 10));
+    }
+    bias = AllocateAndInit<T>(stream, n, false, 0., bias_ref);
   }
-  T* bias = AllocateAndInit<T>(stream, n, false, 0., bias_ref);
 
   T* output = AllocateAndInit<T>(stream, batch_count * m * n, false, 0.);
   CHECK_CUDA(cudaStreamSynchronize(stream));
@@ -132,7 +133,9 @@ void TestMatmulAddUnary(cudaStream_t stream) {
 
   cudaFree(input);
   cudaFree(weight);
-  cudaFree(bias);
+  if (add_bias) {
+    cudaFree(bias);
+  }
   cudaFree(output);
 }
 

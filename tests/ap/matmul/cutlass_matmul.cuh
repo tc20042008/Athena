@@ -73,7 +73,7 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
   const int64_t ldc_bias = params.is_C_bias ? 0 : static_cast<int64_t>(params.n);
 
   ElementComputeEpilogue alpha = static_cast<ElementComputeEpilogue>(1);
-  ElementComputeEpilogue beta = static_cast<ElementComputeEpilogue>(1);
+  ElementComputeEpilogue beta = bias ? static_cast<ElementComputeEpilogue>(1) : static_cast<ElementComputeEpilogue>(0);
 
   typename GemmFunc::Arguments arguments{
       cutlass::gemm::GemmUniversalMode::kGemm,
