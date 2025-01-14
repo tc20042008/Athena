@@ -62,12 +62,14 @@ void trivial_reduce(const int64_t num, const float* input, float* output) {
 }
 
 extern "C"
-void api_trivial_reduce(const int64_t num, const float* input, float* output) {
+void api_trivial_reduce(void* stream_ptr, const int64_t num, const float* input, float* output) {
+  std::cout << "stream_ptr: " << stream_ptr << std::endl;
+  cudaStream_t stream = *(cudaStream_t*)(stream_ptr);
   std::cout << "yiqun nice" << std::endl;
   std::cout << "num: " << num << std::endl;
   std::cout << "input: " << input << std::endl;
   std::cout << "output: " << output << std::endl;
-  return trivial_reduce<<<1, num>>>(num, input, output);
+  return trivial_reduce<<<1, num, 0, stream>>>(num, input, output);
 }
 
   """
@@ -75,6 +77,7 @@ void api_trivial_reduce(const int64_t num, const float* input, float* output) {
     compile_cmd = "nvcc --ptxas-options=-v --compiler-options '-fPIC' --shared  trivial_reduce.cu -o libtrivial_reduce.so"
     return CodeModule(
       FuncDeclare(DataType.void, "api_trivial_reduce", [
+        PointerType.void_ptr,
         DataType.const_int64,
         PointerType.const_float_ptr,
         PointerType.float_ptr,
@@ -92,7 +95,9 @@ void api_trivial_reduce(const int64_t num, const float* input, float* output) {
 def KernelDispatch(ctx):
   so_func = ctx.get_so_function("api_trivial_reduce")
   getters = ctx.kernel_dispatch_const_data.kernel_args_getters
+  stream_ptr = ctx.device_ctx.get_stream_addr_as_void_ptr()
+  print("stream_ptr:", stream_ptr)
   print("getters[0](ctx):", getters[0](ctx))
   print("getters[1](ctx):", getters[1](ctx))
   print("getters[2](ctx):", getters[2](ctx))
-  so_func(getters[0](ctx), getters[1](ctx), getters[2](ctx))
+  so_func(stream_ptr, getters[0](ctx), getters[1](ctx), getters[2](ctx))

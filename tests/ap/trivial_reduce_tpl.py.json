@@ -728,7 +728,7 @@
                 [
                   "__builtin_identity__",
                   {
-                    "str": "\n#include <cstdint>\n#include <iostream>\n#define CINN_WITH_CUDA\n\nextern \"C\" __global__\nvoid trivial_reduce(const int64_t num, const float* input, float* output) {\n  int idx = blockIdx.x * blockDim.x + threadIdx.x;\n  __shared__ float buf[1024];\n  float y;\n  if (idx < num) {\n    float x = input[idx];\n    TRIVIAL_CODE_STRING;\n    buf[idx] = y;\n  }\n  __syncthreads();\n  if (idx==0) {\n    for (int i = 1; i < num; ++i) {\n      buf[0] += buf[i];\n    }\n    output[0] = buf[0];\n  }\n}\n\nextern \"C\"\nvoid api_trivial_reduce(const int64_t num, const float* input, float* output) {\n  std::cout << \"yiqun nice\" << std::endl;\n  std::cout << \"num: \" << num << std::endl;\n  std::cout << \"input: \" << input << std::endl;\n  std::cout << \"output: \" << output << std::endl;\n  return trivial_reduce<<<1, num>>>(num, input, output);\n}\n\n  "
+                    "str": "\n#include <cstdint>\n#include <iostream>\n#define CINN_WITH_CUDA\n\nextern \"C\" __global__\nvoid trivial_reduce(const int64_t num, const float* input, float* output) {\n  int idx = blockIdx.x * blockDim.x + threadIdx.x;\n  __shared__ float buf[1024];\n  float y;\n  if (idx < num) {\n    float x = input[idx];\n    TRIVIAL_CODE_STRING;\n    buf[idx] = y;\n  }\n  __syncthreads();\n  if (idx==0) {\n    for (int i = 1; i < num; ++i) {\n      buf[0] += buf[i];\n    }\n    output[0] = buf[0];\n  }\n}\n\nextern \"C\"\nvoid api_trivial_reduce(void* stream_ptr, const int64_t num, const float* input, float* output) {\n  std::cout << \"stream_ptr: \" << stream_ptr << std::endl;\n  cudaStream_t stream = *(cudaStream_t*)(stream_ptr);\n  std::cout << \"yiqun nice\" << std::endl;\n  std::cout << \"num: \" << num << std::endl;\n  std::cout << \"input: \" << input << std::endl;\n  std::cout << \"output: \" << output << std::endl;\n  return trivial_reduce<<<1, num, 0, stream>>>(num, input, output);\n}\n\n  "
                   }
                 ]
               ],
@@ -782,9 +782,9 @@
                 "___70",
                 [
                   "__builtin_getattr__",
-                  "DataType",
+                  "PointerType",
                   {
-                    "str": "const_int64"
+                    "str": "void_ptr"
                   }
                 ]
               ],
@@ -792,9 +792,9 @@
                 "___71",
                 [
                   "__builtin_getattr__",
-                  "PointerType",
+                  "DataType",
                   {
-                    "str": "const_float_ptr"
+                    "str": "const_int64"
                   }
                 ]
               ],
@@ -804,32 +804,43 @@
                   "__builtin_getattr__",
                   "PointerType",
                   {
-                    "str": "float_ptr"
+                    "str": "const_float_ptr"
                   }
                 ]
               ],
               [
                 "___73",
                 [
-                  "__builtin_list__",
-                  "___70",
-                  "___71",
-                  "___72"
+                  "__builtin_getattr__",
+                  "PointerType",
+                  {
+                    "str": "float_ptr"
+                  }
                 ]
               ],
               [
                 "___74",
+                [
+                  "__builtin_list__",
+                  "___70",
+                  "___71",
+                  "___72",
+                  "___73"
+                ]
+              ],
+              [
+                "___75",
                 [
                   "FuncDeclare",
                   "___69",
                   {
                     "str": "api_trivial_reduce"
                   },
-                  "___73"
+                  "___74"
                 ]
               ],
               [
-                "___75",
+                "___76",
                 [
                   "__builtin_getattr__",
                   "Project",
@@ -839,34 +850,34 @@
                 ]
               ],
               [
-                "___76",
+                "___77",
                 [
                   "__builtin_getattr__",
                   "Project",
                   {
                     "str": "FileContent"
                   }
-                ]
-              ],
-              [
-                "___77",
-                [
-                  "___76",
-                  "code"
                 ]
               ],
               [
                 "___78",
                 [
-                  "__builtin_list__",
-                  {
-                    "str": "trivial_reduce.cu"
-                  },
-                  "___77"
+                  "___77",
+                  "code"
                 ]
               ],
               [
                 "___79",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "trivial_reduce.cu"
+                  },
+                  "___78"
+                ]
+              ],
+              [
+                "___80",
                 [
                   "__builtin_getattr__",
                   "Project",
@@ -876,42 +887,42 @@
                 ]
               ],
               [
-                "___80",
-                [
-                  "___79",
-                  "compile_cmd"
-                ]
-              ],
-              [
                 "___81",
                 [
-                  "__builtin_list__",
-                  {
-                    "str": "make.sh"
-                  },
-                  "___80"
+                  "___80",
+                  "compile_cmd"
                 ]
               ],
               [
                 "___82",
                 [
-                  "___75",
-                  "___78",
+                  "__builtin_list__",
+                  {
+                    "str": "make.sh"
+                  },
                   "___81"
                 ]
               ],
               [
                 "___83",
                 [
-                  "__builtin_list__",
-                  {
-                    "str": "nested_files"
-                  },
+                  "___76",
+                  "___79",
                   "___82"
                 ]
               ],
               [
                 "___84",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "nested_files"
+                  },
+                  "___83"
+                ]
+              ],
+              [
+                "___85",
                 [
                   "__builtin_list__",
                   {
@@ -923,7 +934,7 @@
                 ]
               ],
               [
-                "___85",
+                "___86",
                 [
                   "__builtin_list__",
                   {
@@ -935,48 +946,48 @@
                 ]
               ],
               [
-                "___86",
-                [
-                  "__builtin_list__",
-                  "___83",
-                  "___84",
-                  "___85"
-                ]
-              ],
-              [
                 "___87",
                 [
-                  "__builtin_list__"
+                  "__builtin_list__",
+                  "___84",
+                  "___85",
+                  "___86"
                 ]
               ],
               [
                 "___88",
                 [
-                  "__builtin_PackedArgs__",
-                  "___87",
-                  "___86"
+                  "__builtin_list__"
                 ]
               ],
               [
                 "___89",
                 [
-                  "Project",
-                  "___88"
+                  "__builtin_PackedArgs__",
+                  "___88",
+                  "___87"
                 ]
               ],
               [
                 "___90",
                 [
-                  "CodeModule",
-                  "___74",
+                  "Project",
                   "___89"
                 ]
               ],
               [
                 "___91",
                 [
-                  "__builtin_return__",
+                  "CodeModule",
+                  "___75",
                   "___90"
+                ]
+              ],
+              [
+                "___92",
+                [
+                  "__builtin_return__",
+                  "___91"
                 ]
               ]
             ],
@@ -989,7 +1000,7 @@
       ]
     ],
     [
-      "___92",
+      "___93",
       [
         "__builtin_getattr__",
         "make_project",
@@ -999,61 +1010,61 @@
       ]
     ],
     [
-      "___93",
+      "___94",
       [
         "__builtin_list__",
         {
           "str": "make_project"
         },
-        "___92"
-      ]
-    ],
-    [
-      "___94",
-      [
-        "__builtin_list__"
+        "___93"
       ]
     ],
     [
       "___95",
       [
-        "__builtin_list__",
-        "___11",
-        "___66",
-        "___93"
+        "__builtin_list__"
       ]
     ],
     [
       "___96",
       [
-        "__builtin_PackedArgs__",
-        "___94",
-        "___95"
+        "__builtin_list__",
+        "___11",
+        "___66",
+        "___94"
       ]
     ],
     [
       "___97",
       [
-        "BuiltinSerializableAttrMap",
+        "__builtin_PackedArgs__",
+        "___95",
         "___96"
       ]
     ],
     [
       "___98",
       [
+        "BuiltinSerializableAttrMap",
+        "___97"
+      ]
+    ],
+    [
+      "___99",
+      [
         "type",
         {
           "str": "TrivialReduceTemplate"
         },
         "___0",
-        "___97"
+        "___98"
       ]
     ],
     [
       "TrivialReduceTemplate",
       [
         "__builtin_identity__",
-        "___98"
+        "___99"
       ]
     ],
     [
@@ -1069,7 +1080,7 @@
             "__builtin_let__",
             [
               [
-                "___99",
+                "___100",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -1079,9 +1090,9 @@
                 ]
               ],
               [
-                "___100",
+                "___101",
                 [
-                  "___99",
+                  "___100",
                   {
                     "str": "api_trivial_reduce"
                   }
@@ -1091,11 +1102,11 @@
                 "so_func",
                 [
                   "__builtin_identity__",
-                  "___100"
+                  "___101"
                 ]
               ],
               [
-                "___102",
+                "___103",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -1105,10 +1116,10 @@
                 ]
               ],
               [
-                "___101",
+                "___102",
                 [
                   "__builtin_getattr__",
-                  "___102",
+                  "___103",
                   {
                     "str": "kernel_args_getters"
                   }
@@ -1118,11 +1129,61 @@
                 "getters",
                 [
                   "__builtin_identity__",
-                  "___101"
+                  "___102"
                 ]
               ],
               [
-                "___103",
+                "___105",
+                [
+                  "__builtin_getattr__",
+                  "ctx",
+                  {
+                    "str": "device_ctx"
+                  }
+                ]
+              ],
+              [
+                "___104",
+                [
+                  "__builtin_getattr__",
+                  "___105",
+                  {
+                    "str": "get_stream_addr_as_void_ptr"
+                  }
+                ]
+              ],
+              [
+                "___106",
+                [
+                  "___104"
+                ]
+              ],
+              [
+                "stream_ptr",
+                [
+                  "__builtin_identity__",
+                  "___106"
+                ]
+              ],
+              [
+                "___107",
+                [
+                  "print",
+                  {
+                    "str": "stream_ptr:"
+                  },
+                  "stream_ptr"
+                ]
+              ],
+              [
+                "___108",
+                [
+                  "__builtin_identity__",
+                  "___107"
+                ]
+              ],
+              [
+                "___109",
                 [
                   "__builtin_getitem__",
                   "getters",
@@ -1130,31 +1191,31 @@
                 ]
               ],
               [
-                "___104",
+                "___110",
                 [
-                  "___103",
+                  "___109",
                   "ctx"
                 ]
               ],
               [
-                "___105",
+                "___111",
                 [
                   "print",
                   {
                     "str": "getters[0](ctx):"
                   },
-                  "___104"
+                  "___110"
                 ]
               ],
               [
-                "___106",
+                "___112",
                 [
                   "__builtin_identity__",
-                  "___105"
+                  "___111"
                 ]
               ],
               [
-                "___107",
+                "___113",
                 [
                   "__builtin_getitem__",
                   "getters",
@@ -1162,74 +1223,27 @@
                 ]
               ],
               [
-                "___108",
-                [
-                  "___107",
-                  "ctx"
-                ]
-              ],
-              [
-                "___109",
-                [
-                  "print",
-                  {
-                    "str": "getters[1](ctx):"
-                  },
-                  "___108"
-                ]
-              ],
-              [
-                "___110",
-                [
-                  "__builtin_identity__",
-                  "___109"
-                ]
-              ],
-              [
-                "___111",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  2
-                ]
-              ],
-              [
-                "___112",
-                [
-                  "___111",
-                  "ctx"
-                ]
-              ],
-              [
-                "___113",
-                [
-                  "print",
-                  {
-                    "str": "getters[2](ctx):"
-                  },
-                  "___112"
-                ]
-              ],
-              [
                 "___114",
                 [
-                  "__builtin_identity__",
-                  "___113"
+                  "___113",
+                  "ctx"
                 ]
               ],
               [
                 "___115",
                 [
-                  "__builtin_getitem__",
-                  "getters",
-                  0
+                  "print",
+                  {
+                    "str": "getters[1](ctx):"
+                  },
+                  "___114"
                 ]
               ],
               [
                 "___116",
                 [
-                  "___115",
-                  "ctx"
+                  "__builtin_identity__",
+                  "___115"
                 ]
               ],
               [
@@ -1237,7 +1251,7 @@
                 [
                   "__builtin_getitem__",
                   "getters",
-                  1
+                  2
                 ]
               ],
               [
@@ -1250,32 +1264,80 @@
               [
                 "___119",
                 [
+                  "print",
+                  {
+                    "str": "getters[2](ctx):"
+                  },
+                  "___118"
+                ]
+              ],
+              [
+                "___120",
+                [
+                  "__builtin_identity__",
+                  "___119"
+                ]
+              ],
+              [
+                "___121",
+                [
+                  "__builtin_getitem__",
+                  "getters",
+                  0
+                ]
+              ],
+              [
+                "___122",
+                [
+                  "___121",
+                  "ctx"
+                ]
+              ],
+              [
+                "___123",
+                [
+                  "__builtin_getitem__",
+                  "getters",
+                  1
+                ]
+              ],
+              [
+                "___124",
+                [
+                  "___123",
+                  "ctx"
+                ]
+              ],
+              [
+                "___125",
+                [
                   "__builtin_getitem__",
                   "getters",
                   2
                 ]
               ],
               [
-                "___120",
+                "___126",
                 [
-                  "___119",
+                  "___125",
                   "ctx"
                 ]
               ],
               [
-                "___121",
+                "___127",
                 [
                   "so_func",
-                  "___116",
-                  "___118",
-                  "___120"
+                  "stream_ptr",
+                  "___122",
+                  "___124",
+                  "___126"
                 ]
               ],
               [
-                "___122",
+                "___128",
                 [
                   "__builtin_identity__",
-                  "___121"
+                  "___127"
                 ]
               ]
             ],
