@@ -11,11 +11,20 @@
       ]
     ],
     [
-      "access_topo_drr",
+      "topo_drr_pass",
       [
         "import",
         {
-          "str": "access_topo_drr"
+          "str": "topo_drr_pass"
+        }
+      ]
+    ],
+    [
+      "op_convertion_drr_pass",
+      [
+        "import",
+        {
+          "str": "op_convertion_drr_pass"
         }
       ]
     ],
@@ -29,4077 +38,7 @@
       ]
     ],
     [
-      "ReturnTrue",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "o",
-            "t",
-            "ir_helper"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___0",
-                [
-                  "__builtin_return__",
-                  true
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___1",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___2",
-      [
-        "__builtin_list__",
-        "___1"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___3",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___4",
-                [
-                  "__builtin_return__",
-                  "___3"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___5",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___6",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___5"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___7",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___8",
-                [
-                  "___7",
-                  {
-                    "str": "pd_op.data"
-                  }
-                ]
-              ],
-              [
-                "___9",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "data_op"
-                  }
-                ]
-              ],
-              [
-                "___10",
-                [
-                  "___9",
-                  {
-                    "str": "data_op"
-                  },
-                  "___8"
-                ]
-              ],
-              [
-                "___11",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "data_op"
-                  }
-                ]
-              ],
-              [
-                "___12",
-                [
-                  "__builtin_list__"
-                ]
-              ],
-              [
-                "___13",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___14",
-                [
-                  "__builtin_list__",
-                  "___13"
-                ]
-              ],
-              [
-                "___15",
-                [
-                  "___11",
-                  "___12",
-                  "___14"
-                ]
-              ],
-              [
-                "___16",
-                [
-                  "__builtin_identity__",
-                  "___15"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___17",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___18",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___17"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___19",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "declare_internal_native_ir_value"
-                  }
-                ]
-              ],
-              [
-                "___20",
-                [
-                  "___19",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___21",
-                [
-                  "__builtin_identity__",
-                  "___20"
-                ]
-              ],
-              [
-                "___22",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___23",
-                [
-                  "___22",
-                  {
-                    "str": "pd_op.data"
-                  }
-                ]
-              ],
-              [
-                "___24",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "new_data_op"
-                  }
-                ]
-              ],
-              [
-                "___25",
-                [
-                  "___24",
-                  {
-                    "str": "new_data_op"
-                  },
-                  "___23"
-                ]
-              ],
-              [
-                "NameGetter",
-                [
-                  "__builtin_identity__",
-                  [
-                    "lambda",
-                    [
-                      "o",
-                      "t"
-                    ],
-                    [
-                      "__builtin_let__",
-                      [
-                        [
-                          "___27",
-                          [
-                            "__builtin_getattr__",
-                            "o",
-                            {
-                              "str": "data_op"
-                            }
-                          ]
-                        ],
-                        [
-                          "___26",
-                          [
-                            "__builtin_getattr__",
-                            "___27",
-                            {
-                              "str": "name"
-                            }
-                          ]
-                        ],
-                        [
-                          "___28",
-                          [
-                            "__builtin_return__",
-                            "___26"
-                          ]
-                        ]
-                      ],
-                      [
-                        "__builtin_identity__",
-                        null
-                      ]
-                    ]
-                  ]
-                ]
-              ],
-              [
-                "___29",
-                [
-                  "__builtin_getattr__",
-                  "NameGetter",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___30",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "new_data_op"
-                  }
-                ]
-              ],
-              [
-                "___31",
-                [
-                  "__builtin_setattr__",
-                  "___30",
-                  {
-                    "str": "name"
-                  }
-                ]
-              ],
-              [
-                "___32",
-                [
-                  "___31",
-                  {
-                    "str": "name"
-                  },
-                  "___29"
-                ]
-              ],
-              [
-                "ShapeGetter",
-                [
-                  "__builtin_identity__",
-                  [
-                    "lambda",
-                    [
-                      "o",
-                      "t"
-                    ],
-                    [
-                      "__builtin_let__",
-                      [
-                        [
-                          "___34",
-                          [
-                            "__builtin_getattr__",
-                            "o",
-                            {
-                              "str": "data_op"
-                            }
-                          ]
-                        ],
-                        [
-                          "___33",
-                          [
-                            "__builtin_getattr__",
-                            "___34",
-                            {
-                              "str": "shape"
-                            }
-                          ]
-                        ],
-                        [
-                          "___35",
-                          [
-                            "__builtin_return__",
-                            "___33"
-                          ]
-                        ]
-                      ],
-                      [
-                        "__builtin_identity__",
-                        null
-                      ]
-                    ]
-                  ]
-                ]
-              ],
-              [
-                "___36",
-                [
-                  "__builtin_getattr__",
-                  "ShapeGetter",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___37",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "new_data_op"
-                  }
-                ]
-              ],
-              [
-                "___38",
-                [
-                  "__builtin_setattr__",
-                  "___37",
-                  {
-                    "str": "shape"
-                  }
-                ]
-              ],
-              [
-                "___39",
-                [
-                  "___38",
-                  {
-                    "str": "shape"
-                  },
-                  "___36"
-                ]
-              ],
-              [
-                "DtypeGetter",
-                [
-                  "__builtin_identity__",
-                  [
-                    "lambda",
-                    [
-                      "o",
-                      "t"
-                    ],
-                    [
-                      "__builtin_let__",
-                      [
-                        [
-                          "___41",
-                          [
-                            "__builtin_getattr__",
-                            "o",
-                            {
-                              "str": "data_op"
-                            }
-                          ]
-                        ],
-                        [
-                          "___40",
-                          [
-                            "__builtin_getattr__",
-                            "___41",
-                            {
-                              "str": "dtype"
-                            }
-                          ]
-                        ],
-                        [
-                          "___42",
-                          [
-                            "__builtin_return__",
-                            "___40"
-                          ]
-                        ]
-                      ],
-                      [
-                        "__builtin_identity__",
-                        null
-                      ]
-                    ]
-                  ]
-                ]
-              ],
-              [
-                "___43",
-                [
-                  "__builtin_getattr__",
-                  "DtypeGetter",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___44",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "new_data_op"
-                  }
-                ]
-              ],
-              [
-                "___45",
-                [
-                  "__builtin_setattr__",
-                  "___44",
-                  {
-                    "str": "dtype"
-                  }
-                ]
-              ],
-              [
-                "___46",
-                [
-                  "___45",
-                  {
-                    "str": "dtype"
-                  },
-                  "___43"
-                ]
-              ],
-              [
-                "PlaceGetter",
-                [
-                  "__builtin_identity__",
-                  [
-                    "lambda",
-                    [
-                      "o",
-                      "t"
-                    ],
-                    [
-                      "__builtin_let__",
-                      [
-                        [
-                          "___48",
-                          [
-                            "__builtin_getattr__",
-                            "o",
-                            {
-                              "str": "data_op"
-                            }
-                          ]
-                        ],
-                        [
-                          "___47",
-                          [
-                            "__builtin_getattr__",
-                            "___48",
-                            {
-                              "str": "place"
-                            }
-                          ]
-                        ],
-                        [
-                          "___49",
-                          [
-                            "__builtin_return__",
-                            "___47"
-                          ]
-                        ]
-                      ],
-                      [
-                        "__builtin_identity__",
-                        null
-                      ]
-                    ]
-                  ]
-                ]
-              ],
-              [
-                "___50",
-                [
-                  "__builtin_getattr__",
-                  "PlaceGetter",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___51",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "new_data_op"
-                  }
-                ]
-              ],
-              [
-                "___52",
-                [
-                  "__builtin_setattr__",
-                  "___51",
-                  {
-                    "str": "place"
-                  }
-                ]
-              ],
-              [
-                "___53",
-                [
-                  "___52",
-                  {
-                    "str": "place"
-                  },
-                  "___50"
-                ]
-              ],
-              [
-                "___54",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "new_data_op"
-                  }
-                ]
-              ],
-              [
-                "___55",
-                [
-                  "__builtin_list__"
-                ]
-              ],
-              [
-                "___56",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___57",
-                [
-                  "__builtin_list__",
-                  "___56"
-                ]
-              ],
-              [
-                "___58",
-                [
-                  "___54",
-                  "___55",
-                  "___57"
-                ]
-              ],
-              [
-                "___59",
-                [
-                  "__builtin_identity__",
-                  "___58"
-                ]
-              ],
-              [
-                "___60",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___61",
-                [
-                  "___60",
-                  {
-                    "str": "ap_op.id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___62",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___63",
-                [
-                  "___62",
-                  {
-                    "str": "id_down_spider"
-                  },
-                  "___61"
-                ]
-              ],
-              [
-                "___64",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___65",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___66",
-                [
-                  "__builtin_list__",
-                  "___65"
-                ]
-              ],
-              [
-                "___67",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___68",
-                [
-                  "__builtin_list__",
-                  "___67"
-                ]
-              ],
-              [
-                "___69",
-                [
-                  "___64",
-                  "___66",
-                  "___68"
-                ]
-              ],
-              [
-                "___70",
-                [
-                  "__builtin_identity__",
-                  "___69"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___71",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___72",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___71"
-      ]
-    ],
-    [
-      "___73",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___74",
-      [
-        "__builtin_list__",
-        "___6",
-        "___18",
-        "___72"
-      ]
-    ],
-    [
-      "___75",
-      [
-        "__builtin_PackedArgs__",
-        "___73",
-        "___74"
-      ]
-    ],
-    [
-      "___76",
-      [
-        "BuiltinSerializableAttrMap",
-        "___75"
-      ]
-    ],
-    [
-      "___77",
-      [
-        "type",
-        {
-          "str": "InitIdDownSpiderAccessTopoPass"
-        },
-        "___2",
-        "___76"
-      ]
-    ],
-    [
-      "___78",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___79",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "init_id_down_spider"
-        }
-      ]
-    ],
-    [
-      "___80",
-      [
-        "__builtin_list__",
-        "___79"
-      ]
-    ],
-    [
-      "___81",
-      [
-        "__builtin_list__",
-        {
-          "str": "init_id_down_spider"
-        }
-      ]
-    ],
-    [
-      "___82",
-      [
-        "__builtin_PackedArgs__",
-        "___81",
-        "___80"
-      ]
-    ],
-    [
-      "___83",
-      [
-        "___78",
-        "___82"
-      ]
-    ],
-    [
-      "___84",
-      [
-        "___83",
-        "___77"
-      ]
-    ],
-    [
-      "InitIdDownSpiderAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___84"
-      ]
-    ],
-    [
-      "___85",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___86",
-      [
-        "__builtin_list__",
-        "___85"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___87",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___88",
-                [
-                  "__builtin_return__",
-                  "___87"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___89",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___90",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___89"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___91",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___92",
-                [
-                  "___91",
-                  {
-                    "str": "ap_op.id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___93",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "spider0"
-                  }
-                ]
-              ],
-              [
-                "___94",
-                [
-                  "___93",
-                  {
-                    "str": "spider0"
-                  },
-                  "___92"
-                ]
-              ],
-              [
-                "___95",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "spider0"
-                  }
-                ]
-              ],
-              [
-                "___96",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___97",
-                [
-                  "__builtin_list__",
-                  "___96"
-                ]
-              ],
-              [
-                "___98",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "tmp"
-                  }
-                ]
-              ],
-              [
-                "___99",
-                [
-                  "__builtin_list__",
-                  "___98"
-                ]
-              ],
-              [
-                "___100",
-                [
-                  "___95",
-                  "___97",
-                  "___99"
-                ]
-              ],
-              [
-                "___101",
-                [
-                  "__builtin_identity__",
-                  "___100"
-                ]
-              ],
-              [
-                "___102",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___103",
-                [
-                  "___102",
-                  {
-                    "str": "pd_op.relu"
-                  }
-                ]
-              ],
-              [
-                "___104",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "relu1"
-                  }
-                ]
-              ],
-              [
-                "___105",
-                [
-                  "___104",
-                  {
-                    "str": "relu1"
-                  },
-                  "___103"
-                ]
-              ],
-              [
-                "___106",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "relu1"
-                  }
-                ]
-              ],
-              [
-                "___107",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "tmp"
-                  }
-                ]
-              ],
-              [
-                "___108",
-                [
-                  "__builtin_list__",
-                  "___107"
-                ]
-              ],
-              [
-                "___109",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___110",
-                [
-                  "__builtin_list__",
-                  "___109"
-                ]
-              ],
-              [
-                "___111",
-                [
-                  "___106",
-                  "___108",
-                  "___110"
-                ]
-              ],
-              [
-                "___112",
-                [
-                  "__builtin_identity__",
-                  "___111"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___113",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___114",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___113"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___115",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___116",
-                [
-                  "___115",
-                  {
-                    "str": "ap_op.id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___117",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___118",
-                [
-                  "___117",
-                  {
-                    "str": "fustion_op"
-                  },
-                  "___116"
-                ]
-              ],
-              [
-                "___119",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___120",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___121",
-                [
-                  "__builtin_list__",
-                  "___120"
-                ]
-              ],
-              [
-                "___122",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___123",
-                [
-                  "__builtin_list__",
-                  "___122"
-                ]
-              ],
-              [
-                "___124",
-                [
-                  "___119",
-                  "___121",
-                  "___123"
-                ]
-              ],
-              [
-                "___125",
-                [
-                  "__builtin_identity__",
-                  "___124"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___126",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___127",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___126"
-      ]
-    ],
-    [
-      "___128",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___129",
-      [
-        "__builtin_list__",
-        "___90",
-        "___114",
-        "___127"
-      ]
-    ],
-    [
-      "___130",
-      [
-        "__builtin_PackedArgs__",
-        "___128",
-        "___129"
-      ]
-    ],
-    [
-      "___131",
-      [
-        "BuiltinSerializableAttrMap",
-        "___130"
-      ]
-    ],
-    [
-      "___132",
-      [
-        "type",
-        {
-          "str": "DoubleReluAccessTopoPass"
-        },
-        "___86",
-        "___131"
-      ]
-    ],
-    [
-      "___133",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___134",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "default"
-        }
-      ]
-    ],
-    [
-      "___135",
-      [
-        "__builtin_list__",
-        "___134"
-      ]
-    ],
-    [
-      "___136",
-      [
-        "__builtin_list__",
-        {
-          "str": "down_spider_relu"
-        }
-      ]
-    ],
-    [
-      "___137",
-      [
-        "__builtin_PackedArgs__",
-        "___136",
-        "___135"
-      ]
-    ],
-    [
-      "___138",
-      [
-        "___133",
-        "___137"
-      ]
-    ],
-    [
-      "___139",
-      [
-        "___138",
-        "___132"
-      ]
-    ],
-    [
-      "DoubleReluAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___139"
-      ]
-    ],
-    [
-      "___140",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___141",
-      [
-        "__builtin_list__",
-        "___140"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___142",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___143",
-                [
-                  "__builtin_return__",
-                  "___142"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___144",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___145",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___144"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___146",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___147",
-                [
-                  "___146",
-                  {
-                    "str": "ap_op.id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___148",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "spider0"
-                  }
-                ]
-              ],
-              [
-                "___149",
-                [
-                  "___148",
-                  {
-                    "str": "spider0"
-                  },
-                  "___147"
-                ]
-              ],
-              [
-                "___150",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "spider0"
-                  }
-                ]
-              ],
-              [
-                "___151",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___152",
-                [
-                  "__builtin_list__",
-                  "___151"
-                ]
-              ],
-              [
-                "___153",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "tmp0"
-                  }
-                ]
-              ],
-              [
-                "___154",
-                [
-                  "__builtin_list__",
-                  "___153"
-                ]
-              ],
-              [
-                "___155",
-                [
-                  "___150",
-                  "___152",
-                  "___154"
-                ]
-              ],
-              [
-                "___156",
-                [
-                  "__builtin_identity__",
-                  "___155"
-                ]
-              ],
-              [
-                "___157",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___158",
-                [
-                  "___157",
-                  {
-                    "str": "ap_op.id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___159",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "spider1"
-                  }
-                ]
-              ],
-              [
-                "___160",
-                [
-                  "___159",
-                  {
-                    "str": "spider1"
-                  },
-                  "___158"
-                ]
-              ],
-              [
-                "___161",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "spider1"
-                  }
-                ]
-              ],
-              [
-                "___162",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___163",
-                [
-                  "__builtin_list__",
-                  "___162"
-                ]
-              ],
-              [
-                "___164",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "tmp1"
-                  }
-                ]
-              ],
-              [
-                "___165",
-                [
-                  "__builtin_list__",
-                  "___164"
-                ]
-              ],
-              [
-                "___166",
-                [
-                  "___161",
-                  "___163",
-                  "___165"
-                ]
-              ],
-              [
-                "___167",
-                [
-                  "__builtin_identity__",
-                  "___166"
-                ]
-              ],
-              [
-                "___168",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___169",
-                [
-                  "___168",
-                  {
-                    "str": "pd_op.add"
-                  }
-                ]
-              ],
-              [
-                "___170",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "add"
-                  }
-                ]
-              ],
-              [
-                "___171",
-                [
-                  "___170",
-                  {
-                    "str": "add"
-                  },
-                  "___169"
-                ]
-              ],
-              [
-                "___172",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "add"
-                  }
-                ]
-              ],
-              [
-                "___173",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "tmp0"
-                  }
-                ]
-              ],
-              [
-                "___174",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "tmp1"
-                  }
-                ]
-              ],
-              [
-                "___175",
-                [
-                  "__builtin_list__",
-                  "___173",
-                  "___174"
-                ]
-              ],
-              [
-                "___176",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___177",
-                [
-                  "__builtin_list__",
-                  "___176"
-                ]
-              ],
-              [
-                "___178",
-                [
-                  "___172",
-                  "___175",
-                  "___177"
-                ]
-              ],
-              [
-                "___179",
-                [
-                  "__builtin_identity__",
-                  "___178"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___180",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___181",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___180"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___182",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___183",
-                [
-                  "___182",
-                  {
-                    "str": "ap_op.id_down_spider"
-                  }
-                ]
-              ],
-              [
-                "___184",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___185",
-                [
-                  "___184",
-                  {
-                    "str": "fustion_op"
-                  },
-                  "___183"
-                ]
-              ],
-              [
-                "___186",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___187",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___188",
-                [
-                  "__builtin_list__",
-                  "___187"
-                ]
-              ],
-              [
-                "___189",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___190",
-                [
-                  "__builtin_list__",
-                  "___189"
-                ]
-              ],
-              [
-                "___191",
-                [
-                  "___186",
-                  "___188",
-                  "___190"
-                ]
-              ],
-              [
-                "___192",
-                [
-                  "__builtin_identity__",
-                  "___191"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___193",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___194",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___193"
-      ]
-    ],
-    [
-      "___195",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___196",
-      [
-        "__builtin_list__",
-        "___145",
-        "___181",
-        "___194"
-      ]
-    ],
-    [
-      "___197",
-      [
-        "__builtin_PackedArgs__",
-        "___195",
-        "___196"
-      ]
-    ],
-    [
-      "___198",
-      [
-        "BuiltinSerializableAttrMap",
-        "___197"
-      ]
-    ],
-    [
-      "___199",
-      [
-        "type",
-        {
-          "str": "DoubleReluAccessTopoPass"
-        },
-        "___141",
-        "___198"
-      ]
-    ],
-    [
-      "___200",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___201",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "default"
-        }
-      ]
-    ],
-    [
-      "___202",
-      [
-        "__builtin_list__",
-        "___201"
-      ]
-    ],
-    [
-      "___203",
-      [
-        "__builtin_list__",
-        {
-          "str": "down_spider_add"
-        }
-      ]
-    ],
-    [
-      "___204",
-      [
-        "__builtin_PackedArgs__",
-        "___203",
-        "___202"
-      ]
-    ],
-    [
-      "___205",
-      [
-        "___200",
-        "___204"
-      ]
-    ],
-    [
-      "___206",
-      [
-        "___205",
-        "___199"
-      ]
-    ],
-    [
-      "DoubleReluAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___206"
-      ]
-    ],
-    [
-      "___207",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___208",
-      [
-        "__builtin_list__",
-        "___207"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___209",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___210",
-                [
-                  "__builtin_return__",
-                  "___209"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___211",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___212",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___211"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___213",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___214",
-                [
-                  "___213",
-                  {
-                    "str": "pd_op.exp"
-                  }
-                ]
-              ],
-              [
-                "___215",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "exp_op"
-                  }
-                ]
-              ],
-              [
-                "___216",
-                [
-                  "___215",
-                  {
-                    "str": "exp_op"
-                  },
-                  "___214"
-                ]
-              ],
-              [
-                "___217",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "exp_op"
-                  }
-                ]
-              ],
-              [
-                "___218",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___219",
-                [
-                  "__builtin_list__",
-                  "___218"
-                ]
-              ],
-              [
-                "___220",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___221",
-                [
-                  "__builtin_list__",
-                  "___220"
-                ]
-              ],
-              [
-                "___222",
-                [
-                  "___217",
-                  "___219",
-                  "___221"
-                ]
-              ],
-              [
-                "___223",
-                [
-                  "__builtin_identity__",
-                  "___222"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___224",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___225",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___224"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___226",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___227",
-                [
-                  "___226",
-                  {
-                    "str": "pd_op.relu"
-                  }
-                ]
-              ],
-              [
-                "___228",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___229",
-                [
-                  "___228",
-                  {
-                    "str": "fustion_op"
-                  },
-                  "___227"
-                ]
-              ],
-              [
-                "___230",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___231",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___232",
-                [
-                  "__builtin_list__",
-                  "___231"
-                ]
-              ],
-              [
-                "___233",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___234",
-                [
-                  "__builtin_list__",
-                  "___233"
-                ]
-              ],
-              [
-                "___235",
-                [
-                  "___230",
-                  "___232",
-                  "___234"
-                ]
-              ],
-              [
-                "___236",
-                [
-                  "__builtin_identity__",
-                  "___235"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___237",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___238",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___237"
-      ]
-    ],
-    [
-      "___239",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___240",
-      [
-        "__builtin_list__",
-        "___212",
-        "___225",
-        "___238"
-      ]
-    ],
-    [
-      "___241",
-      [
-        "__builtin_PackedArgs__",
-        "___239",
-        "___240"
-      ]
-    ],
-    [
-      "___242",
-      [
-        "BuiltinSerializableAttrMap",
-        "___241"
-      ]
-    ],
-    [
-      "___243",
-      [
-        "type",
-        {
-          "str": "PdOpExpAccessTopoPass"
-        },
-        "___208",
-        "___242"
-      ]
-    ],
-    [
-      "___244",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___245",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "default"
-        }
-      ]
-    ],
-    [
-      "___246",
-      [
-        "__builtin_list__",
-        "___245"
-      ]
-    ],
-    [
-      "___247",
-      [
-        "__builtin_list__",
-        {
-          "str": "pd_op_exp"
-        }
-      ]
-    ],
-    [
-      "___248",
-      [
-        "__builtin_PackedArgs__",
-        "___247",
-        "___246"
-      ]
-    ],
-    [
-      "___249",
-      [
-        "___244",
-        "___248"
-      ]
-    ],
-    [
-      "___250",
-      [
-        "___249",
-        "___243"
-      ]
-    ],
-    [
-      "PdOpExpAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___250"
-      ]
-    ],
-    [
-      "___251",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___252",
-      [
-        "__builtin_list__",
-        "___251"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___253",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___254",
-                [
-                  "__builtin_return__",
-                  "___253"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___255",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___256",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___255"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___257",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___258",
-                [
-                  "___257",
-                  {
-                    "str": "pd_op.sin"
-                  }
-                ]
-              ],
-              [
-                "___259",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "sin_op"
-                  }
-                ]
-              ],
-              [
-                "___260",
-                [
-                  "___259",
-                  {
-                    "str": "sin_op"
-                  },
-                  "___258"
-                ]
-              ],
-              [
-                "___261",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "sin_op"
-                  }
-                ]
-              ],
-              [
-                "___262",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___263",
-                [
-                  "__builtin_list__",
-                  "___262"
-                ]
-              ],
-              [
-                "___264",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___265",
-                [
-                  "__builtin_list__",
-                  "___264"
-                ]
-              ],
-              [
-                "___266",
-                [
-                  "___261",
-                  "___263",
-                  "___265"
-                ]
-              ],
-              [
-                "___267",
-                [
-                  "__builtin_identity__",
-                  "___266"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___268",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___269",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___268"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___270",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___271",
-                [
-                  "___270",
-                  {
-                    "str": "pd_op.relu"
-                  }
-                ]
-              ],
-              [
-                "___272",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___273",
-                [
-                  "___272",
-                  {
-                    "str": "fustion_op"
-                  },
-                  "___271"
-                ]
-              ],
-              [
-                "___274",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___275",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___276",
-                [
-                  "__builtin_list__",
-                  "___275"
-                ]
-              ],
-              [
-                "___277",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___278",
-                [
-                  "__builtin_list__",
-                  "___277"
-                ]
-              ],
-              [
-                "___279",
-                [
-                  "___274",
-                  "___276",
-                  "___278"
-                ]
-              ],
-              [
-                "___280",
-                [
-                  "__builtin_identity__",
-                  "___279"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___281",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___282",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___281"
-      ]
-    ],
-    [
-      "___283",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___284",
-      [
-        "__builtin_list__",
-        "___256",
-        "___269",
-        "___282"
-      ]
-    ],
-    [
-      "___285",
-      [
-        "__builtin_PackedArgs__",
-        "___283",
-        "___284"
-      ]
-    ],
-    [
-      "___286",
-      [
-        "BuiltinSerializableAttrMap",
-        "___285"
-      ]
-    ],
-    [
-      "___287",
-      [
-        "type",
-        {
-          "str": "PdOpSinAccessTopoPass"
-        },
-        "___252",
-        "___286"
-      ]
-    ],
-    [
-      "___288",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___289",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "default"
-        }
-      ]
-    ],
-    [
-      "___290",
-      [
-        "__builtin_list__",
-        "___289"
-      ]
-    ],
-    [
-      "___291",
-      [
-        "__builtin_list__",
-        {
-          "str": "pd_op_sin"
-        }
-      ]
-    ],
-    [
-      "___292",
-      [
-        "__builtin_PackedArgs__",
-        "___291",
-        "___290"
-      ]
-    ],
-    [
-      "___293",
-      [
-        "___288",
-        "___292"
-      ]
-    ],
-    [
-      "___294",
-      [
-        "___293",
-        "___287"
-      ]
-    ],
-    [
-      "PdOpSinAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___294"
-      ]
-    ],
-    [
-      "___295",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___296",
-      [
-        "__builtin_list__",
-        "___295"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___297",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___298",
-                [
-                  "__builtin_return__",
-                  "___297"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___299",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___300",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___299"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___301",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___302",
-                [
-                  "___301",
-                  {
-                    "str": "cinn_op.yield_store"
-                  }
-                ]
-              ],
-              [
-                "___303",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "exp_op"
-                  }
-                ]
-              ],
-              [
-                "___304",
-                [
-                  "___303",
-                  {
-                    "str": "exp_op"
-                  },
-                  "___302"
-                ]
-              ],
-              [
-                "___305",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "exp_op"
-                  }
-                ]
-              ],
-              [
-                "___306",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___307",
-                [
-                  "__builtin_list__",
-                  "___306"
-                ]
-              ],
-              [
-                "___308",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___309",
-                [
-                  "__builtin_list__",
-                  "___308"
-                ]
-              ],
-              [
-                "___310",
-                [
-                  "___305",
-                  "___307",
-                  "___309"
-                ]
-              ],
-              [
-                "___311",
-                [
-                  "__builtin_identity__",
-                  "___310"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___312",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___313",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___312"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___314",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___315",
-                [
-                  "___314",
-                  {
-                    "str": "pd_op.relu"
-                  }
-                ]
-              ],
-              [
-                "___316",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___317",
-                [
-                  "___316",
-                  {
-                    "str": "fustion_op"
-                  },
-                  "___315"
-                ]
-              ],
-              [
-                "___318",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "fustion_op"
-                  }
-                ]
-              ],
-              [
-                "___319",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input"
-                  }
-                ]
-              ],
-              [
-                "___320",
-                [
-                  "__builtin_list__",
-                  "___319"
-                ]
-              ],
-              [
-                "___321",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___322",
-                [
-                  "__builtin_list__",
-                  "___321"
-                ]
-              ],
-              [
-                "___323",
-                [
-                  "___318",
-                  "___320",
-                  "___322"
-                ]
-              ],
-              [
-                "___324",
-                [
-                  "__builtin_identity__",
-                  "___323"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___325",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___326",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___325"
-      ]
-    ],
-    [
-      "___327",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___328",
-      [
-        "__builtin_list__",
-        "___300",
-        "___313",
-        "___326"
-      ]
-    ],
-    [
-      "___329",
-      [
-        "__builtin_PackedArgs__",
-        "___327",
-        "___328"
-      ]
-    ],
-    [
-      "___330",
-      [
-        "BuiltinSerializableAttrMap",
-        "___329"
-      ]
-    ],
-    [
-      "___331",
-      [
-        "type",
-        {
-          "str": "CinnOpYieldStoreAccessTopoPass"
-        },
-        "___296",
-        "___330"
-      ]
-    ],
-    [
-      "___332",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___333",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "default"
-        }
-      ]
-    ],
-    [
-      "___334",
-      [
-        "__builtin_list__",
-        "___333"
-      ]
-    ],
-    [
-      "___335",
-      [
-        "__builtin_list__",
-        {
-          "str": "cinn_op_yield_store"
-        }
-      ]
-    ],
-    [
-      "___336",
-      [
-        "__builtin_PackedArgs__",
-        "___335",
-        "___334"
-      ]
-    ],
-    [
-      "___337",
-      [
-        "___332",
-        "___336"
-      ]
-    ],
-    [
-      "___338",
-      [
-        "___337",
-        "___331"
-      ]
-    ],
-    [
-      "CinnOpYieldStoreAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___338"
-      ]
-    ],
-    [
-      "___339",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "DrrPass"
-        }
-      ]
-    ],
-    [
-      "___340",
-      [
-        "__builtin_list__",
-        "___339"
-      ]
-    ],
-    [
-      "get_constraint_func",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___341",
-                [
-                  "__builtin_getattr__",
-                  "ReturnTrue",
-                  {
-                    "str": "__function__"
-                  }
-                ]
-              ],
-              [
-                "___342",
-                [
-                  "__builtin_return__",
-                  "___341"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___343",
-      [
-        "__builtin_getattr__",
-        "get_constraint_func",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___344",
-      [
-        "__builtin_list__",
-        {
-          "str": "get_constraint_func"
-        },
-        "___343"
-      ]
-    ],
-    [
-      "source_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___345",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___346",
-                [
-                  "___345",
-                  {
-                    "str": "pd_op.subtract"
-                  }
-                ]
-              ],
-              [
-                "___347",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "source_op"
-                  }
-                ]
-              ],
-              [
-                "___348",
-                [
-                  "___347",
-                  {
-                    "str": "source_op"
-                  },
-                  "___346"
-                ]
-              ],
-              [
-                "___349",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "source_op"
-                  }
-                ]
-              ],
-              [
-                "___350",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input0"
-                  }
-                ]
-              ],
-              [
-                "___351",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input1"
-                  }
-                ]
-              ],
-              [
-                "___352",
-                [
-                  "__builtin_list__",
-                  "___350",
-                  "___351"
-                ]
-              ],
-              [
-                "___353",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___354",
-                [
-                  "__builtin_list__",
-                  "___353"
-                ]
-              ],
-              [
-                "___355",
-                [
-                  "___349",
-                  "___352",
-                  "___354"
-                ]
-              ],
-              [
-                "___356",
-                [
-                  "__builtin_identity__",
-                  "___355"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___357",
-      [
-        "__builtin_getattr__",
-        "source_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___358",
-      [
-        "__builtin_list__",
-        {
-          "str": "source_pattern"
-        },
-        "___357"
-      ]
-    ],
-    [
-      "result_pattern",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "o",
-            "t"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___359",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "ap_native_op"
-                  }
-                ]
-              ],
-              [
-                "___360",
-                [
-                  "___359",
-                  {
-                    "str": "pd_op.add"
-                  }
-                ]
-              ],
-              [
-                "___361",
-                [
-                  "__builtin_setattr__",
-                  "o",
-                  {
-                    "str": "result_op"
-                  }
-                ]
-              ],
-              [
-                "___362",
-                [
-                  "___361",
-                  {
-                    "str": "result_op"
-                  },
-                  "___360"
-                ]
-              ],
-              [
-                "___363",
-                [
-                  "__builtin_getattr__",
-                  "o",
-                  {
-                    "str": "result_op"
-                  }
-                ]
-              ],
-              [
-                "___364",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input0"
-                  }
-                ]
-              ],
-              [
-                "___365",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "input1"
-                  }
-                ]
-              ],
-              [
-                "___366",
-                [
-                  "__builtin_list__",
-                  "___364",
-                  "___365"
-                ]
-              ],
-              [
-                "___367",
-                [
-                  "__builtin_getattr__",
-                  "t",
-                  {
-                    "str": "output"
-                  }
-                ]
-              ],
-              [
-                "___368",
-                [
-                  "__builtin_list__",
-                  "___367"
-                ]
-              ],
-              [
-                "___369",
-                [
-                  "___363",
-                  "___366",
-                  "___368"
-                ]
-              ],
-              [
-                "___370",
-                [
-                  "__builtin_identity__",
-                  "___369"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___371",
-      [
-        "__builtin_getattr__",
-        "result_pattern",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___372",
-      [
-        "__builtin_list__",
-        {
-          "str": "result_pattern"
-        },
-        "___371"
-      ]
-    ],
-    [
-      "___373",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___374",
-      [
-        "__builtin_list__",
-        "___344",
-        "___358",
-        "___372"
-      ]
-    ],
-    [
-      "___375",
-      [
-        "__builtin_PackedArgs__",
-        "___373",
-        "___374"
-      ]
-    ],
-    [
-      "___376",
-      [
-        "BuiltinSerializableAttrMap",
-        "___375"
-      ]
-    ],
-    [
-      "___377",
-      [
-        "type",
-        {
-          "str": "PdOpSubtractAccessTopoPass"
-        },
-        "___340",
-        "___376"
-      ]
-    ],
-    [
-      "___378",
-      [
-        "__builtin_getattr__",
-        "access_topo_drr",
-        {
-          "str": "register_drr_pass"
-        }
-      ]
-    ],
-    [
-      "___379",
-      [
-        "__builtin_list__",
-        {
-          "str": "tag"
-        },
-        {
-          "str": "default"
-        }
-      ]
-    ],
-    [
-      "___380",
-      [
-        "__builtin_list__",
-        "___379"
-      ]
-    ],
-    [
-      "___381",
-      [
-        "__builtin_list__",
-        {
-          "str": "pd_op_subtract"
-        }
-      ]
-    ],
-    [
-      "___382",
-      [
-        "__builtin_PackedArgs__",
-        "___381",
-        "___380"
-      ]
-    ],
-    [
-      "___383",
-      [
-        "___378",
-        "___382"
-      ]
-    ],
-    [
-      "___384",
-      [
-        "___383",
-        "___377"
-      ]
-    ],
-    [
-      "PdOpSubtractAccessTopoPass",
-      [
-        "__builtin_identity__",
-        "___384"
-      ]
-    ],
-    [
-      "___385",
+      "___0",
       [
         "__builtin_getattr__",
         "abstract_drr",
@@ -4109,10 +48,10 @@
       ]
     ],
     [
-      "___386",
+      "___1",
       [
         "__builtin_list__",
-        "___385"
+        "___0"
       ]
     ],
     [
@@ -4130,7 +69,7 @@
             "__builtin_let__",
             [
               [
-                "___387",
+                "___2",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4140,13 +79,13 @@
                 ]
               ],
               [
-                "___388",
+                "___3",
                 [
-                  "___387"
+                  "___2"
                 ]
               ],
               [
-                "___389",
+                "___4",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4156,17 +95,17 @@
                 ]
               ],
               [
-                "___390",
+                "___5",
                 [
-                  "___389",
+                  "___4",
                   {
                     "str": "trivial_op"
                   },
-                  "___388"
+                  "___3"
                 ]
               ],
               [
-                "___391",
+                "___6",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4176,7 +115,7 @@
                 ]
               ],
               [
-                "___392",
+                "___7",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4186,14 +125,14 @@
                 ]
               ],
               [
-                "___393",
+                "___8",
                 [
                   "__builtin_list__",
-                  "___392"
+                  "___7"
                 ]
               ],
               [
-                "___394",
+                "___9",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4203,29 +142,29 @@
                 ]
               ],
               [
-                "___395",
+                "___10",
                 [
                   "__builtin_list__",
-                  "___394"
+                  "___9"
                 ]
               ],
               [
-                "___396",
+                "___11",
                 [
-                  "___391",
-                  "___393",
-                  "___395"
+                  "___6",
+                  "___8",
+                  "___10"
                 ]
               ],
               [
-                "___397",
+                "___12",
                 [
                   "__builtin_identity__",
-                  "___396"
+                  "___11"
                 ]
               ],
               [
-                "___398",
+                "___13",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4235,16 +174,16 @@
                 ]
               ],
               [
-                "___399",
+                "___14",
                 [
-                  "___398",
+                  "___13",
                   {
                     "str": "pd_op.full_int_array"
                   }
                 ]
               ],
               [
-                "___400",
+                "___15",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4254,17 +193,17 @@
                 ]
               ],
               [
-                "___401",
+                "___16",
                 [
-                  "___400",
+                  "___15",
                   {
                     "str": "full_int_array"
                   },
-                  "___399"
+                  "___14"
                 ]
               ],
               [
-                "___402",
+                "___17",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4274,13 +213,13 @@
                 ]
               ],
               [
-                "___403",
+                "___18",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___404",
+                "___19",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4290,29 +229,29 @@
                 ]
               ],
               [
-                "___405",
+                "___20",
                 [
                   "__builtin_list__",
-                  "___404"
+                  "___19"
                 ]
               ],
               [
-                "___406",
+                "___21",
                 [
-                  "___402",
-                  "___403",
-                  "___405"
+                  "___17",
+                  "___18",
+                  "___20"
                 ]
               ],
               [
-                "___407",
+                "___22",
                 [
                   "__builtin_identity__",
-                  "___406"
+                  "___21"
                 ]
               ],
               [
-                "___408",
+                "___23",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4322,16 +261,16 @@
                 ]
               ],
               [
-                "___409",
+                "___24",
                 [
-                  "___408",
+                  "___23",
                   {
                     "str": "pd_op.sum"
                   }
                 ]
               ],
               [
-                "___410",
+                "___25",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4341,17 +280,17 @@
                 ]
               ],
               [
-                "___411",
+                "___26",
                 [
-                  "___410",
+                  "___25",
                   {
                     "str": "reduce_op"
                   },
-                  "___409"
+                  "___24"
                 ]
               ],
               [
-                "___412",
+                "___27",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4361,7 +300,7 @@
                 ]
               ],
               [
-                "___413",
+                "___28",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4371,7 +310,7 @@
                 ]
               ],
               [
-                "___414",
+                "___29",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4381,15 +320,15 @@
                 ]
               ],
               [
-                "___415",
+                "___30",
                 [
                   "__builtin_list__",
-                  "___413",
-                  "___414"
+                  "___28",
+                  "___29"
                 ]
               ],
               [
-                "___416",
+                "___31",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4399,25 +338,25 @@
                 ]
               ],
               [
-                "___417",
+                "___32",
                 [
                   "__builtin_list__",
-                  "___416"
+                  "___31"
                 ]
               ],
               [
-                "___418",
+                "___33",
                 [
-                  "___412",
-                  "___415",
-                  "___417"
+                  "___27",
+                  "___30",
+                  "___32"
                 ]
               ],
               [
-                "___419",
+                "___34",
                 [
                   "__builtin_identity__",
-                  "___418"
+                  "___33"
                 ]
               ]
             ],
@@ -4430,7 +369,7 @@
       ]
     ],
     [
-      "___420",
+      "___35",
       [
         "__builtin_getattr__",
         "source_pattern",
@@ -4440,13 +379,13 @@
       ]
     ],
     [
-      "___421",
+      "___36",
       [
         "__builtin_list__",
         {
           "str": "source_pattern"
         },
-        "___420"
+        "___35"
       ]
     ],
     [
@@ -4462,7 +401,7 @@
             "__builtin_let__",
             [
               [
-                "___422",
+                "___37",
                 [
                   "__builtin_getattr__",
                   "Constraint",
@@ -4472,10 +411,10 @@
                 ]
               ],
               [
-                "___423",
+                "___38",
                 [
                   "__builtin_return__",
-                  "___422"
+                  "___37"
                 ]
               ]
             ],
@@ -4488,7 +427,7 @@
       ]
     ],
     [
-      "___424",
+      "___39",
       [
         "__builtin_getattr__",
         "get_constraint_func",
@@ -4498,13 +437,13 @@
       ]
     ],
     [
-      "___425",
+      "___40",
       [
         "__builtin_list__",
         {
           "str": "get_constraint_func"
         },
-        "___424"
+        "___39"
       ]
     ],
     [
@@ -4522,7 +461,7 @@
             "__builtin_let__",
             [
               [
-                "___426",
+                "___41",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4532,7 +471,7 @@
                 ]
               ],
               [
-                "___427",
+                "___42",
                 [
                   "__builtin_getattr__",
                   "CodeGen",
@@ -4542,14 +481,14 @@
                 ]
               ],
               [
-                "___428",
+                "___43",
                 [
-                  "___426",
-                  "___427"
+                  "___41",
+                  "___42"
                 ]
               ],
               [
-                "___429",
+                "___44",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4559,17 +498,17 @@
                 ]
               ],
               [
-                "___430",
+                "___45",
                 [
-                  "___429",
+                  "___44",
                   {
                     "str": "fustion_op"
                   },
-                  "___428"
+                  "___43"
                 ]
               ],
               [
-                "___431",
+                "___46",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4579,7 +518,7 @@
                 ]
               ],
               [
-                "___432",
+                "___47",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4589,14 +528,14 @@
                 ]
               ],
               [
-                "___433",
+                "___48",
                 [
                   "__builtin_list__",
-                  "___432"
+                  "___47"
                 ]
               ],
               [
-                "___434",
+                "___49",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4606,25 +545,25 @@
                 ]
               ],
               [
-                "___435",
+                "___50",
                 [
                   "__builtin_list__",
-                  "___434"
+                  "___49"
                 ]
               ],
               [
-                "___436",
+                "___51",
                 [
-                  "___431",
-                  "___433",
-                  "___435"
+                  "___46",
+                  "___48",
+                  "___50"
                 ]
               ],
               [
-                "___437",
+                "___52",
                 [
                   "__builtin_identity__",
-                  "___436"
+                  "___51"
                 ]
               ]
             ],
@@ -4637,7 +576,7 @@
       ]
     ],
     [
-      "___438",
+      "___53",
       [
         "__builtin_getattr__",
         "result_pattern",
@@ -4647,58 +586,58 @@
       ]
     ],
     [
-      "___439",
+      "___54",
       [
         "__builtin_list__",
         {
           "str": "result_pattern"
         },
-        "___438"
+        "___53"
       ]
     ],
     [
-      "___440",
+      "___55",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___441",
+      "___56",
       [
         "__builtin_list__",
-        "___421",
-        "___425",
-        "___439"
+        "___36",
+        "___40",
+        "___54"
       ]
     ],
     [
-      "___442",
+      "___57",
       [
         "__builtin_PackedArgs__",
-        "___440",
-        "___441"
+        "___55",
+        "___56"
       ]
     ],
     [
-      "___443",
+      "___58",
       [
         "BuiltinSerializableAttrMap",
-        "___442"
+        "___57"
       ]
     ],
     [
-      "___444",
+      "___59",
       [
         "type",
         {
           "str": "TrivialFusionDemo"
         },
-        "___386",
-        "___443"
+        "___1",
+        "___58"
       ]
     ],
     [
-      "___445",
+      "___60",
       [
         "__builtin_getattr__",
         "abstract_drr",
@@ -4708,7 +647,7 @@
       ]
     ],
     [
-      "___446",
+      "___61",
       [
         "__builtin_list__",
         {
@@ -4718,14 +657,14 @@
       ]
     ],
     [
-      "___447",
+      "___62",
       [
         "__builtin_list__",
-        "___446"
+        "___61"
       ]
     ],
     [
-      "___448",
+      "___63",
       [
         "__builtin_list__",
         {
@@ -4734,32 +673,32 @@
       ]
     ],
     [
-      "___449",
+      "___64",
       [
         "__builtin_PackedArgs__",
-        "___448",
-        "___447"
+        "___63",
+        "___62"
       ]
     ],
     [
-      "___450",
+      "___65",
       [
-        "___445",
-        "___449"
+        "___60",
+        "___64"
       ]
     ],
     [
-      "___451",
+      "___66",
       [
-        "___450",
-        "___444"
+        "___65",
+        "___59"
       ]
     ],
     [
       "TrivialFusionDemo",
       [
         "__builtin_identity__",
-        "___451"
+        "___66"
       ]
     ],
     [
@@ -4776,7 +715,7 @@
             "__builtin_let__",
             [
               [
-                "___452",
+                "___67",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4786,16 +725,16 @@
                 ]
               ],
               [
-                "___453",
+                "___68",
                 [
-                  "___452",
+                  "___67",
                   {
                     "str": "pd_op.data"
                   }
                 ]
               ],
               [
-                "___454",
+                "___69",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4805,17 +744,17 @@
                 ]
               ],
               [
-                "___455",
+                "___70",
                 [
-                  "___454",
+                  "___69",
                   {
                     "str": "data_op"
                   },
-                  "___453"
+                  "___68"
                 ]
               ],
               [
-                "___456",
+                "___71",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4825,13 +764,13 @@
                 ]
               ],
               [
-                "___457",
+                "___72",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___458",
+                "___73",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4841,29 +780,29 @@
                 ]
               ],
               [
-                "___459",
+                "___74",
                 [
                   "__builtin_list__",
-                  "___458"
+                  "___73"
                 ]
               ],
               [
-                "___460",
+                "___75",
                 [
-                  "___456",
-                  "___457",
-                  "___459"
+                  "___71",
+                  "___72",
+                  "___74"
                 ]
               ],
               [
-                "___461",
+                "___76",
                 [
                   "__builtin_identity__",
-                  "___460"
+                  "___75"
                 ]
               ],
               [
-                "___462",
+                "___77",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4873,16 +812,16 @@
                 ]
               ],
               [
-                "___463",
+                "___78",
                 [
-                  "___462",
+                  "___77",
                   {
                     "str": "ap_op.id_down_spider"
                   }
                 ]
               ],
               [
-                "___464",
+                "___79",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4892,17 +831,17 @@
                 ]
               ],
               [
-                "___465",
+                "___80",
                 [
-                  "___464",
+                  "___79",
                   {
                     "str": "id_down_spider_op"
                   },
-                  "___463"
+                  "___78"
                 ]
               ],
               [
-                "___466",
+                "___81",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4912,7 +851,7 @@
                 ]
               ],
               [
-                "___467",
+                "___82",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4922,14 +861,14 @@
                 ]
               ],
               [
-                "___468",
+                "___83",
                 [
                   "__builtin_list__",
-                  "___467"
+                  "___82"
                 ]
               ],
               [
-                "___469",
+                "___84",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -4939,29 +878,29 @@
                 ]
               ],
               [
-                "___470",
+                "___85",
                 [
                   "__builtin_list__",
-                  "___469"
+                  "___84"
                 ]
               ],
               [
-                "___471",
+                "___86",
                 [
-                  "___466",
-                  "___468",
-                  "___470"
+                  "___81",
+                  "___83",
+                  "___85"
                 ]
               ],
               [
-                "___472",
+                "___87",
                 [
                   "__builtin_identity__",
-                  "___471"
+                  "___86"
                 ]
               ],
               [
-                "___473",
+                "___88",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -4971,16 +910,16 @@
                 ]
               ],
               [
-                "___474",
+                "___89",
                 [
-                  "___473",
+                  "___88",
                   {
                     "str": "cf.yield"
                   }
                 ]
               ],
               [
-                "___475",
+                "___90",
                 [
                   "__builtin_setattr__",
                   "o",
@@ -4990,17 +929,17 @@
                 ]
               ],
               [
-                "___476",
+                "___91",
                 [
-                  "___475",
+                  "___90",
                   {
                     "str": "yield_op"
                   },
-                  "___474"
+                  "___89"
                 ]
               ],
               [
-                "___477",
+                "___92",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -5010,7 +949,7 @@
                 ]
               ],
               [
-                "___478",
+                "___93",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -5020,31 +959,31 @@
                 ]
               ],
               [
-                "___479",
+                "___94",
                 [
                   "__builtin_list__",
-                  "___478"
+                  "___93"
                 ]
               ],
               [
-                "___480",
+                "___95",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___481",
+                "___96",
                 [
-                  "___477",
-                  "___479",
-                  "___480"
+                  "___92",
+                  "___94",
+                  "___95"
                 ]
               ],
               [
-                "___482",
+                "___97",
                 [
                   "__builtin_identity__",
-                  "___481"
+                  "___96"
                 ]
               ]
             ],
@@ -5071,7 +1010,7 @@
             "__builtin_let__",
             [
               [
-                "___483",
+                "___98",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5081,7 +1020,7 @@
                 ]
               ],
               [
-                "___484",
+                "___99",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -5091,21 +1030,21 @@
                 ]
               ],
               [
-                "___485",
+                "___100",
                 [
-                  "___483",
-                  "___484"
+                  "___98",
+                  "___99"
                 ]
               ],
               [
                 "program",
                 [
                   "__builtin_identity__",
-                  "___485"
+                  "___100"
                 ]
               ],
               [
-                "___486",
+                "___101",
                 [
                   "print",
                   {
@@ -5115,14 +1054,14 @@
                 ]
               ],
               [
-                "___487",
+                "___102",
                 [
                   "__builtin_identity__",
-                  "___486"
+                  "___101"
                 ]
               ],
               [
-                "___488",
+                "___103",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5132,20 +1071,20 @@
                 ]
               ],
               [
-                "___489",
+                "___104",
                 [
-                  "___488"
+                  "___103"
                 ]
               ],
               [
                 "init_pass_manager",
                 [
                   "__builtin_identity__",
-                  "___489"
+                  "___104"
                 ]
               ],
               [
-                "___490",
+                "___105",
                 [
                   "__builtin_getattr__",
                   "init_pass_manager",
@@ -5155,7 +1094,7 @@
                 ]
               ],
               [
-                "___491",
+                "___106",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5165,30 +1104,30 @@
                 ]
               ],
               [
-                "___492",
+                "___107",
                 [
-                  "___491",
+                  "___106",
                   {
                     "str": "init_id_down_spider"
                   }
                 ]
               ],
               [
-                "___493",
+                "___108",
                 [
-                  "___490",
-                  "___492"
+                  "___105",
+                  "___107"
                 ]
               ],
               [
-                "___494",
+                "___109",
                 [
                   "__builtin_identity__",
-                  "___493"
+                  "___108"
                 ]
               ],
               [
-                "___495",
+                "___110",
                 [
                   "__builtin_getattr__",
                   "init_pass_manager",
@@ -5198,21 +1137,21 @@
                 ]
               ],
               [
-                "___496",
+                "___111",
                 [
-                  "___495",
+                  "___110",
                   "program"
                 ]
               ],
               [
-                "___497",
+                "___112",
                 [
                   "__builtin_identity__",
-                  "___496"
+                  "___111"
                 ]
               ],
               [
-                "___498",
+                "___113",
                 [
                   "print",
                   {
@@ -5222,14 +1161,14 @@
                 ]
               ],
               [
-                "___499",
+                "___114",
                 [
                   "__builtin_identity__",
-                  "___498"
+                  "___113"
                 ]
               ],
               [
-                "___500",
+                "___115",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5239,20 +1178,20 @@
                 ]
               ],
               [
-                "___501",
+                "___116",
                 [
-                  "___500"
+                  "___115"
                 ]
               ],
               [
                 "pass_manager",
                 [
                   "__builtin_identity__",
-                  "___501"
+                  "___116"
                 ]
               ],
               [
-                "___502",
+                "___117",
                 [
                   "__builtin_getattr__",
                   "pass_manager",
@@ -5262,7 +1201,7 @@
                 ]
               ],
               [
-                "___503",
+                "___118",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5272,30 +1211,30 @@
                 ]
               ],
               [
-                "___504",
+                "___119",
                 [
-                  "___503",
+                  "___118",
                   {
                     "str": "default"
                   }
                 ]
               ],
               [
-                "___505",
+                "___120",
                 [
-                  "___502",
-                  "___504"
+                  "___117",
+                  "___119"
                 ]
               ],
               [
-                "___506",
+                "___121",
                 [
                   "__builtin_identity__",
-                  "___505"
+                  "___120"
                 ]
               ],
               [
-                "___507",
+                "___122",
                 [
                   "__builtin_getattr__",
                   "pass_manager",
@@ -5305,7 +1244,7 @@
                 ]
               ],
               [
-                "___508",
+                "___123",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5315,27 +1254,27 @@
                 ]
               ],
               [
-                "___509",
+                "___124",
                 [
-                  "___508"
+                  "___123"
                 ]
               ],
               [
-                "___510",
+                "___125",
                 [
-                  "___507",
-                  "___509"
+                  "___122",
+                  "___124"
                 ]
               ],
               [
-                "___511",
+                "___126",
                 [
                   "__builtin_identity__",
-                  "___510"
+                  "___125"
                 ]
               ],
               [
-                "___512",
+                "___127",
                 [
                   "__builtin_getattr__",
                   "pass_manager",
@@ -5345,21 +1284,21 @@
                 ]
               ],
               [
-                "___513",
+                "___128",
                 [
-                  "___512",
+                  "___127",
                   "program"
                 ]
               ],
               [
-                "___514",
+                "___129",
                 [
                   "__builtin_identity__",
-                  "___513"
+                  "___128"
                 ]
               ],
               [
-                "___515",
+                "___130",
                 [
                   "print",
                   {
@@ -5369,14 +1308,14 @@
                 ]
               ],
               [
-                "___516",
+                "___131",
                 [
                   "__builtin_identity__",
-                  "___515"
+                  "___130"
                 ]
               ],
               [
-                "___517",
+                "___132",
                 [
                   "__builtin_getattr__",
                   "ir_helper",
@@ -5386,7 +1325,7 @@
                 ]
               ],
               [
-                "___518",
+                "___133",
                 [
                   "__builtin_getattr__",
                   "DataDownSpiderYield",
@@ -5396,22 +1335,22 @@
                 ]
               ],
               [
-                "___519",
+                "___134",
                 [
-                  "___517",
+                  "___132",
                   "program",
-                  "___518"
+                  "___133"
                 ]
               ],
               [
                 "matched",
                 [
                   "__builtin_identity__",
-                  "___519"
+                  "___134"
                 ]
               ],
               [
-                "___520",
+                "___135",
                 [
                   "print",
                   {
@@ -5421,14 +1360,14 @@
                 ]
               ],
               [
-                "___521",
+                "___136",
                 [
                   "__builtin_identity__",
-                  "___520"
+                  "___135"
                 ]
               ],
               [
-                "___522",
+                "___137",
                 [
                   "__builtin_return__",
                   "matched"
@@ -5458,7 +1397,7 @@
             "__builtin_let__",
             [
               [
-                "___523",
+                "___138",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -5468,7 +1407,7 @@
                 ]
               ],
               [
-                "___524",
+                "___139",
                 [
                   "__builtin_getattr__",
                   "o",
@@ -5478,78 +1417,78 @@
                 ]
               ],
               [
-                "___525",
+                "___140",
                 [
                   "__builtin_list__",
                   false
                 ]
               ],
               [
-                "___526",
+                "___141",
                 [
                   "__builtin_list__",
                   {
                     "str": "input_index_loop_anchor_flags"
                   },
-                  "___525"
+                  "___140"
                 ]
               ],
               [
-                "___527",
+                "___142",
                 [
                   "__builtin_list__",
                   true
                 ]
               ],
               [
-                "___528",
+                "___143",
                 [
                   "__builtin_list__",
                   {
                     "str": "output_index_loop_anchor_flags"
                   },
-                  "___527"
+                  "___142"
                 ]
               ],
               [
-                "___529",
+                "___144",
                 [
                   "__builtin_list__",
-                  "___526",
-                  "___528"
+                  "___141",
+                  "___143"
                 ]
               ],
               [
-                "___530",
+                "___145",
                 [
                   "__builtin_list__",
-                  "___524"
+                  "___139"
                 ]
               ],
               [
-                "___531",
+                "___146",
                 [
                   "__builtin_PackedArgs__",
-                  "___530",
-                  "___529"
+                  "___145",
+                  "___144"
                 ]
               ],
               [
-                "___532",
+                "___147",
                 [
-                  "___523",
-                  "___531"
+                  "___138",
+                  "___146"
                 ]
               ],
               [
                 "trivial_op_code_gen_class",
                 [
                   "__builtin_identity__",
-                  "___532"
+                  "___147"
                 ]
               ],
               [
-                "___533",
+                "___148",
                 [
                   "__builtin_getattr__",
                   "trivial_reduce_tpl",
@@ -5559,7 +1498,7 @@
                 ]
               ],
               [
-                "___534",
+                "___149",
                 [
                   "__builtin_list__",
                   {
@@ -5569,42 +1508,42 @@
                 ]
               ],
               [
-                "___535",
+                "___150",
                 [
                   "__builtin_list__",
-                  "___534"
+                  "___149"
                 ]
               ],
               [
-                "___536",
+                "___151",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___537",
+                "___152",
                 [
                   "__builtin_PackedArgs__",
-                  "___536",
-                  "___535"
+                  "___151",
+                  "___150"
                 ]
               ],
               [
-                "___538",
+                "___153",
                 [
-                  "___533",
-                  "___537"
+                  "___148",
+                  "___152"
                 ]
               ],
               [
                 "template_module",
                 [
                   "__builtin_identity__",
-                  "___538"
+                  "___153"
                 ]
               ],
               [
-                "___539",
+                "___154",
                 [
                   "__builtin_getattr__",
                   "template_module",
@@ -5614,7 +1553,7 @@
                 ]
               ],
               [
-                "___540",
+                "___155",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -5624,7 +1563,7 @@
                 ]
               ],
               [
-                "___542",
+                "___157",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -5634,42 +1573,42 @@
                 ]
               ],
               [
-                "___541",
+                "___156",
                 [
                   "__builtin_getattr__",
-                  "___542",
+                  "___157",
                   {
                     "str": "shape"
                   }
                 ]
               ],
               [
-                "___543",
+                "___158",
                 [
                   "__builtin_getitem__",
-                  "___541",
+                  "___156",
                   0
                 ]
               ],
               [
-                "___544",
+                "___159",
                 [
-                  "___540",
-                  "___543"
+                  "___155",
+                  "___158"
                 ]
               ],
               [
-                "___545",
+                "___160",
                 [
                   "__builtin_list__",
                   {
                     "str": "dim0_karg"
                   },
-                  "___544"
+                  "___159"
                 ]
               ],
               [
-                "___546",
+                "___161",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -5679,7 +1618,7 @@
                 ]
               ],
               [
-                "___547",
+                "___162",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -5689,24 +1628,24 @@
                 ]
               ],
               [
-                "___548",
+                "___163",
                 [
-                  "___546",
-                  "___547"
+                  "___161",
+                  "___162"
                 ]
               ],
               [
-                "___549",
+                "___164",
                 [
                   "__builtin_list__",
                   {
                     "str": "input_karg"
                   },
-                  "___548"
+                  "___163"
                 ]
               ],
               [
-                "___550",
+                "___165",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -5716,7 +1655,7 @@
                 ]
               ],
               [
-                "___551",
+                "___166",
                 [
                   "__builtin_getattr__",
                   "t",
@@ -5726,57 +1665,57 @@
                 ]
               ],
               [
-                "___552",
+                "___167",
                 [
-                  "___550",
-                  "___551"
+                  "___165",
+                  "___166"
                 ]
               ],
               [
-                "___553",
+                "___168",
                 [
                   "__builtin_list__",
                   {
                     "str": "output_karg"
                   },
-                  "___552"
+                  "___167"
                 ]
               ],
               [
-                "___554",
+                "___169",
                 [
                   "__builtin_list__",
-                  "___545",
-                  "___549",
-                  "___553"
+                  "___160",
+                  "___164",
+                  "___168"
                 ]
               ],
               [
-                "___555",
+                "___170",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___556",
+                "___171",
                 [
                   "__builtin_PackedArgs__",
-                  "___555",
-                  "___554"
+                  "___170",
+                  "___169"
                 ]
               ],
               [
-                "___557",
+                "___172",
                 [
-                  "___539",
-                  "___556"
+                  "___154",
+                  "___171"
                 ]
               ],
               [
-                "___558",
+                "___173",
                 [
                   "__builtin_return__",
-                  "___557"
+                  "___172"
                 ]
               ]
             ],
