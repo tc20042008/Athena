@@ -1,6 +1,5 @@
 #pragma once
 
-// #include "cutlass/epilogue/thread/linear_combination_bias_relu.h"
 #include "cutlass/epilogue/thread/linear_combination_bias_elementwise.h"
 #include "cutlass_epilogue/thread/linear_combination_unary.h"
 #include "cutlass/util/device_memory.h"
