@@ -74,7 +74,7 @@ void api_trivial_reduce(void* stream_ptr, const int64_t num, const float* input,
 
   """
     code = code_template.replace("TRIVIAL_CODE_STRING", trivial_code_str)
-    compile_cmd = "nvcc --ptxas-options=-v --compiler-options '-fPIC' --shared  trivial_reduce.cu -o libtrivial_reduce.so"
+    compile_cmd = "nvcc --ptxas-options=-v --compiler-options '-fPIC' -gencode arch=compute_80,code=sm_80 --shared trivial_reduce.cu -o libtrivial_reduce.so"
     return CodeModule(
       FuncDeclare(DataType.void, "api_trivial_reduce", [
         PointerType.void_ptr,

@@ -52,15 +52,19 @@ class TestCinnSubGraphBase(unittest.TestCase):
 
     def prepare_data(self):
         self.x_shape = [256, 256]
-        self.x = paddle.randn(self.x_shape, dtype="float32")
+        self.x = paddle.randn(self.x_shape, dtype="float16")
         self.x.stop_gradient = False
 
         self.y_shape = [256, 256]
-        self.y = paddle.randn(self.y_shape, dtype="float32")
+        self.y = paddle.randn(self.y_shape, dtype="float16")
+        self.y.stop_gradient = False
 
     def eval_symbolic(self, use_cinn):
         net = CINNSubGraphNet()
-        input_spec = [InputSpec(shape=[None], dtype='float32')]
+        input_spec = [
+            InputSpec(shape=[256, 256], dtype='float16'),
+            InputSpec(shape=[256, 256], dtype='float16')
+        ]
         net = utils.apply_to_static(net, use_cinn, input_spec)
         net.eval()
         out = net(self.x, self.y)
@@ -68,10 +72,10 @@ class TestCinnSubGraphBase(unittest.TestCase):
 
     def test_eval_symbolic(self):
         cinn_out = self.eval_symbolic(use_cinn=True)
-        #dy_out = self.eval_symbolic(use_cinn=False)
-        #np.testing.assert_allclose(
-        #    cinn_out.numpy(), dy_out.numpy(), rtol=1e-06, atol=1e-06
-        #)
+        dy_out = self.eval_symbolic(use_cinn=False)
+        np.testing.assert_allclose(
+            cinn_out.numpy(), dy_out.numpy(), rtol=1e-02, atol=1e-02
+        )
 
 
 if __name__ == '__main__':

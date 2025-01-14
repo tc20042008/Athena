@@ -41,6 +41,8 @@ class MatrixAddUnaryTemplate:
   def make_project(self, trivial_code_str):
     code_template = """
 // auto generated codes
+#include <cuda.h>
+#include <cuda_fp16.h>
 
 #define CINN_WITH_CUDA
 #include "epilogue_op.h"
@@ -61,7 +63,7 @@ struct UnaryEpilogueFunctor {
 
 extern "C" {
 
-void MatmulAddUnaryKernel(const int64_t num, const float* input, const float* weight, float* output) {
+void MatmulAddUnaryKernel(const int64_t num, const half* input, const half* weight, half* output) {
   ap::GemmEpilogueParams params;
 
   params.batch_count = 1;
@@ -74,13 +76,12 @@ void MatmulAddUnaryKernel(const int64_t num, const float* input, const float* we
   params.bias = nullptr;
   params.output = output;
 
-  std::cout << "-- [MatmulAddUnaryKernel] m=" << m << ", n=" << n << ", k=" << k << std::endl;
   std::cout << "-- [MatmulAddUnaryKernel] input=" << input << std::endl;
   std::cout << "-- [MatmulAddUnaryKernel] weight=" << weight << std::endl;
   std::cout << "-- [MatmulAddUnaryKernel] output=" << output << std::endl;
 
   UnaryEpilogueFunctor<float>::Arguments unary_args{1.0};
-  ap::CutlassMatmulAddUnary<float, float, UnaryEpilogueFunctor, false, false>(params, unary_args);
+  ap::CutlassMatmulAddUnary<cutlass::half_t, float, UnaryEpilogueFunctor, false, false>(params, unary_args);
 }
 }
 
@@ -96,22 +97,22 @@ void MatmulAddUnaryKernel(const int64_t num, const float* input, const float* we
     compile_cmd = compile_cmd + " -I " + cutlass_dir + "/tools/util/include"
     compile_cmd = compile_cmd + " -I " + source_dir
     compile_cmd = compile_cmd + " -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 -DCUTLASS_DEBUG_TRACE_LEVEL=1 "
-    compile_cmd = compile_cmd + " --shared matrix_add_unary_kernel.cu -o libmatrix_add_unary_kernel.so"
+    compile_cmd = compile_cmd + " --shared matmul_add_unary_kernel.cu -o libmatmul_add_unary_kernel.so"
     print("-- CodeModule")
     return CodeModule(
       FuncDeclare(DataType.void, "MatmulAddUnaryKernel", [
         DataType.const_int64,
-        PointerType.const_float_ptr,
-        PointerType.const_float_ptr,
-        PointerType.float_ptr,
+        PointerType.const_float16_ptr,
+        PointerType.const_float16_ptr,
+        PointerType.float16_ptr,
       ]),
       Project(
         nested_files=Project.Directory(
-          ["matrix_add_unary_kernel.cu", Project.FileContent(code)],
+          ["matmul_add_unary_kernel.cu", Project.FileContent(code)],
           ["make.sh", Project.FileContent(compile_cmd)]
         ),
         compile_cmd="sh make.sh",
-        so_relative_path="libmatrix_add_unary_kernel.so"
+        so_relative_path="libmatmul_add_unary_kernel.so"
       )
     )
 

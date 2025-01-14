@@ -764,7 +764,7 @@
                 [
                   "__builtin_identity__",
                   {
-                    "str": "nvcc --ptxas-options=-v --compiler-options '-fPIC' --shared  trivial_reduce.cu -o libtrivial_reduce.so"
+                    "str": "nvcc --ptxas-options=-v --compiler-options '-fPIC' -gencode arch=compute_80,code=sm_80 --shared trivial_reduce.cu -o libtrivial_reduce.so"
                   }
                 ]
               ],
