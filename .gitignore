@@ -1,3 +1,5 @@
+tests/ap/ap_workspace/
+tests/ap/reified_drr/
 *.pyc
 
 # System-generated temporary files
