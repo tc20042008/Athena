@@ -37,18 +37,18 @@ T* AllocateAndInit(cudaStream_t stream, size_t numel, bool random, T value = 0, 
     }
   }
 
-  if (std::is_same<T, float>::value) {
-    std::cout << "-- AllocateAndInit: dtype=float, numel=" << numel << std::endl;
+  if constexpr (std::is_same<T, float>::value) {
+    std::cout << "-- [AllocateAndInit] dtype=float, numel=" << numel << std::endl;
     CHECK_CUDA(cudaMemcpyAsync(addr, data.data(), numel * sizeof(T), cudaMemcpyHostToDevice, stream));
-  } else if (std::is_same<T, half>::value) {
-    std::cout << "-- AllocateAndInit: dtype=half, numel=" << numel << std::endl;
+  } else if constexpr (std::is_same<T, half>::value) {
+    std::cout << "-- [AllocateAndInit] dtype=half, numel=" << numel << std::endl;
     float* tmp_addr = nullptr;
     CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&tmp_addr), numel * sizeof(float)));
     CHECK_CUDA(cudaMemcpyAsync(tmp_addr, data.data(), numel * sizeof(float), cudaMemcpyHostToDevice, stream));
     ConvertToHalf(stream, tmp_addr, addr, numel);
     cudaFree(tmp_addr);
   } else {
-    std::cerr << "Unsupported!" << std::endl;
+    std::cerr << "-- [AllocateAndInit] Unsupported data type!" << std::endl;
   }
 
   return addr;
@@ -61,10 +61,10 @@ void Print(cudaStream_t stream, T* addr, size_t batch_count, size_t m, size_t n)
   std::vector<float> data;
   data.resize(numel);
 
-  if (std::is_same<T, float>::value) {
+  if constexpr (std::is_same<T, float>::value) {
     CHECK_CUDA(cudaMemcpyAsync(data.data(), addr, numel * sizeof(T), cudaMemcpyDeviceToHost, stream));
     CHECK_CUDA(cudaStreamSynchronize(stream));
-  } else if (std::is_same<T, half>::value) {
+  } else if constexpr (std::is_same<T, half>::value) {
     float* tmp_addr = nullptr;
     CHECK_CUDA(cudaMalloc(reinterpret_cast<void **>(&tmp_addr), numel * sizeof(float)));
     ConvertToFloat(stream, addr, tmp_addr, numel);
@@ -101,14 +101,13 @@ void Print(cudaStream_t stream, T* addr, size_t batch_count, size_t m, size_t n)
 }
 
 template <typename T>
-void TestMatmulAddUnary(cudaStream_t stream) {
-  int batch_count = 4;
-  int m = 65536;
-  int n = 32;
-  int k = 128;
+void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
+  int batch_count = 1;
+  int m = 256;
+  int n = 512;
+  int k = 256;
 
   bool transpose_b = false;
-  bool add_bias = false;
 
   T* input = AllocateAndInit<T>(stream, batch_count * m * k, false, 1.);
   T* weight = AllocateAndInit<T>(stream, k * n, false, 1.);
@@ -197,13 +196,12 @@ void TestMatmulAddBinary(cudaStream_t stream) {
 }
 
 int main(int argc, const char *arg[]) {
-  using DType = half;
-
   cudaStream_t stream;
   CHECK_CUDA(cudaStreamCreate(&stream));
 
-  TestMatmulAddUnary<DType>(stream);
-  // TestMatmulAddBinary<DType>(stream);
+  // TestMatmulAddUnary<half>(stream, false);
+  TestMatmulAddUnary<float>(stream, false);
+  // TestMatmulAddBinary<half>(stream);
 
   CHECK_CUDA(cudaStreamDestroy(stream));
   return 0;

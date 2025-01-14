@@ -30,6 +30,8 @@
     }                                                                               \
   }
 
+namespace ap {
+
 struct GemmEpilogueParams {
   int batch_count;
   int m;
@@ -61,3 +63,5 @@ template <>
 struct MatrixLayout<true> {
   using Type = cutlass::layout::ColumnMajor;
 };
+
+}

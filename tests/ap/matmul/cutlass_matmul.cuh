@@ -9,6 +9,8 @@
 
 #include "matmul.h"
 
+namespace ap {
+
 //template <typename TShape, typename WShape, typename IShape, int NumStages>
 template <typename ElementT, typename ElementComputeT, template<typename T> class UnaryFunctor, bool TransposeA = false, bool TransposeB = false>
 void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename UnaryFunctor<ElementComputeT>::Arguments& unary_args) {
@@ -242,4 +244,6 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
   // Run the GEMM
   //
   CHECK_CUTLASS(device_gemm());
+}
+
 }
