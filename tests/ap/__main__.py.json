@@ -1,0 +1,18 @@
+[
+  "__builtin_let__",
+  [
+    [
+      "test_trivial_reduce",
+      [
+        "import",
+        {
+          "str": "test_trivial_reduce"
+        }
+      ]
+    ]
+  ],
+  [
+    "__builtin_identity__",
+    null
+  ]
+]
