@@ -199,8 +199,7 @@ int main(int argc, const char *arg[]) {
   cudaStream_t stream;
   CHECK_CUDA(cudaStreamCreate(&stream));
 
-  // TestMatmulAddUnary<half>(stream, false);
-  TestMatmulAddUnary<float>(stream, false);
+  TestMatmulAddUnary<half>(stream, false);
   // TestMatmulAddBinary<half>(stream);
 
   CHECK_CUDA(cudaStreamDestroy(stream));

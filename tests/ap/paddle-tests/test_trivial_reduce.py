@@ -66,10 +66,10 @@ class TestCinnSubGraphBase(unittest.TestCase):
 
     def test_eval_symbolic(self):
         cinn_out = self.eval_symbolic(use_cinn=True)
-        #dy_out = self.eval_symbolic(use_cinn=False)
-        #np.testing.assert_allclose(
-        #    cinn_out.numpy(), dy_out.numpy(), rtol=1e-06, atol=1e-06
-        #)
+        dy_out = self.eval_symbolic(use_cinn=False)
+        np.testing.assert_allclose(
+            cinn_out.numpy(), dy_out.numpy(), rtol=1e-06, atol=1e-06
+        )
 
 
 if __name__ == '__main__':

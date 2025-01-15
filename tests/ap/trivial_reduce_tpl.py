@@ -65,7 +65,6 @@ extern "C"
 void api_trivial_reduce(void* stream_ptr, const int64_t num, const float* input, float* output) {
   std::cout << "stream_ptr: " << stream_ptr << std::endl;
   cudaStream_t stream = *(cudaStream_t*)(stream_ptr);
-  std::cout << "yiqun nice" << std::endl;
   std::cout << "num: " << num << std::endl;
   std::cout << "input: " << input << std::endl;
   std::cout << "output: " << output << std::endl;
@@ -74,7 +73,7 @@ void api_trivial_reduce(void* stream_ptr, const int64_t num, const float* input,
 
   """
     code = code_template.replace("TRIVIAL_CODE_STRING", trivial_code_str)
-    compile_cmd = "nvcc --ptxas-options=-v --compiler-options '-fPIC' -gencode arch=compute_80,code=sm_80 --shared trivial_reduce.cu -o libtrivial_reduce.so"
+    compile_cmd = "nvcc --ptxas-options=-v --compiler-options '-fPIC' --shared trivial_reduce.cu -o libtrivial_reduce.so"
     return CodeModule(
       FuncDeclare(DataType.void, "api_trivial_reduce", [
         PointerType.void_ptr,
