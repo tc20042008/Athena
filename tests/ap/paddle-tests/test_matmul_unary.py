@@ -55,15 +55,15 @@ class TestCinnSubGraphBase(unittest.TestCase):
         self.x = paddle.randn(self.x_shape, dtype="float16")
         self.x.stop_gradient = False
 
-        self.y_shape = [256, 256]
+        self.y_shape = [256, 512]
         self.y = paddle.randn(self.y_shape, dtype="float16")
         self.y.stop_gradient = False
 
     def eval_symbolic(self, use_cinn):
         net = CINNSubGraphNet()
         input_spec = [
-            InputSpec(shape=[256, 256], dtype='float16'),
-            InputSpec(shape=[256, 256], dtype='float16')
+            InputSpec(shape=self.x_shape, dtype='float16'),
+            InputSpec(shape=self.y_shape, dtype='float16')
         ]
         net = utils.apply_to_static(net, use_cinn, input_spec)
         net.eval()

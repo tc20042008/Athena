@@ -44,8 +44,10 @@ def CodeGen(ctx, o, t):
     trivial_op_code_gen_class=trivial_op_code_gen_class
   )
   return template_module.compile(
-    dim0_karg=ctx.dim_expr_kernel_arg_id(t.input0.shape[0]),
     input0_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input0),
     input1_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input1),
     output_karg=ctx.out_tensor_data_ptr_kernel_arg_id(t.output1),
+    m_karg=ctx.dim_expr_kernel_arg_id(t.input0.shape[0]),
+    n_karg=ctx.dim_expr_kernel_arg_id(t.input1.shape[1]),
+    k_karg=ctx.dim_expr_kernel_arg_id(t.input0.shape[1]),
   )

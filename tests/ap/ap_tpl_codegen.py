@@ -15,7 +15,7 @@ class CudaLikeIrCodeGenCtx:
     self.stmts = MutableList()
     self.dtype2type_name = OrderedDict([
       [DataType.float,  "float"],
-      [DataType.float16,  "half"],
+      [DataType.float16, "half"],
       [DataType.int32,    "int"],
     ])
 
