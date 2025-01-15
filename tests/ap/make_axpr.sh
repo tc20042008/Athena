@@ -1,23 +1,26 @@
 #!/bin/bash
 
-FILENAME=${1:-"test_trivial_reduce"}
-#FILENAME=${1:-"test_matmul_unary"}
+TEST_FILENAME=${1:-"test_trivial_reduce"}
+#TEST_FILENAME=${1:-"test_matmul_unary"}
 
-TPL_FILENAME=`echo ${FILENAME/test_/}`
+TEST_TPL_FILENAME=`echo ${TEST_FILENAME/test_/}`
 
-python3 ../../athena/advanced_pass/py_to_json.py __main__.py __main__.py.json
+echo "-- Write 'import ${TEST_FILENAME}' to __main__.py"
+echo "import ${TEST_FILENAME}" > __main__.py
 
-echo "-- Convert access_topo_drr.py -> access_topo_drr.py.json"
-python ../../athena/advanced_pass/py_to_json.py access_topo_drr.py access_topo_drr.py.json
 
-echo "-- Convert abstract_drr.py -> abstract_drr.py.json"
-python ../../athena/advanced_pass/py_to_json.py abstract_drr.py abstract_drr.py.json
-
-echo "-- Convert ap_tpl_codegen.py -> ap_tpl_codegen.py.json"
-python ../../athena/advanced_pass/py_to_json.py ap_tpl_codegen.py ap_tpl_codegen.py.json
-
-echo "-- Convert ${FILENAME}.py -> ${FILENAME}.py.json"
-python ../../athena/advanced_pass/py_to_json.py ${FILENAME}.py ${FILENAME}.py.json
-
-echo "-- Convert ${TPL_FILENAME}_tpl.py -> ${TPL_FILENAME}_tpl.py.json"
-python ../../athena/advanced_pass/py_to_json.py ${TPL_FILENAME}_tpl.py ${TPL_FILENAME}_tpl.py.json
+FILENAMES_ARRAY=(
+    "__main__"
+    "topo_drr_pass"
+    "op_convertion_drr_pass"
+    "access_topo_drr"
+    "abstract_drr"
+    "ap_tpl_codegen"
+    "${TEST_FILENAME}"
+    "${TEST_TPL_FILENAME}_tpl"
+)
+for filename in "${FILENAMES_ARRAY[@]}"
+do
+    echo "-- Convert ${filename}.py -> ${filename}.py.json"
+    python ../../athena/advanced_pass/py_to_json.py ${filename}.py ${filename}.py.json
+done
