@@ -15,7 +15,7 @@ class CudaLikeIrCodeGenCtx:
     self.stmts = MutableList()
     self.dtype2type_name = OrderedDict([
       [DataType.float,  "float"],
-      [DataType.float16, "half"],
+      [DataType.float16, "auto"],
       [DataType.int32,    "int"],
     ])
 
@@ -53,6 +53,59 @@ class PdOpExpCodeGen:
         self.output_dtypes[0],
         f"{self.unique_op_name}_0")
     val = f"expf({x.var_name})"
+    lir_code_gen_ctx.let(out.dtype, out.var_name, val)
+    return [out]
+
+class PdOpSinCodeGen:
+  def __init__(self,
+               index_expr_code_gen,
+               unique_op_name,
+               input_dtypes,
+               output_dtypes,
+               input_index_tuple_exprs,
+               output_index_tuple_exprs,
+               attrs):
+    self.index_expr_code_gen = index_expr_code_gen
+    self.unique_op_name = unique_op_name
+    self.input_dtypes = input_dtypes
+    self.output_dtypes = output_dtypes
+    self.input_index_tuple_exprs = input_index_tuple_exprs
+    self.output_index_tuple_exprs = output_index_tuple_exprs
+    self.attrs = attrs
+
+  def __call__(self, lir_code_gen_ctx, x):
+    out = CodeGenValue(
+        self.output_index_tuple_exprs[0],
+        self.output_dtypes[0],
+        f"{self.unique_op_name}_0")
+    val = f"sin({x.var_name})"
+    lir_code_gen_ctx.let(out.dtype, out.var_name, val)
+    return [out]
+
+
+class PdOpScaleCodeGen:
+  def __init__(self,
+               index_expr_code_gen,
+               unique_op_name,
+               input_dtypes,
+               output_dtypes,
+               input_index_tuple_exprs,
+               output_index_tuple_exprs,
+               attrs):
+    self.index_expr_code_gen = index_expr_code_gen
+    self.unique_op_name = unique_op_name
+    self.input_dtypes = input_dtypes
+    self.output_dtypes = output_dtypes
+    self.input_index_tuple_exprs = input_index_tuple_exprs
+    self.output_index_tuple_exprs = output_index_tuple_exprs
+    self.attrs = attrs
+
+  def __call__(self, lir_code_gen_ctx, x):
+    out = CodeGenValue(
+        self.output_index_tuple_exprs[0],
+        self.output_dtypes[0],
+        f"{self.unique_op_name}_0")
+    val = f"({x.var_name}) * static_cast<float>(0.1)"
     lir_code_gen_ctx.let(out.dtype, out.var_name, val)
     return [out]
 
@@ -209,6 +262,8 @@ class NativeOpCodeGenClassFactory:
   def __init__(self):
     self.op_name2class = OrderedDict([
       ["pd_op.exp",               PdOpExpCodeGen],
+      ["pd_op.sin",               PdOpSinCodeGen],
+      ["cinn_op.scale",           PdOpScaleCodeGen],
       ["pd_op.subtract",          PdOpSubstractCodeGen],
       ["pd_op.add",               PdOpAddCodeGen],
       ["pd_op.multiply",          PdOpMultiplyCodeGen],

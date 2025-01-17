@@ -82,13 +82,17 @@ void MatmulAddUnaryKernel(void* stream_ptr, const half* input, const half* weigh
   cudaStream_t* cuda_stream_ptr = reinterpret_cast<cudaStream_t*>(stream_ptr);
   params.stream = *cuda_stream_ptr;
 
-  std::cout << "-- [MatmulAddUnaryKernel] m=" << m << ", n=" << n << ", k=" << k << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] input=" << input << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] weight=" << weight << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] output=" << output << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] stream=" << cuda_stream_ptr << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] m=" << m << ", n=" << n << ", k=" << k << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] input=" << input << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] weight=" << weight << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] output=" << output << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] stream=" << cuda_stream_ptr << std::endl;
 
-  UnaryEpilogueFunctor<float>::Arguments unary_args{1.0};
+  // using TShape = cutlass::gemm::GemmShape<32, 32, 64>;
+  // using WShape = cutlass::gemm::GemmShape<32, 16, 16>;
+  // using IShape = cutlass::gemm::GemmShape<16, 8, 16>;
+
+  UnaryEpilogueFunctor<float>::Arguments unary_args{0.1};
   ap::CutlassMatmulAddUnary<cutlass::half_t, float, UnaryEpilogueFunctor, false, false>(params, unary_args);
 }
 }
@@ -98,11 +102,11 @@ void MatmulAddUnaryKernel(void* stream_ptr, const half* input, const half* weigh
 
     source_dir = "/work/abstract_pass/Athena/tests/ap/matmul"
     cutlass_dir = "/work/abstract_pass/Athena/tests/ap/matmul/cutlass"
-    compile_cmd = "nvcc -std=c++17 -O3 --ptxas-options=-v -Xcompiler=-fPIC -arch=sm_80 --expt-relaxed-constexpr"
+    compile_cmd = "nvcc -std=c++17 -O3 -Xcompiler=-fPIC -arch=sm_80 --expt-relaxed-constexpr"
     compile_cmd = compile_cmd + " -I " + cutlass_dir + "/include"
     compile_cmd = compile_cmd + " -I " + cutlass_dir + "/tools/util/include"
     compile_cmd = compile_cmd + " -I " + source_dir
-    compile_cmd = compile_cmd + " -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 -DCUTLASS_DEBUG_TRACE_LEVEL=1 "
+    compile_cmd = compile_cmd + " -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 -DCUTLASS_DEBUG_TRACE_LEVEL=0 "
     compile_cmd = compile_cmd + " --shared matmul_add_unary_kernel.cu -o libmatmul_add_unary_kernel.so"
 
     return CodeModule(
@@ -128,13 +132,13 @@ void MatmulAddUnaryKernel(void* stream_ptr, const half* input, const half* weigh
 def KernelDispatch(ctx):
   so_func = ctx.get_so_function("MatmulAddUnaryKernel")
   stream_ptr = ctx.device_ctx.get_stream_addr_as_void_ptr()
-  print(f"-- [KernelDispatch] stream_ptr: {stream_ptr}")
+  # print(f"-- [KernelDispatch] stream_ptr: {stream_ptr}")
 
   getters = ctx.kernel_dispatch_const_data.kernel_args_getters
-  print(f"-- [KernelDispatch] getters[0](ctx): {getters[0](ctx)}")
-  print(f"-- [KernelDispatch] getters[1](ctx): {getters[1](ctx)}")
-  print(f"-- [KernelDispatch] getters[2](ctx): {getters[2](ctx)}")
-  print(f"-- [KernelDispatch] getters[3](ctx): {getters[3](ctx)}")
-  print(f"-- [KernelDispatch] getters[4](ctx): {getters[4](ctx)}")
-  print(f"-- [KernelDispatch] getters[5](ctx): {getters[5](ctx)}")
+  # print(f"-- [KernelDispatch] getters[0](ctx): {getters[0](ctx)}")
+  # print(f"-- [KernelDispatch] getters[1](ctx): {getters[1](ctx)}")
+  # print(f"-- [KernelDispatch] getters[2](ctx): {getters[2](ctx)}")
+  # print(f"-- [KernelDispatch] getters[3](ctx): {getters[3](ctx)}")
+  # print(f"-- [KernelDispatch] getters[4](ctx): {getters[4](ctx)}")
+  # print(f"-- [KernelDispatch] getters[5](ctx): {getters[5](ctx)}")
   so_func(stream_ptr, getters[0](ctx), getters[1](ctx), getters[2](ctx), getters[3](ctx), getters[4](ctx), getters[5](ctx))

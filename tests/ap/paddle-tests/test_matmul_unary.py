@@ -28,7 +28,7 @@ from paddle.static import InputSpec
 
 def trivial_matrix_unary(x, y):
     out = paddle.matmul(x, y)
-    return paddle.exp(out)
+    return paddle.scale(out, scale=0.1)
 
 
 class CINNSubGraphNet(paddle.nn.Layer):
@@ -51,15 +51,15 @@ class TestCinnSubGraphBase(unittest.TestCase):
         self.prepare_data()
 
     def prepare_data(self):
-        self.x_shape = [256, 256]
+        self.x_shape = [65536, 128]
         self.x = paddle.randn(self.x_shape, dtype="float16")
         self.x.stop_gradient = False
 
-        self.y_shape = [256, 512]
+        self.y_shape = [128, 32]
         self.y = paddle.randn(self.y_shape, dtype="float16")
         self.y.stop_gradient = False
 
-    def eval_symbolic(self, use_cinn):
+    def eval_symbolic(self, use_cinn, profile):
         net = CINNSubGraphNet()
         input_spec = [
             InputSpec(shape=self.x_shape, dtype='float16'),
@@ -68,14 +68,26 @@ class TestCinnSubGraphBase(unittest.TestCase):
         net = utils.apply_to_static(net, use_cinn, input_spec)
         net.eval()
         out = net(self.x, self.y)
+        if profile:
+            # warmup
+            for i in range(10):
+                out = net(self.x, self.y)
+
+            # repeat
+            paddle.base.core.nvprof_start()
+            for i in range(1000):
+                out = net(self.x, self.y)
+            paddle.base.core.nvprof_stop()
         return out
 
     def test_eval_symbolic(self):
-        cinn_out = self.eval_symbolic(use_cinn=True)
-        dy_out = self.eval_symbolic(use_cinn=False)
-        np.testing.assert_allclose(
-            cinn_out.numpy(), dy_out.numpy(), rtol=1e-02, atol=1e-02
-        )
+        profile = False
+        cinn_out = self.eval_symbolic(use_cinn=True, profile=profile)
+        dy_out = self.eval_symbolic(use_cinn=False, profile=profile)
+        if not profile:
+            np.testing.assert_allclose(
+                cinn_out.numpy(), dy_out.numpy(), rtol=1e-02, atol=1e-02
+            )
 
 
 if __name__ == '__main__':
