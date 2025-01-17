@@ -12,7 +12,7 @@
 
 template <typename T>
 void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
-  int batch_count = 1;
+  int batch_count = 4;
   int m = 65536;
   int n = 32;
   int k = 128;

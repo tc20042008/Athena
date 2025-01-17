@@ -51,7 +51,7 @@ class TestCinnSubGraphBase(unittest.TestCase):
         self.prepare_data()
 
     def prepare_data(self):
-        self.x_shape = [65536, 128]
+        self.x_shape = [4, 65536, 128]
         self.x = paddle.randn(self.x_shape, dtype="float16")
         self.x.stop_gradient = False
 
@@ -62,8 +62,8 @@ class TestCinnSubGraphBase(unittest.TestCase):
     def eval_symbolic(self, use_cinn, profile):
         net = CINNSubGraphNet()
         input_spec = [
-            InputSpec(shape=self.x_shape, dtype='float16'),
-            InputSpec(shape=self.y_shape, dtype='float16')
+            InputSpec(shape=self.x_shape, dtype="float16"),
+            InputSpec(shape=self.y_shape, dtype="float16"),
         ]
         net = utils.apply_to_static(net, use_cinn, input_spec)
         net.eval()
@@ -85,10 +85,42 @@ class TestCinnSubGraphBase(unittest.TestCase):
         cinn_out = self.eval_symbolic(use_cinn=True, profile=profile)
         dy_out = self.eval_symbolic(use_cinn=False, profile=profile)
         if not profile:
+            self.check_result(cinn_out.numpy(), dy_out.numpy())
+
+    def check_result(self, out_1, out_2, check_equal=False):
+        out_1_flatten = out_1.flatten()
+        out_2_flatten = out_2.flatten()
+
+        diff = np.abs(out_1_flatten - out_2_flatten)
+        max_atol_idx = np.argmax(diff)
+        print(
+            f"-- max difference     : {np.max(diff)}, {out_1_flatten[max_atol_idx]} vs {out_2_flatten[max_atol_idx]}"
+        )
+
+        relative_error = np.abs(diff / out_2_flatten)
+        max_rtol_idx = np.nanargmax(relative_error)
+        print(
+            f"-- max relative error : {np.nanmax(relative_error)}, {out_1_flatten[max_rtol_idx]} vs {out_2_flatten[max_rtol_idx]}"
+        )
+
+        if check_equal:
+            num_diffs = 0
+            for i in range(out_1.size):
+                if num_diffs >= 10:
+                    break
+
+                if out_1_flatten[i] != out_2_flatten[i]:
+                    print(f"-- {i}: {out_1_flatten[i]} vs {out_2_flatten[i]}")
+                    num_diffs += 1
+            np.testing.assert_array_equal(out_1, out_2)
+        else:
             np.testing.assert_allclose(
-                cinn_out.numpy(), dy_out.numpy(), rtol=1e-02, atol=1e-02
+                out_1,
+                out_2,
+                atol=1e-2,
+                rtol=1e-2,
             )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -44,9 +44,9 @@ struct GemmEpilogueParams {
   const void *bias;
   void *output;
 
-  cudaStream_t stream;
+  bool is_B_weight{true};
   bool is_C_bias{true};
-  void *workspace{nullptr};
+  cudaStream_t stream;
 };
 
 struct GemmBroadcastEpilogueParams : GemmEpilogueParams {
@@ -76,13 +76,13 @@ struct GemmShapeArguments {
   int64_t ldc_bias;
   int64_t ldd;
 
-  GemmShapeArguments(cutlass::gemm::GemmCoord problem_size, bool is_C_bias) {
+  GemmShapeArguments(cutlass::gemm::GemmCoord problem_size, bool is_B_weight, bool is_C_bias) {
     batch_stride_A = problem_size.m() * problem_size.k();
-    batch_stride_A = problem_size.n() * problem_size.k();
+    batch_stride_B = is_B_weight ? 0 : problem_size.n() * problem_size.k();
     batch_stride_D = problem_size.m() * problem_size.n();
 
     /// Only available in RRR format
-    batch_stride_C = is_C_bias ? problem_size.n() : problem_size.m() * problem_size.n();
+    batch_stride_C = is_C_bias ? 0 : problem_size.m() * problem_size.n();
 
     lda = TransposeA ? problem_size.m() : problem_size.k();
     ldb = TransposeB ? problem_size.k() : problem_size.n();
