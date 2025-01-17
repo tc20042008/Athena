@@ -7,6 +7,7 @@
 #include <cuda_fp16.h>
 
 #include "cutlass/cutlass.h"
+#include "cutlass/gemm_coord.h"
 #include "cutlass/layout/matrix.h"
 
 #define CHECK_CUTLASS(status)                                             \
@@ -62,6 +63,32 @@ struct MatrixLayout {
 template <>
 struct MatrixLayout<true> {
   using Type = cutlass::layout::ColumnMajor;
+};
+
+template <bool TransposeA, bool TransposeB>
+struct GemmShapeArguments {
+  int64_t batch_stride_A;
+  int64_t batch_stride_B;
+  int64_t batch_stride_C;
+  int64_t batch_stride_D;
+  int64_t lda;
+  int64_t ldb;
+  int64_t ldc_bias;
+  int64_t ldd;
+
+  GemmShapeArguments(cutlass::gemm::GemmCoord problem_size, bool is_C_bias) {
+    batch_stride_A = problem_size.m() * problem_size.k();
+    batch_stride_A = problem_size.n() * problem_size.k();
+    batch_stride_D = problem_size.m() * problem_size.n();
+
+    /// Only available in RRR format
+    batch_stride_C = is_C_bias ? problem_size.n() : problem_size.m() * problem_size.n();
+
+    lda = TransposeA ? problem_size.m() : problem_size.k();
+    ldb = TransposeB ? problem_size.k() : problem_size.n();
+    ldc_bias = is_C_bias ? 0 : problem_size.n();
+    ldd = problem_size.n();
+  }
 };
 
 }

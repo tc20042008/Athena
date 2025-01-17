@@ -1,5 +1,3 @@
-// auto generated
-
 #include "epilogue_op.h"
 
 namespace ap {
@@ -25,6 +23,38 @@ struct UnaryEpilogueFunctor {
 
 extern "C" {
 
+void MatmulAddKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
+  ap::GemmEpilogueParams params;
+
+  params.batch_count = batch_count;
+  params.m = m;
+  params.n = n;
+  params.k = k;
+
+  params.input = input;
+  params.weight = weight;
+  params.bias = bias;
+  params.output = output;
+
+  params.stream = stream;
+
+  // std::cout << "-- [MatmulAddKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
+  // std::cout << "-- [MatmulAddKernel] input: " << input << std::endl;
+  // std::cout << "-- [MatmulAddKernel] weight: " << weight << std::endl;
+  // std::cout << "-- [MatmulAddKernel] bias: " << bias << std::endl;
+  // std::cout << "-- [MatmulAddKernel] output: " << output << std::endl;
+  // std::cout << "-- [MatmulAddKernel] stream: " << stream << std::endl;
+
+  using ElementT = cutlass::half_t;
+  using ElementComputeT = float;
+
+  if (transpose_b) {
+    ap::CutlassMatmulAdd<ElementT, ElementComputeT, false, true>(params);
+  } else {
+    ap::CutlassMatmulAdd<ElementT, ElementComputeT, false, false>(params);
+  }
+}
+
 void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
   ap::GemmEpilogueParams params;
 
@@ -40,16 +70,17 @@ void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* we
 
   params.stream = stream;
 
-  std::cout << "-- [MatmulAddUnaryKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] input: " << input << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] weight: " << weight << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] bias: " << bias << std::endl;
-  std::cout << "-- [MatmulAddUnaryKernel] output: " << output << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] input: " << input << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] weight: " << weight << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] bias: " << bias << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] output: " << output << std::endl;
+  // std::cout << "-- [MatmulAddUnaryKernel] stream: " << stream << std::endl;
 
   using ElementT = cutlass::half_t;
   using ElementComputeT = float;
 
-  ap::UnaryEpilogueFunctor<ElementComputeT>::Arguments unary_args{1.0};
+  ap::UnaryEpilogueFunctor<ElementComputeT>::Arguments unary_args{0.1};
   if (transpose_b) {
     ap::CutlassMatmulAddUnary<ElementT, ElementComputeT, ap::UnaryEpilogueFunctor, false, true>(params, unary_args);
   } else {
