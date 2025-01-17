@@ -6,7 +6,7 @@ namespace ap {
 // struct EpilogueArguments {
 //   typename ap::ScaleFunctor<T>::Arguments scale_args;
 // };
- 
+
 template <typename T>
 struct UnaryEpilogueFunctor {
   using Arguments = typename ScaleFunctor<T>::Arguments;
@@ -23,7 +23,7 @@ struct UnaryEpilogueFunctor {
 
 extern "C" {
 
-void MatmulAddKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
+void MatmulAddKernel(cudaStream_t* stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
   ap::GemmEpilogueParams params;
 
   params.batch_count = batch_count;
@@ -36,7 +36,7 @@ void MatmulAddKernel(cudaStream_t stream, const void* input, const void* weight,
   params.bias = bias;
   params.output = output;
 
-  params.stream = stream;
+  params.stream = *stream;
 
   // std::cout << "-- [MatmulAddKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
   // std::cout << "-- [MatmulAddKernel] input: " << input << std::endl;
@@ -55,7 +55,7 @@ void MatmulAddKernel(cudaStream_t stream, const void* input, const void* weight,
   }
 }
 
-void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
+void MatmulAddUnaryKernel(cudaStream_t* stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
   ap::GemmEpilogueParams params;
 
   params.batch_count = batch_count;
@@ -68,7 +68,7 @@ void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* we
   params.bias = bias;
   params.output = output;
 
-  params.stream = stream;
+  params.stream = *stream;
 
   // std::cout << "-- [MatmulAddUnaryKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
   // std::cout << "-- [MatmulAddUnaryKernel] input: " << input << std::endl;
@@ -88,7 +88,7 @@ void MatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* we
   }
 }
 
-void MatmulAddBinaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* broadcast, void* broadcast_out, void* output, int m, int n, int k, bool need_broadcast) {
+void MatmulAddBinaryKernel(cudaStream_t* stream, const void* input, const void* weight, const void* bias, void* broadcast, void* broadcast_out, void* output, int m, int n, int k, bool need_broadcast) {
   ap::GemmBroadcastEpilogueParams params;
 
   params.m = m;
@@ -100,7 +100,7 @@ void MatmulAddBinaryKernel(cudaStream_t stream, const void* input, const void* w
   params.bias = bias;
   params.output = output;
 
-  params.stream = stream;
+  params.stream = *stream;
 
   params.need_broadcast = need_broadcast;
   params.broadcast = broadcast;

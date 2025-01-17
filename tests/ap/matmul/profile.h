@@ -41,4 +41,24 @@ class GpuTimer {
   cudaEvent_t stop_{nullptr};
 };
 
+
+#ifdef ENABLE_PROFILE
+#define KERNEL_PROFILE(func)                    \
+  {                                             \
+    for (int i = 0; i < 10; ++i) {              \
+      func;                                     \
+    }                                           \
+    CHECK_CUDA(cudaStreamSynchronize(stream));  \
+    GpuTimer gpu_timer(true);                   \
+    gpu_timer.Start(stream);                    \
+    for (int i = 0; i < 1000; ++i) {            \
+      func;                                     \
+    }                                           \
+    gpu_timer.Stop(stream);                     \
+  }
+#else
+#define KERNEL_PROFILE(func) func
+#endif
+
+
 void TuneMatmulAddUnaryKernel(cudaStream_t stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k);

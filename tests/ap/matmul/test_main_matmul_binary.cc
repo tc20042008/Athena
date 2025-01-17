@@ -50,7 +50,7 @@ void TestMatmulAddBinary(cudaStream_t stream) {
       cudaMemsetAsync(output, 0, sizeof(T) * m * n, stream));
   CHECK_CUDA(
       cudaMemsetAsync(broadcast_out, 0, sizeof(T) * m * n, stream));
-  MatmulAddBinaryKernel(stream, input, weight, bias, broadcast, broadcast_out, output, m, n, k, need_broadcast);
+  MatmulAddBinaryKernel(&stream, input, weight, bias, broadcast, broadcast_out, output, m, n, k, need_broadcast);
 
   Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
 

@@ -31,4 +31,5 @@ nvcc -std=c++17 -O3 \
     -I ${SOURCE_DIR} \
     -I ${AP_LIB_DIR} \
     -L./ -l${SO_NAME} -lcuda -lcudart \
+    -DENABLE_PROFILE=1  \
     test_util.cu ${TEST_NAME}.cc -o test_main

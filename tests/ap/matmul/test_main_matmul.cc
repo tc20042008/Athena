@@ -31,19 +31,7 @@ void TestMatmulAdd(cudaStream_t stream, bool add_bias) {
   CHECK_CUDA(cudaStreamSynchronize(stream));
 
   CHECK_CUDA(cudaMemsetAsync(output, 0, sizeof(T) * batch_count * m * n, stream));
-
-  MatmulAddKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
-  for (int i = 0; i < 10; ++i) {
-    MatmulAddKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
-  }
-  CHECK_CUDA(cudaStreamSynchronize(stream));
-
-  GpuTimer gpu_timer(true);
-  gpu_timer.Start(stream);
-  for (int i = 0; i < 1000; ++i) {
-    MatmulAddKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
-  }
-  gpu_timer.Stop(stream);
+  KERNEL_PROFILE(MatmulAddKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
 
   Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
 

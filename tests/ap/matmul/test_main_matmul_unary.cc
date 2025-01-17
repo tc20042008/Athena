@@ -38,31 +38,9 @@ void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
   CHECK_CUDA(cudaMemsetAsync(output, 0, sizeof(T) * batch_count * m * n, stream));
 
 #ifdef USE_AP_GENERATED_KERNEL
-  MatmulAddUnaryKernel(&stream, input, weight, output, m, n, k);
-  for (int i = 0; i < 10; ++i) {
-    MatmulAddUnaryKernel(&stream, input, weight, output, m, n, k);
-  }
-  CHECK_CUDA(cudaStreamSynchronize(stream));
-
-  GpuTimer gpu_timer(true);
-  gpu_timer.Start(stream);
-  for (int i = 0; i < 1000; ++i) {
-    MatmulAddUnaryKernel(&stream, input, weight, output, m, n, k);
-  }
-  gpu_timer.Stop(stream);
+  KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, output, batch_count, m, n, k));
 #else
-  MatmulAddUnaryKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
-  for (int i = 0; i < 10; ++i) {
-    MatmulAddUnaryKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
-  }
-  CHECK_CUDA(cudaStreamSynchronize(stream));
-
-  GpuTimer gpu_timer(true);
-  gpu_timer.Start(stream);
-  for (int i = 0; i < 1000; ++i) {
-    MatmulAddUnaryKernel(stream, input, weight, bias, output, batch_count, m, n, k, transpose_b);
-  }
-  gpu_timer.Stop(stream);
+  KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
 #endif
 
   Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
