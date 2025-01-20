@@ -3,7 +3,7 @@
 #include "profile.h"
 #include "test_util.h"
 
-#ifdef USE_AP_GENERATED_KERNEL
+#if USE_AP_GENERATED_KERNEL
 #include "matmul_add_unary_kernel.h"
 #else
 #include "kernel.h"
@@ -37,10 +37,10 @@ void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
 
   CHECK_CUDA(cudaMemsetAsync(output, 0, sizeof(T) * batch_count * m * n, stream));
 
-#ifdef USE_AP_GENERATED_KERNEL
+#if USE_AP_GENERATED_KERNEL
   KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, output, batch_count, m, n, k));
 #else
-  KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b, std::is_same<T, half>::value));
+  KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
 #endif
 
   Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
@@ -57,8 +57,11 @@ int main(int argc, const char *arg[]) {
   cudaStream_t stream;
   CHECK_CUDA(cudaStreamCreate(&stream));
 
-  //TestMatmulAddUnary<half>(stream, false);
+#if USE_FLOAT16
+  TestMatmulAddUnary<half>(stream, false);
+#else
   TestMatmulAddUnary<float>(stream, false);
+#endif
 
   CHECK_CUDA(cudaStreamDestroy(stream));
   return 0;

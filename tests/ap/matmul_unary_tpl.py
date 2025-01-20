@@ -184,15 +184,7 @@ void MatmulAddUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* inp
 def KernelDispatch(ctx):
     so_func = ctx.get_so_function("MatmulAddUnaryKernel")
     stream_ptr = ctx.device_ctx.get_stream_addr_as_void_ptr()
-    # print(f"-- [KernelDispatch] stream_ptr: {stream_ptr}")
-
     getters = ctx.kernel_dispatch_const_data.kernel_args_getters
-    # print(f"-- [KernelDispatch] getters[0](ctx): {getters[0](ctx)}")
-    # print(f"-- [KernelDispatch] getters[1](ctx): {getters[1](ctx)}")
-    # print(f"-- [KernelDispatch] getters[2](ctx): {getters[2](ctx)}")
-    # print(f"-- [KernelDispatch] getters[3](ctx): {getters[3](ctx)}")
-    # print(f"-- [KernelDispatch] getters[4](ctx): {getters[4](ctx)}")
-    # print(f"-- [KernelDispatch] getters[5](ctx): {getters[5](ctx)}")
     so_func(
         stream_ptr,
         getters[0](ctx),

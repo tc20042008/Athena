@@ -21,20 +21,6 @@ struct UnaryEpilogueFunctor {
 
 #include "cutlass_matmul.cuh"
 
-namespace ap {
-
-template <typename ElementT, typename ElementComputeT>
-void MatmulAddUnaryKernelImpl(const GemmEpilogueParams& params, bool transpose_b) {
-  typename ap::UnaryEpilogueFunctor<ElementComputeT>::Arguments unary_args{0.1};
-  if (transpose_b) {
-    ap::CutlassMatmulAddUnary<ElementT, ElementComputeT, ap::UnaryEpilogueFunctor, false, true>(params, unary_args);
-  } else {
-    ap::CutlassMatmulAddUnary<ElementT, ElementComputeT, ap::UnaryEpilogueFunctor, false, false>(params, unary_args);
-  }
-}
-
-}
-
 extern "C" {
 
 void MatmulAddKernel(cudaStream_t* stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
@@ -69,7 +55,7 @@ void MatmulAddKernel(cudaStream_t* stream, const void* input, const void* weight
   }
 }
 
-void MatmulAddUnaryKernel(cudaStream_t* stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b, bool dtype_is_float16) {
+void MatmulAddUnaryKernel(cudaStream_t* stream, const void* input, const void* weight, const void* bias, void* output, int batch_count, int m, int n, int k, bool transpose_b) {
   ap::GemmEpilogueParams params;
 
   params.batch_count = batch_count;
@@ -91,10 +77,19 @@ void MatmulAddUnaryKernel(cudaStream_t* stream, const void* input, const void* w
   // std::cout << "-- [MatmulAddUnaryKernel] output: " << output << std::endl;
   // std::cout << "-- [MatmulAddUnaryKernel] stream: " << stream << std::endl;
 
-  if (dtype_is_float16) {
-    ap::MatmulAddUnaryKernelImpl<cutlass::half_t, float>(params, transpose_b);
+#if USE_FLOAT16
+  using ElementT = cutlass::half_t;
+  using ElementComputeT = float;
+#else
+  using ElementT = float;
+  using ElementComputeT = float;
+#endif
+
+  typename ap::UnaryEpilogueFunctor<ElementComputeT>::Arguments unary_args{0.1};
+  if (transpose_b) {
+    ap::CutlassMatmulAddUnary<ElementT, ElementComputeT, ap::UnaryEpilogueFunctor, false, true>(params, unary_args);
   } else {
-    ap::MatmulAddUnaryKernelImpl<float, float>(params, transpose_b);
+    ap::CutlassMatmulAddUnary<ElementT, ElementComputeT, ap::UnaryEpilogueFunctor, false, false>(params, unary_args);
   }
 }
 

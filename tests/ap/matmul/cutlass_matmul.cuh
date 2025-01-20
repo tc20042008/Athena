@@ -9,7 +9,7 @@
 
 #include "matmul.h"
 
-#ifdef TUNE_TILE_SHAPE
+#if TUNE_TILE_SHAPE
 #include "tile_shape.h"
 #else
 #include "default_tile_shape.h"
