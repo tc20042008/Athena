@@ -25,6 +25,27 @@ class PdOpExpAccessTopoPass(access_topo_drr.DrrPass):
       [t.output]
     )
 
+@access_topo_drr.register_drr_pass("pd_op_scale", tag="default")
+class PdOpScaleAccessTopoPass(access_topo_drr.DrrPass):
+
+  def get_constraint_func(self):
+    return ReturnTrue.__function__
+
+  def source_pattern(self, o, t):
+    o.scale_op = o.ap_native_op("cinn_op.scale")
+    o.scale_op(
+      [t.input],
+      [t.output]
+    )
+
+  def result_pattern(self, o, t):
+    o.relu_op = o.ap_native_op("pd_op.relu")
+    o.relu_op(
+      [t.input],
+      [t.output]
+    )
+
+
 @access_topo_drr.register_drr_pass("pd_op_sin", tag="default")
 class PdOpSinAccessTopoPass(access_topo_drr.DrrPass):
 

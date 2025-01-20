@@ -39,6 +39,7 @@ class CINNSubGraphNet(paddle.nn.Layer):
     def forward(self, x, y):
         out = self.fn(x, y)
         return out
+        # return paddle.transpose(out, perm=[0, 2, 1])
 
 
 class TestCinnSubGraphBase(unittest.TestCase):
@@ -51,19 +52,21 @@ class TestCinnSubGraphBase(unittest.TestCase):
         self.prepare_data()
 
     def prepare_data(self):
+        self.dtype = "float16"
+
         self.x_shape = [4, 65536, 128]
-        self.x = paddle.randn(self.x_shape, dtype="float16")
+        self.x = paddle.randn(self.x_shape, dtype=self.dtype)
         self.x.stop_gradient = False
 
         self.y_shape = [128, 32]
-        self.y = paddle.randn(self.y_shape, dtype="float16")
+        self.y = paddle.randn(self.y_shape, dtype=self.dtype)
         self.y.stop_gradient = False
 
     def eval_symbolic(self, use_cinn, profile):
         net = CINNSubGraphNet()
         input_spec = [
-            InputSpec(shape=self.x_shape, dtype="float16"),
-            InputSpec(shape=self.y_shape, dtype="float16"),
+            InputSpec(shape=self.x_shape, dtype=self.dtype),
+            InputSpec(shape=self.y_shape, dtype=self.dtype),
         ]
         net = utils.apply_to_static(net, use_cinn, input_spec)
         net.eval()
@@ -114,11 +117,15 @@ class TestCinnSubGraphBase(unittest.TestCase):
                     num_diffs += 1
             np.testing.assert_array_equal(out_1, out_2)
         else:
+            if self.dtype == "float16":
+                atol, rtol = 1e-2, 1e-2
+            else:
+                atol, rtol = 1e-5, 1e-5
             np.testing.assert_allclose(
                 out_1,
                 out_2,
-                atol=1e-2,
-                rtol=1e-2,
+                atol=atol,
+                rtol=rtol,
             )
 
 

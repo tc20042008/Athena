@@ -29,20 +29,21 @@ def DataDownSpiderYield(o, t):
 
 
 def Constraint(o, t, ir_helper):
-    matched = True
-    # program = ir_helper.copy_fused_ops_to_program(o.trivial_op)
-    # print("before-access_topo_pass", program)
-    # init_pass_manager = ir_helper.create_pass_manager()
-    # init_pass_manager.add_pass(ir_helper.create_access_topo_drr_one_step_pass("init_id_down_spider"))
-    # init_pass_manager.run(program)
-    # print("after-init-access_topo_pass", program)
-    # pass_manager = ir_helper.create_pass_manager()
-    # pass_manager.add_pass(ir_helper.create_access_topo_drr_pass("default"))
-    # pass_manager.add_pass(ir_helper.create_dce_pass())
-    # pass_manager.run(program)
-    # print("after-apply-access_topo_pass", program)
-    # matched = ir_helper.match(program, DataDownSpiderYield.__function__)
-    # print("DataDownSpiderYield matched: ", matched)
+    program = ir_helper.copy_fused_ops_to_program(o.trivial_op)
+    print("before-access_topo_pass", program)
+    init_pass_manager = ir_helper.create_pass_manager()
+    init_pass_manager.add_pass(
+        ir_helper.create_access_topo_drr_one_step_pass("init_id_down_spider")
+    )
+    init_pass_manager.run(program)
+    print("after-init-access_topo_pass", program)
+    pass_manager = ir_helper.create_pass_manager()
+    pass_manager.add_pass(ir_helper.create_access_topo_drr_pass("default"))
+    pass_manager.add_pass(ir_helper.create_dce_pass())
+    pass_manager.run(program)
+    print("after-apply-access_topo_pass", program)
+    matched = ir_helper.match(program, DataDownSpiderYield.__function__)
+    print("DataDownSpiderYield matched: ", matched)
     return matched
 
 
