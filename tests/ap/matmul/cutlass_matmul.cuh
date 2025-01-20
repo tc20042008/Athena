@@ -46,12 +46,11 @@ template <typename ElementT,
           bool TransposeA = false,
           bool TransposeB = false>
 void CutlassMatmulAdd(const GemmEpilogueParams& params) {
-  using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
-  using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
-  using ElementInputA = ElementT;                     // <- data type of elements in input matrix A
-  using ElementInputB = ElementT;                     // <- data type of elements in input matrix B
-  using ElementOutput = ElementT;                     // <- data type of elements in output matrix D
-
+  using ElementAccumulator = typename CutlassDataType<ElementComputeT>::Type; // <- data type of accumulator
+  using ElementComputeEpilogue = ElementAccumulator;              // <- data type of epilogue operations
+  using ElementInputA = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix A
+  using ElementInputB = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix B
+  using ElementOutput = typename CutlassDataType<ElementT>::Type; // <- data type of elements in output matrix D
 
   // Epilogue operation as LinearCombination:
   //  alpha * accumulator + beta * source
@@ -139,11 +138,11 @@ template <typename ElementT,
 //           typename IShape = cutlass::gemm::GemmShape<16, 8, 16>,
 //           int NumStages = 5>
 void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename UnaryFunctor<ElementComputeT>::Arguments& unary_args) {
-  using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
-  using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
-  using ElementInputA = ElementT;                     // <- data type of elements in input matrix A
-  using ElementInputB = ElementT;                     // <- data type of elements in input matrix B
-  using ElementOutput = ElementT;                     // <- data type of elements in output matrix D
+  using ElementAccumulator = typename CutlassDataType<ElementComputeT>::Type; // <- data type of accumulator
+  using ElementComputeEpilogue = ElementAccumulator;              // <- data type of epilogue operations
+  using ElementInputA = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix A
+  using ElementInputB = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix B
+  using ElementOutput = typename CutlassDataType<ElementT>::Type; // <- data type of elements in output matrix D
 
   // Epilogue operation as LinearCombinationUnary:
   //  d_ij = unary_op(alpha * sum_k(a_ik * b_kj) + c_ij)
@@ -226,13 +225,13 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
 
 template <typename ElementT, typename ElementComputeT>
 void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
-  using ElementAccumulator = ElementComputeT;         // <- data type of accumulator
-  using ElementComputeEpilogue = ElementAccumulator;  // <- data type of epilogue operations
-  using ElementInputA = ElementT;
-  using ElementInputB = ElementT;
-  using ElementOutputC = ElementT;
-  using ElementOutputZ = ElementT;
-  using ElementOutputT = ElementT;
+  using ElementAccumulator = typename CutlassDataType<ElementComputeT>::Type; // <- data type of accumulator
+  using ElementComputeEpilogue = ElementAccumulator;              // <- data type of epilogue operations
+  using ElementInputA = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix A
+  using ElementInputB = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix B
+  using ElementOutputC = typename CutlassDataType<ElementT>::Type;// <- data type of elements in output matrix D
+  using ElementOutputZ = ElementOutputC;
+  using ElementOutputT = ElementOutputC;
 
   // Epilogue operation as LinearCombinationBiasElementwise:
   //  Y = GEMM(AB, C)

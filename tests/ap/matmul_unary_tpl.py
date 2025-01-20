@@ -9,6 +9,7 @@ class MatrixAddUnaryTemplate:
 
     def compile(
         self,
+        dtype_of_ptr_args,
         input0_karg,
         input1_karg,
         output_karg,
@@ -34,7 +35,7 @@ class MatrixAddUnaryTemplate:
         print("low level ir of fusion_op:\n", trivial_code_str)
         print("===================================")
 
-        project_module = self.make_project(trivial_code_str)
+        project_module = self.make_project(trivial_code_str, dtype_of_ptr_args)
         return CodeGenResult(
             module=project_module,
             kernel_dispatch_func=KernelDispatch,
@@ -51,7 +52,7 @@ class MatrixAddUnaryTemplate:
             ),
         )
 
-    def make_project(self, trivial_code_str):
+    def make_project(self, trivial_code_str, dtype_of_ptr_args):
         code_template = """
 // auto generated codes
 #include <cuda.h>
@@ -67,7 +68,7 @@ struct UnaryEpilogueFunctor {
   __forceinline__ __host__ __device__
   T operator()(T x, Arguments args) const {
     T y;
-    TRIVAL_UNARY_OPERATOR_STRING;
+    AP_GENERATED_UNARY_EPILOGUE_STRING;
     return y;
   }
 };
@@ -76,7 +77,7 @@ struct UnaryEpilogueFunctor {
 
 extern "C" {
 
-void MatmulAddUnaryKernel(void* stream_ptr, const half* input, const half* weight, half* output, const int64_t batch_count, const int64_t m, const int64_t n, const int64_t k) {
+void MatmulAddUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input, const AP_GENERATED_INPUT1_DTYPE* weight, AP_GENERATED_OUTPUT_DTYPE* output, const int64_t batch_count, const int64_t m, const int64_t n, const int64_t k) {
   ap::GemmEpilogueParams params;
 
   params.batch_count = batch_count;
@@ -98,17 +99,32 @@ void MatmulAddUnaryKernel(void* stream_ptr, const half* input, const half* weigh
   // std::cout << "-- [MatmulAddUnaryKernel] output=" << output << std::endl;
   // std::cout << "-- [MatmulAddUnaryKernel] stream=" << cuda_stream_ptr << std::endl;
 
-  // using TShape = cutlass::gemm::GemmShape<32, 32, 64>;
-  // using WShape = cutlass::gemm::GemmShape<32, 16, 16>;
-  // using IShape = cutlass::gemm::GemmShape<16, 8, 16>;
-
   UnaryEpilogueFunctor<float>::Arguments unary_args{0.1};
-  ap::CutlassMatmulAddUnary<cutlass::half_t, float, UnaryEpilogueFunctor, false, false>(params, unary_args);
+  ap::CutlassMatmulAddUnary<AP_GENERATED_ELEMENT_DTYPE, float, UnaryEpilogueFunctor, false, false>(params, unary_args);
 }
 }
 
   """
-        code = code_template.replace("TRIVAL_UNARY_OPERATOR_STRING", trivial_code_str)
+
+        dtype2type_name = OrderedDict(
+            [
+                [DataType.float, "float"],
+                [DataType.float16, "half"],
+            ]
+        )
+        input0_dtype = dtype2type_name[dtype_of_ptr_args[0]]
+        input1_dtype = dtype2type_name[dtype_of_ptr_args[1]]
+        output_dtype = dtype2type_name[dtype_of_ptr_args[2]]
+
+        code = (
+            code_template.replace(
+                "AP_GENERATED_UNARY_EPILOGUE_STRING", trivial_code_str
+            )
+            .replace("AP_GENERATED_INPUT0_DTYPE", input0_dtype)
+            .replace("AP_GENERATED_INPUT1_DTYPE", input1_dtype)
+            .replace("AP_GENERATED_OUTPUT_DTYPE", output_dtype)
+            .replace("AP_GENERATED_ELEMENT_DTYPE", output_dtype)
+        )
 
         source_dir = "/work/abstract_pass/Athena/tests/ap/matmul"
         cutlass_dir = "/work/abstract_pass/Athena/tests/ap/matmul/cutlass"
@@ -127,15 +143,27 @@ void MatmulAddUnaryKernel(void* stream_ptr, const half* input, const half* weigh
             + " --shared matmul_add_unary_kernel.cu -o libmatmul_add_unary_kernel.so"
         )
 
+        dtype2const_pointer_type = OrderedDict(
+            [
+                [DataType.float, PointerType.const_float_ptr],
+                [DataType.float16, PointerType.const_float16_ptr],
+            ]
+        )
+        dtype2pointer_type = OrderedDict(
+            [
+                [DataType.float, PointerType.float_ptr],
+                [DataType.float16, PointerType.float16_ptr],
+            ]
+        )
         return CodeModule(
             FuncDeclare(
                 DataType.void,
                 "MatmulAddUnaryKernel",
                 [
                     PointerType.void_ptr,
-                    PointerType.const_float16_ptr,
-                    PointerType.const_float16_ptr,
-                    PointerType.float16_ptr,
+                    dtype2const_pointer_type[dtype_of_ptr_args[0]],
+                    dtype2const_pointer_type[dtype_of_ptr_args[1]],
+                    dtype2pointer_type[dtype_of_ptr_args[2]],
                     DataType.const_int64,
                     DataType.const_int64,
                     DataType.const_int64,

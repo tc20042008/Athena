@@ -55,6 +55,18 @@ struct GemmBroadcastEpilogueParams : GemmEpilogueParams {
   void* broadcast_out;
 };
 
+// Convert to cutlass data type
+template <typename T>
+struct CutlassDataType {
+  using Type = T;
+};
+
+template <>
+struct CutlassDataType<half> {
+  using Type = cutlass::half_t;
+};
+
+// Convert to cutlass layout
 template <bool Transposed>
 struct MatrixLayout {
   using Type = cutlass::layout::RowMajor;
