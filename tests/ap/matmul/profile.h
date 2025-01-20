@@ -42,7 +42,7 @@ class GpuTimer {
 };
 
 
-#ifdef ENABLE_PROFILE
+#if ENABLE_PROFILE
 #define KERNEL_PROFILE(func)                    \
   {                                             \
     for (int i = 0; i < 10; ++i) {              \

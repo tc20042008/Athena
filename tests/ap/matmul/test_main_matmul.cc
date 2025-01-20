@@ -8,9 +8,9 @@
 template <typename T>
 void TestMatmulAdd(cudaStream_t stream, bool add_bias) {
   int batch_count = 1;
-  int m = 65536;
-  int n = 32;
-  int k = 128;
+  int m = 256;
+  int n = 512;
+  int k = 256;
 
   bool transpose_b = false;
 
@@ -31,7 +31,8 @@ void TestMatmulAdd(cudaStream_t stream, bool add_bias) {
   CHECK_CUDA(cudaStreamSynchronize(stream));
 
   CHECK_CUDA(cudaMemsetAsync(output, 0, sizeof(T) * batch_count * m * n, stream));
-  KERNEL_PROFILE(MatmulAddKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
+  // KERNEL_PROFILE(MatmulAddKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
+  KERNEL_PROFILE(NativeMatmulAddKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
 
   Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
 
@@ -47,7 +48,11 @@ int main(int argc, const char *arg[]) {
   cudaStream_t stream;
   CHECK_CUDA(cudaStreamCreate(&stream));
 
+#if USE_FLOAT16
   TestMatmulAdd<half>(stream, false);
+#else
+  TestMatmulAdd<float>(stream, true);
+#endif
 
   CHECK_CUDA(cudaStreamDestroy(stream));
   return 0;

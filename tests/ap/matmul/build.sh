@@ -10,7 +10,7 @@ USE_HALF=0
 
 #SO_NAME=matmul_add_unary_kernel
 SO_NAME=matmul_kernel
-TEST_NAME=test_main_matmul_unary
+TEST_NAME=test_main_matmul
 
 rm -rf lib${SO_NAME}.so
 rm -rf test_main
@@ -22,10 +22,10 @@ nvcc -std=c++17 -O3 \
     -I ${CUTLASS_DIR}/tools/util/include \
     -I ${SOURCE_DIR} \
     -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 \
-    -DCUTLASS_DEBUG_TRACE_LEVEL=0 \
+    -DCUTLASS_DEBUG_TRACE_LEVEL=1 \
     -DTUNE_TILE_SHAPE=0 \
     -DUSE_FLOAT16=${USE_HALF} \
-    --shared kernel.cu -o lib${SO_NAME}.so
+    --shared native_kernel.cu kernel.cu -o lib${SO_NAME}.so
 
 #    --shared ${AP_LIB_DIR}/matmul_add_unary_kernel.cu -o libmatmul_add_unary_kernel.so
 

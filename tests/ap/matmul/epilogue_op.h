@@ -34,20 +34,30 @@ struct ScaleFunctor {
   }
 };
 
-// template <typename T, int NumIns, int NumOuts>
-// struct DoubleAddFunctor {
-//   struct Arguments {
-//     const void* ins[NumIns];
-//     void* outs[NumOuts];
-//   };
-// 
-//   __forceinline__ __host__ __device__
-//   T[NumOuts] operator()(T x, T y, T z, Arguments args) const {
-//     T[NumOuts] out;
-//     out[0] = x + y;
-//     out[1] = out[0] + z;
-//     return out;
-//   }
-// };
+struct GemmCoord3d {
+  size_t batch_id;
+  size_t row_id;
+  size_t col_id;
+};
+
+template <typename T, int NumIns = 1, int NumOuts = 1>
+struct AddFunctor {
+  struct Arguments {
+    const void* ins[NumIns] = {nullptr};
+    // void* outs[NumOuts];
+  };
+
+  __forceinline__ __host__ __device__
+  T Load(const void* ptr, const GemmCoord3d& coord) const {
+    size_t offset = coord.col_id;
+    return reinterpret_cast<const T*>(ptr)[offset];
+  }
+
+  __forceinline__ __host__ __device__
+  T operator()(T x, const GemmCoord3d& coord, const Arguments& args) const {
+    T y = Load(args.ins[0], coord);
+    return x + y;
+  }
+};
 
 }

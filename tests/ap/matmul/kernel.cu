@@ -45,8 +45,13 @@ void MatmulAddKernel(cudaStream_t* stream, const void* input, const void* weight
   // std::cout << "-- [MatmulAddKernel] output: " << output << std::endl;
   // std::cout << "-- [MatmulAddKernel] stream: " << stream << std::endl;
 
+#if USE_FLOAT16
   using ElementT = cutlass::half_t;
   using ElementComputeT = float;
+#else
+  using ElementT = float;
+  using ElementComputeT = float;
+#endif
 
   if (transpose_b) {
     ap::CutlassMatmulAdd<ElementT, ElementComputeT, false, true>(params);
