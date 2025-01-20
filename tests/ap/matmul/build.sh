@@ -20,6 +20,7 @@ nvcc -std=c++17 -O3 \
     -I ${SOURCE_DIR} \
     -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 \
     -DCUTLASS_DEBUG_TRACE_LEVEL=0 \
+    -DTUNE_TILE_SHAPE=0 \
     --shared kernel.cu -o lib${SO_NAME}.so
 
 #    --shared ${AP_LIB_DIR}/matmul_add_unary_kernel.cu -o libmatmul_add_unary_kernel.so

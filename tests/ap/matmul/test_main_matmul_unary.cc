@@ -40,7 +40,7 @@ void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
 #ifdef USE_AP_GENERATED_KERNEL
   KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, output, batch_count, m, n, k));
 #else
-  KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b));
+  KERNEL_PROFILE(MatmulAddUnaryKernel(&stream, input, weight, bias, output, batch_count, m, n, k, transpose_b, std::is_same<T, half>::value));
 #endif
 
   Print<T>(stream, reinterpret_cast<T*>(output), batch_count, m, n);
@@ -57,7 +57,8 @@ int main(int argc, const char *arg[]) {
   cudaStream_t stream;
   CHECK_CUDA(cudaStreamCreate(&stream));
 
-  TestMatmulAddUnary<half>(stream, false);
+  //TestMatmulAddUnary<half>(stream, false);
+  TestMatmulAddUnary<float>(stream, false);
 
   CHECK_CUDA(cudaStreamDestroy(stream));
   return 0;

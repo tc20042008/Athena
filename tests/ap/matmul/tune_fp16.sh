@@ -49,11 +49,14 @@ for config in "${TILE_SHAPES[@]}"; do
 
 namespace ap {
 
-using TShape = cutlass::gemm::GemmShape<$tshape>;
-using WShape = cutlass::gemm::GemmShape<$wshape>;
-using IShape = cutlass::gemm::GemmShape<$INST_SHAPE_SM80>;
-using SwizzleThreadBlock = cutlass::gemm::threadblock::GemmIdentityThreadblockSwizzle<$value>;
-constexpr int NumStages = $stages;
+template <typename ElementT>
+struct GemmTuningConfig {
+  using TShape = cutlass::gemm::GemmShape<$tshape>;
+  using WShape = cutlass::gemm::GemmShape<$wshape>;
+  using IShape = cutlass::gemm::GemmShape<$INST_SHAPE_SM80>;
+  using SwizzleThreadBlock = cutlass::gemm::threadblock::GemmIdentityThreadblockSwizzle<$value>;
+  static constexpr int NumStages = $stages;
+};
 
 }
 EOF

@@ -8,15 +8,26 @@
 #include "cutlass/gemm/device/gemm_universal_with_broadcast.h"
 
 #include "matmul.h"
-//#include "tile_shape.h"
+
+#ifdef TUNE_TILE_SHAPE
+#include "tile_shape.h"
+#else
+#include "default_tile_shape.h"
+#endif
 
 namespace ap {
 
-using TShape = cutlass::gemm::GemmShape<256,64,32>;
-using WShape = cutlass::gemm::GemmShape<64,64,32>;
-using IShape = cutlass::gemm::GemmShape<16,8,16>;
-using SwizzleThreadBlock = cutlass::gemm::threadblock::GemmIdentityThreadblockSwizzle<1>;
-constexpr int NumStages = 3;
+// Operation performed by GEMM
+template <typename ElementT>
+struct GemmOperation {
+  using Type = cutlass::arch::OpMultiplyAdd;
+};
+
+template <>
+struct GemmOperation<float> {
+  using Type = cutlass::arch::OpMultiplyAddFastF32;
+};
+
 
 cutlass::gemm::GemmUniversalMode GetGemmMode(int batch_count) {
   return batch_count > 1 ? cutlass::gemm::GemmUniversalMode::kBatched : cutlass::gemm::GemmUniversalMode::kGemm;
@@ -61,15 +72,15 @@ void CutlassMatmulAdd(const GemmEpilogueParams& params) {
       ElementAccumulator,
       cutlass::arch::OpClassTensorOp,
       cutlass::arch::Sm80,
-      TShape,
-      WShape,
-      IShape,
+      typename GemmTuningConfig<ElementT>::TShape,
+      typename GemmTuningConfig<ElementT>::WShape,
+      typename GemmTuningConfig<ElementT>::IShape,
       EpilogueOutputOp,
-      SwizzleThreadBlock,           // how threadblocks are scheduled on GPU
-      NumStages,
-      8,                            // AlignA
-      8,                            // AlignB
-      cutlass::arch::OpMultiplyAdd  // Operation performed by GEMM
+      typename GemmTuningConfig<ElementT>::SwizzleThreadBlock,             // how threadblocks are scheduled on GPU
+      GemmTuningConfig<ElementT>::NumStages,
+      128 / cutlass::sizeof_bits<ElementInputA>::value, // AlignA
+      128 / cutlass::sizeof_bits<ElementInputB>::value, // AlignB
+      typename GemmOperation<ElementT>::Type            // Operation performed by GEMM
   >;
 
   /// Arguments
@@ -157,15 +168,15 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
       ElementAccumulator,
       cutlass::arch::OpClassTensorOp,
       cutlass::arch::Sm80,
-      TShape,
-      WShape,
-      IShape,
+      typename GemmTuningConfig<ElementT>::TShape,
+      typename GemmTuningConfig<ElementT>::WShape,
+      typename GemmTuningConfig<ElementT>::IShape,
       EpilogueOutputOp,
-      SwizzleThreadBlock,
-      NumStages,
-      8,         // AlignA
-      8,         // AlignB
-      cutlass::arch::OpMultiplyAdd    // Operation performed by GEMM
+      typename GemmTuningConfig<ElementT>::SwizzleThreadBlock,
+      GemmTuningConfig<ElementT>::NumStages,
+      128 / cutlass::sizeof_bits<ElementInputA>::value, // AlignA
+      128 / cutlass::sizeof_bits<ElementInputB>::value, // AlignB
+      typename GemmOperation<ElementT>::Type  // Operation performed by GEMM
   >;
 
   /// Arguments
@@ -223,11 +234,6 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
   using ElementOutputZ = ElementT;
   using ElementOutputT = ElementT;
 
-  // using TShape = cutlass::gemm::GemmShape<256, 128, 32>;// threadblock tile
-  // using WShape = cutlass::gemm::GemmShape<64, 64, 32>;  // warp tile
-  // using IShape = cutlass::gemm::GemmShape<16, 8, 16>;   // MMA Op tile
-  // constexpr int NumStages = 3;
-
   // Epilogue operation as LinearCombinationBiasElementwise:
   //  Y = GEMM(AB, C)
   //  T[i, j] = BinaryOp(Y[i, j], Broadcast[i])
@@ -267,15 +273,15 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
       ElementAccumulator,
       cutlass::arch::OpClassTensorOp,
       cutlass::arch::Sm80,
-      TShape,
-      WShape,
-      IShape,
+      typename GemmTuningConfig<ElementT>::TShape,
+      typename GemmTuningConfig<ElementT>::WShape,
+      typename GemmTuningConfig<ElementT>::IShape,
       EpilogueOutputOp,
-      SwizzleThreadBlock,
-      NumStages,
-      8,         // AlignA
-      8,         // AlignB
-      cutlass::arch::OpMultiplyAdd    // Operation performed by GEMM
+      typename GemmTuningConfig<ElementT>::SwizzleThreadBlock,
+      GemmTuningConfig<ElementT>::NumStages,
+      128 / cutlass::sizeof_bits<ElementInputA>::value, // AlignA
+      128 / cutlass::sizeof_bits<ElementInputB>::value, // AlignB
+      typename GemmOperation<ElementT>::Type  // Operation performed by GEMM
   >;
 
   /// Arguments

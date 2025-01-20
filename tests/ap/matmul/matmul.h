@@ -65,6 +65,7 @@ struct MatrixLayout<true> {
   using Type = cutlass::layout::ColumnMajor;
 };
 
+// Shape related aruguments
 template <bool TransposeA, bool TransposeB>
 struct GemmShapeArguments {
   int64_t batch_stride_A;
