@@ -1,7 +1,7 @@
 import ap_tpl_codegen
 
 
-class MatmulUnaryTemplate:
+class MatmulBinaryTemplate:
     def __init__(self, trivial_op_code_gen_class):
         self.class_factory = ap_tpl_codegen.GeneratorClassFactory()
         self.lir_code_gen_ctx_class = ap_tpl_codegen.CudaLikeIrCodeGenCtx
@@ -12,8 +12,8 @@ class MatmulUnaryTemplate:
         dtype_of_ptr_args,
         input0_karg,
         input1_karg,
+        input2_karg,
         output_karg,
-        batch_count_karg,
         m_karg,
         n_karg,
         k_karg,
@@ -27,8 +27,9 @@ class MatmulUnaryTemplate:
         )
         lir_code_gen_ctx = self.lir_code_gen_ctx_class()
         values = fusion_code_gen.load_from_register(lir_code_gen_ctx, "x", 0)
+        values = fusion_code_gen.load_from_register(lir_code_gen_ctx, "y", 0)
         values = fusion_code_gen.compute(lir_code_gen_ctx, values)
-        values = fusion_code_gen.store_to_register(lir_code_gen_ctx, values, "y", 0)
+        values = fusion_code_gen.store_to_register(lir_code_gen_ctx, values, "out", 0)
         trivial_code_str = lir_code_gen_ctx.get_stmts_joined_str()
         print("===================================")
         print("fusion_code_gen.compute(): ", values)
@@ -43,8 +44,8 @@ class MatmulUnaryTemplate:
                 kernel_args_getters=[
                     input0_karg.runtime_getter,
                     input1_karg.runtime_getter,
+                    input2_karg.runtime_getter,
                     output_karg.runtime_getter,
-                    batch_count_karg.runtime_getter,
                     m_karg.runtime_getter,
                     n_karg.runtime_getter,
                     k_karg.runtime_getter,
@@ -58,32 +59,41 @@ class MatmulUnaryTemplate:
 #include <cuda.h>
 #include <cuda_fp16.h>
 
-#include "epilogue_op.h"
+#include "native_matmul.cuh"
 
 namespace ap {
 
-template <typename T>
-struct UnaryEpilogueFunctor {
-  using Arguments = typename ap::ScaleFunctor<T>::Arguments;
+template <typename T, int NumIns = 1, int NumOuts = 1>
+struct AddFunctor {
+  struct Arguments {
+    const void* ins[NumIns] = {nullptr};
+  };
 
   __forceinline__ __host__ __device__
-  T operator()(T x, Arguments args) const {
-    T y;
-    AP_GENERATED_UNARY_EPILOGUE_STRING;
-    return y;
+  T Load(const void* ptr, const GemmCoord3d& coord) const {
+    // size_t offset = coord.k;
+    size_t offset = coord.j * 512 + coord.k;
+    return reinterpret_cast<const T*>(ptr)[offset];
+  }
+
+  __forceinline__ __host__ __device__
+  T operator()(T x, const GemmCoord3d& coord, const Arguments& args) const {
+    T y = Load(args.ins[0], coord);
+    T out = x + y;
+    // T out;
+    // AP_GENERATED_BINARY_EPILOGUE_STRING;
+    return out;
   }
 };
 
 }
 
-#include "cutlass_matmul.cuh"
-
 extern "C" {
 
-void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input, const AP_GENERATED_INPUT1_DTYPE* weight, AP_GENERATED_OUTPUT_DTYPE* output, const int64_t batch_count, const int64_t m, const int64_t n, const int64_t k) {
+void MatmulBinaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input, const AP_GENERATED_INPUT1_DTYPE* weight, const AP_GENERATED_INPUT2_DTYPE* bias, AP_GENERATED_OUTPUT_DTYPE* output, const int64_t m, const int64_t n, const int64_t k) {
   ap::GemmEpilogueParams params;
 
-  params.batch_count = batch_count;
+  params.batch_count = 1;
   params.m = m;
   params.n = n;
   params.k = k;
@@ -96,14 +106,16 @@ void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input,
   cudaStream_t* cuda_stream_ptr = reinterpret_cast<cudaStream_t*>(stream_ptr);
   params.stream = *cuda_stream_ptr;
 
-  // std::cout << "-- [MatmulUnaryKernel] batch_count=" << batch_count <<", m=" << m << ", n=" << n << ", k=" << k << std::endl;
-  // std::cout << "-- [MatmulUnaryKernel] input=" << input << std::endl;
-  // std::cout << "-- [MatmulUnaryKernel] weight=" << weight << std::endl;
-  // std::cout << "-- [MatmulUnaryKernel] output=" << output << std::endl;
-  // std::cout << "-- [MatmulUnaryKernel] stream=" << cuda_stream_ptr << std::endl;
+  // std::cout << "-- [MatmulBinaryKernel] m=" << m << ", n=" << n << ", k=" << k << std::endl;
+  // std::cout << "-- [MatmulBinaryKernel] input=" << input << std::endl;
+  // std::cout << "-- [MatmulBinaryKernel] weight=" << weight << std::endl;
+  // std::cout << "-- [MatmulBinaryKernel] bias=" << bias << std::endl;
+  // std::cout << "-- [MatmulBinaryKernel] output=" << output << std::endl;
+  // std::cout << "-- [MatmulBinaryKernel] stream=" << cuda_stream_ptr << std::endl;
 
-  ap::UnaryEpilogueFunctor<float>::Arguments unary_args{0.1};
-  ap::CutlassMatmulAddUnary<AP_GENERATED_ELEMENT_DTYPE, float, ap::UnaryEpilogueFunctor, false, false>(params, unary_args);
+  typename ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>::Arguments epilogue_args;
+  epilogue_args.ins[0] = bias;
+  ap::NativeMatmulAdd<AP_GENERATED_ELEMENT_DTYPE, ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>>(params, epilogue_args);
 }
 }
 
@@ -117,7 +129,8 @@ void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input,
         )
         input0_dtype = dtype2type_name[dtype_of_ptr_args[0]]
         input1_dtype = dtype2type_name[dtype_of_ptr_args[1]]
-        output_dtype = dtype2type_name[dtype_of_ptr_args[2]]
+        input2_dtype = dtype2type_name[dtype_of_ptr_args[2]]
+        output_dtype = dtype2type_name[dtype_of_ptr_args[3]]
 
         code = (
             code_template.replace(
@@ -125,7 +138,10 @@ void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input,
             )
             .replace("AP_GENERATED_INPUT0_DTYPE", input0_dtype)
             .replace("AP_GENERATED_INPUT1_DTYPE", input1_dtype)
+            .replace("AP_GENERATED_INPUT2_DTYPE", input1_dtype)
             .replace("AP_GENERATED_OUTPUT_DTYPE", output_dtype)
+            .replace("AP_GENERATED_ELEMENT_DTYPE", output_dtype)
+            .replace("AP_GENERATED_ELEMENT_DTYPE", output_dtype)
             .replace("AP_GENERATED_ELEMENT_DTYPE", output_dtype)
         )
 
@@ -143,7 +159,7 @@ void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input,
         )
         compile_cmd = (
             compile_cmd
-            + " --shared matmul_unary_kernel.cu -o libmatmul_unary_kernel.so"
+            + " --shared matmul_binary_kernel.cu -o libmatmul_binary_kernel.so"
         )
 
         dtype2const_pointer_type = OrderedDict(
@@ -161,13 +177,13 @@ void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input,
         return CodeModule(
             FuncDeclare(
                 DataType.void,
-                "MatmulUnaryKernel",
+                "MatmulBinaryKernel",
                 [
                     PointerType.void_ptr,
                     dtype2const_pointer_type[dtype_of_ptr_args[0]],
                     dtype2const_pointer_type[dtype_of_ptr_args[1]],
-                    dtype2pointer_type[dtype_of_ptr_args[2]],
-                    DataType.const_int64,
+                    dtype2const_pointer_type[dtype_of_ptr_args[2]],
+                    dtype2pointer_type[dtype_of_ptr_args[3]],
                     DataType.const_int64,
                     DataType.const_int64,
                     DataType.const_int64,
@@ -175,25 +191,25 @@ void MatmulUnaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input,
             ),
             Project(
                 nested_files=Project.Directory(
-                    ["matmul_unary_kernel.cu", Project.FileContent(code)],
+                    ["matmul_binary_kernel.cu", Project.FileContent(code)],
                     ["make.sh", Project.FileContent(compile_cmd)],
                 ),
                 compile_cmd="sh make.sh",
-                so_relative_path="libmatmul_unary_kernel.so",
+                so_relative_path="libmatmul_binary_kernel.so",
             ),
         )
 
 
 def KernelDispatch(ctx):
-    so_func = ctx.get_so_function("MatmulUnaryKernel")
+    so_func = ctx.get_so_function("MatmulBinaryKernel")
     stream_ptr = ctx.device_ctx.get_stream_addr_as_void_ptr()
 
     getters = ctx.kernel_dispatch_const_data.kernel_args_getters
     input = getters[0](ctx)
     weight = getters[1](ctx)
-    output = getters[2](ctx)
-    batch_count = getters[3](ctx)
+    bias = getters[2](ctx)
+    output = getters[3](ctx)
     m = getters[4](ctx)
     n = getters[5](ctx)
     k = getters[6](ctx)
-    so_func(stream_ptr, input, weight, output, batch_count, m, n, k)
+    so_func(stream_ptr, input, weight, bias, output, m, n, k)

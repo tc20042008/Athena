@@ -33,6 +33,12 @@
 
 namespace ap {
 
+struct GemmCoord3d {
+  size_t i; // batch id
+  size_t j; // row id
+  size_t k; // column id
+};
+
 struct GemmEpilogueParams {
   int batch_count;
   int m;

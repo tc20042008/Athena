@@ -2,8 +2,8 @@ import abstract_drr
 import matmul_unary_tpl
 
 
-@abstract_drr.register_drr_pass("matrix_unary_fusion", nice=0)
-class MatrixUnaryFusion(abstract_drr.DrrPass):
+@abstract_drr.register_drr_pass("matmul_unary_fusion", nice=0)
+class MatmulUnaryFusion(abstract_drr.DrrPass):
     def source_pattern(self, o, t):
         o.matmul_op = o.ap_native_op("pd_op.matmul")
         o.matmul_op([t.input0, t.input1], [t.output0])
@@ -53,7 +53,7 @@ def CodeGen(ctx, o, t):
         input_index_loop_anchor_flags=[False],
         output_index_loop_anchor_flags=[True],
     )
-    template_module = matmul_unary_tpl.MatrixAddUnaryTemplate(
+    template_module = matmul_unary_tpl.MatmulUnaryTemplate(
         trivial_op_code_gen_class=trivial_op_code_gen_class
     )
     dtypes = [t.input0.dtype, t.input1.dtype, t.output1.dtype]

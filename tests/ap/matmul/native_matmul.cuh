@@ -4,9 +4,8 @@
 
 #include <iostream>
 #include "matmul.h"
-#include "epilogue_op.h"
 
-namespace native {
+namespace ap {
 
 template <typename T,
           size_t BlockTileSizeX,
@@ -184,8 +183,8 @@ __global__ void GemmKernel(size_t m, size_t n, size_t k, T const* A,
   }
 }
 
-template <typename T>
-void MatmulAdd(const ap::GemmEpilogueParams& params) {
+template <typename T, typename EpilogueFunctor>
+void NativeMatmulAdd(const ap::GemmEpilogueParams& params, const typename EpilogueFunctor::Arguments& epilogue_args) {
   size_t m = params.m;
   size_t n = params.n;
   size_t k = params.k;
@@ -217,15 +216,12 @@ void MatmulAdd(const ap::GemmEpilogueParams& params) {
   static_assert(kBlockTileSizeX * kBlockTileSizeK % kNumThreadsPerBlock == 0U);
   static_assert(kBlockTileSizeK * kBlockTileSizeY % kNumThreadsPerBlock == 0U);
 
-  typename ap::AddFunctor<T, 1, 1>::Arguments epilogue_args;
-  epilogue_args.ins[0] = params.bias;
-
   dim3 const block_dim{kNumThreadsPerBlock, 1U, 1U};
   dim3 const grid_dim{
       (static_cast<unsigned int>(n) + kBlockTileSizeX - 1U) / kBlockTileSizeX,
       (static_cast<unsigned int>(m) + kBlockTileSizeY - 1U) / kBlockTileSizeY,
       1U};
-  GemmKernel<T, kBlockTileSizeX, kBlockTileSizeY, kBlockTileSizeK, kThreadTileSizeX, kThreadTileSizeY, ap::AddFunctor<T, 1, 1>>
+  GemmKernel<T, kBlockTileSizeX, kBlockTileSizeY, kBlockTileSizeK, kThreadTileSizeX, kThreadTileSizeY, EpilogueFunctor>
       <<<grid_dim, block_dim, 0U, stream>>>(m, n, k, A, lda, B, ldb, C, ldc, epilogue_args);
 }
 

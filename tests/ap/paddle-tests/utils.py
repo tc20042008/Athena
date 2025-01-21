@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import contextlib
 from collections import defaultdict
 
 import numpy as np
@@ -22,6 +23,22 @@ import paddle
 JIT_KERNEL_NAME = "jit_kernel"
 __IF_OP_NAME = "pd_op.if"
 __WHILE_OP_NAME = "pd_op.while"
+
+
+@contextlib.contextmanager
+def profile_context(enabled):
+    if enabled:
+        # warmup
+        for i in range(10):
+            yield
+
+        # repeat
+        paddle.base.core.nvprof_start()
+        for i in range(1000):
+            yield
+        paddle.base.core.nvprof_stop()
+    else:
+        yield
 
 
 def unittest_use_cinn():
@@ -75,7 +92,7 @@ def check_jit_kernel_number(static_fn, expected_number):
     np.testing.assert_equal(jit_kernel_number, expected_number)
 
 
-def get_jit_kernel_structure_helper(block, map_info, if_op_idx='_0'):
+def get_jit_kernel_structure_helper(block, map_info, if_op_idx="_0"):
     """
     Recursivly generate JIT_KERNEL map_info for Static/Dynmaic Shape UT.
     """
@@ -94,12 +111,12 @@ def get_jit_kernel_structure_helper(block, map_info, if_op_idx='_0'):
             get_jit_kernel_structure_helper(
                 op.as_if_op().true_block(),
                 map_info[true_key],
-                if_op_idx + '_' + str(if_count),
+                if_op_idx + "_" + str(if_count),
             )
             get_jit_kernel_structure_helper(
                 op.as_if_op().false_block(),
                 map_info[false_key],
-                if_op_idx + '_' + str(if_count),
+                if_op_idx + "_" + str(if_count),
             )
             if_count += 1
 
