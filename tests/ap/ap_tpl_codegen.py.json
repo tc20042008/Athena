@@ -341,7 +341,7 @@
                   "__builtin_getattr__",
                   "DataType",
                   {
-                    "str": "float16"
+                    "str": "int32"
                   }
                 ]
               ],
@@ -351,48 +351,27 @@
                   "__builtin_list__",
                   "___30",
                   {
-                    "str": "auto"
+                    "str": "int"
                   }
                 ]
               ],
               [
                 "___32",
                 [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "int32"
-                  }
+                  "__builtin_list__",
+                  "___29",
+                  "___31"
                 ]
               ],
               [
                 "___33",
                 [
-                  "__builtin_list__",
-                  "___32",
-                  {
-                    "str": "int"
-                  }
+                  "OrderedDict",
+                  "___32"
                 ]
               ],
               [
                 "___34",
-                [
-                  "__builtin_list__",
-                  "___29",
-                  "___31",
-                  "___33"
-                ]
-              ],
-              [
-                "___35",
-                [
-                  "OrderedDict",
-                  "___34"
-                ]
-              ],
-              [
-                "___36",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -402,13 +381,13 @@
                 ]
               ],
               [
-                "___37",
+                "___35",
                 [
-                  "___36",
+                  "___34",
                   {
                     "str": "dtype2type_name"
                   },
-                  "___35"
+                  "___33"
                 ]
               ]
             ],
@@ -421,7 +400,7 @@
       ]
     ],
     [
-      "___38",
+      "___36",
       [
         "__builtin_getattr__",
         "__init__",
@@ -431,13 +410,13 @@
       ]
     ],
     [
-      "___39",
+      "___37",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___38"
+        "___36"
       ]
     ],
     [
@@ -455,7 +434,7 @@
             "__builtin_let__",
             [
               [
-                "___41",
+                "___39",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -465,17 +444,17 @@
                 ]
               ],
               [
-                "___40",
+                "___38",
                 [
                   "__builtin_getattr__",
-                  "___41",
+                  "___39",
                   {
                     "str": "append"
                   }
                 ]
               ],
               [
-                "___42",
+                "___40",
                 [
                   "__builtin_getattr__",
                   "dst",
@@ -485,14 +464,14 @@
                 ]
               ],
               [
-                "___43",
+                "___41",
                 [
                   "__builtin_ToString__",
-                  "___42"
+                  "___40"
                 ]
               ],
               [
-                "___44",
+                "___42",
                 [
                   "__builtin_ToString__",
                   {
@@ -501,15 +480,15 @@
                 ]
               ],
               [
-                "___45",
+                "___43",
                 [
                   "__builtin_Add__",
-                  "___43",
-                  "___44"
+                  "___41",
+                  "___42"
                 ]
               ],
               [
-                "___46",
+                "___44",
                 [
                   "__builtin_getattr__",
                   "src",
@@ -519,22 +498,22 @@
                 ]
               ],
               [
-                "___47",
+                "___45",
                 [
                   "__builtin_ToString__",
-                  "___46"
+                  "___44"
                 ]
               ],
               [
-                "___48",
+                "___46",
                 [
                   "__builtin_Add__",
-                  "___45",
-                  "___47"
+                  "___43",
+                  "___45"
                 ]
               ],
               [
-                "___49",
+                "___47",
                 [
                   "__builtin_ToString__",
                   {
@@ -543,25 +522,25 @@
                 ]
               ],
               [
-                "___50",
+                "___48",
                 [
                   "__builtin_Add__",
-                  "___48",
-                  "___49"
+                  "___46",
+                  "___47"
                 ]
               ],
               [
-                "___51",
+                "___49",
                 [
-                  "___40",
-                  "___50"
+                  "___38",
+                  "___48"
                 ]
               ],
               [
-                "___52",
+                "___50",
                 [
                   "__builtin_identity__",
-                  "___51"
+                  "___49"
                 ]
               ]
             ],
@@ -574,7 +553,7 @@
       ]
     ],
     [
-      "___53",
+      "___51",
       [
         "__builtin_getattr__",
         "assign",
@@ -584,13 +563,13 @@
       ]
     ],
     [
-      "___54",
+      "___52",
       [
         "__builtin_list__",
         {
           "str": "assign"
         },
-        "___53"
+        "___51"
       ]
     ],
     [
@@ -609,7 +588,7 @@
             "__builtin_let__",
             [
               [
-                "___55",
+                "___53",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -619,10 +598,10 @@
                 ]
               ],
               [
-                "___56",
+                "___54",
                 [
                   "__builtin_getitem__",
-                  "___55",
+                  "___53",
                   "dtype"
                 ]
               ],
@@ -630,11 +609,11 @@
                 "type_name",
                 [
                   "__builtin_identity__",
-                  "___56"
+                  "___54"
                 ]
               ],
               [
-                "___58",
+                "___56",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -644,29 +623,44 @@
                 ]
               ],
               [
-                "___57",
+                "___55",
                 [
                   "__builtin_getattr__",
-                  "___58",
+                  "___56",
                   {
                     "str": "append"
                   }
                 ]
               ],
               [
-                "___59",
+                "___57",
                 [
                   "__builtin_ToString__",
                   "type_name"
                 ]
               ],
               [
-                "___60",
+                "___58",
                 [
                   "__builtin_ToString__",
                   {
                     "str": " "
                   }
+                ]
+              ],
+              [
+                "___59",
+                [
+                  "__builtin_Add__",
+                  "___57",
+                  "___58"
+                ]
+              ],
+              [
+                "___60",
+                [
+                  "__builtin_ToString__",
+                  "var_name"
                 ]
               ],
               [
@@ -681,7 +675,9 @@
                 "___62",
                 [
                   "__builtin_ToString__",
-                  "var_name"
+                  {
+                    "str": " = "
+                  }
                 ]
               ],
               [
@@ -696,9 +692,7 @@
                 "___64",
                 [
                   "__builtin_ToString__",
-                  {
-                    "str": " = "
-                  }
+                  "val_name"
                 ]
               ],
               [
@@ -713,7 +707,9 @@
                 "___66",
                 [
                   "__builtin_ToString__",
-                  "val_name"
+                  {
+                    "str": ";"
+                  }
                 ]
               ],
               [
@@ -727,32 +723,15 @@
               [
                 "___68",
                 [
-                  "__builtin_ToString__",
-                  {
-                    "str": ";"
-                  }
+                  "___55",
+                  "___67"
                 ]
               ],
               [
                 "___69",
                 [
-                  "__builtin_Add__",
-                  "___67",
-                  "___68"
-                ]
-              ],
-              [
-                "___70",
-                [
-                  "___57",
-                  "___69"
-                ]
-              ],
-              [
-                "___71",
-                [
                   "__builtin_identity__",
-                  "___70"
+                  "___68"
                 ]
               ]
             ],
@@ -765,7 +744,7 @@
       ]
     ],
     [
-      "___72",
+      "___70",
       [
         "__builtin_getattr__",
         "let",
@@ -775,13 +754,13 @@
       ]
     ],
     [
-      "___73",
+      "___71",
       [
         "__builtin_list__",
         {
           "str": "let"
         },
-        "___72"
+        "___70"
       ]
     ],
     [
@@ -797,7 +776,7 @@
             "__builtin_let__",
             [
               [
-                "___74",
+                "___72",
                 [
                   "__builtin_getattr__",
                   {
@@ -809,7 +788,7 @@
                 ]
               ],
               [
-                "___75",
+                "___73",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -819,31 +798,31 @@
                 ]
               ],
               [
-                "___76",
+                "___74",
                 [
                   "__builtin_starred__",
+                  "___73"
+                ]
+              ],
+              [
+                "___75",
+                [
+                  "__builtin_list__",
+                  "___74"
+                ]
+              ],
+              [
+                "___76",
+                [
+                  "___72",
                   "___75"
                 ]
               ],
               [
                 "___77",
                 [
-                  "__builtin_list__",
-                  "___76"
-                ]
-              ],
-              [
-                "___78",
-                [
-                  "___74",
-                  "___77"
-                ]
-              ],
-              [
-                "___79",
-                [
                   "__builtin_return__",
-                  "___78"
+                  "___76"
                 ]
               ]
             ],
@@ -856,7 +835,7 @@
       ]
     ],
     [
-      "___80",
+      "___78",
       [
         "__builtin_getattr__",
         "get_stmts_joined_str",
@@ -866,66 +845,66 @@
       ]
     ],
     [
-      "___81",
+      "___79",
       [
         "__builtin_list__",
         {
           "str": "get_stmts_joined_str"
         },
-        "___80"
+        "___78"
       ]
     ],
     [
-      "___82",
+      "___80",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___83",
+      "___81",
       [
         "__builtin_list__",
-        "___39",
-        "___54",
-        "___73",
+        "___37",
+        "___52",
+        "___71",
+        "___79"
+      ]
+    ],
+    [
+      "___82",
+      [
+        "__builtin_PackedArgs__",
+        "___80",
         "___81"
       ]
     ],
     [
-      "___84",
-      [
-        "__builtin_PackedArgs__",
-        "___82",
-        "___83"
-      ]
-    ],
-    [
-      "___85",
+      "___83",
       [
         "BuiltinSerializableAttrMap",
-        "___84"
+        "___82"
       ]
     ],
     [
-      "___86",
+      "___84",
       [
         "type",
         {
           "str": "CudaLikeIrCodeGenCtx"
         },
         "___24",
-        "___85"
+        "___83"
       ]
     ],
     [
       "CudaLikeIrCodeGenCtx",
       [
         "__builtin_identity__",
-        "___86"
+        "___84"
       ]
     ],
     [
-      "___87",
+      "___85",
       [
         "__builtin_list__"
       ]
@@ -950,12 +929,32 @@
             "__builtin_let__",
             [
               [
-                "___88",
+                "___86",
                 [
                   "__builtin_setattr__",
                   "self",
                   {
                     "str": "index_expr_code_gen"
+                  }
+                ]
+              ],
+              [
+                "___87",
+                [
+                  "___86",
+                  {
+                    "str": "index_expr_code_gen"
+                  },
+                  "index_expr_code_gen"
+                ]
+              ],
+              [
+                "___88",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "unique_op_name"
                   }
                 ]
               ],
@@ -964,9 +963,9 @@
                 [
                   "___88",
                   {
-                    "str": "index_expr_code_gen"
+                    "str": "unique_op_name"
                   },
-                  "index_expr_code_gen"
+                  "unique_op_name"
                 ]
               ],
               [
@@ -975,7 +974,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "unique_op_name"
+                    "str": "input_dtypes"
                   }
                 ]
               ],
@@ -984,9 +983,9 @@
                 [
                   "___90",
                   {
-                    "str": "unique_op_name"
+                    "str": "input_dtypes"
                   },
-                  "unique_op_name"
+                  "input_dtypes"
                 ]
               ],
               [
@@ -995,7 +994,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "input_dtypes"
+                    "str": "output_dtypes"
                   }
                 ]
               ],
@@ -1004,9 +1003,9 @@
                 [
                   "___92",
                   {
-                    "str": "input_dtypes"
+                    "str": "output_dtypes"
                   },
-                  "input_dtypes"
+                  "output_dtypes"
                 ]
               ],
               [
@@ -1015,7 +1014,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "output_dtypes"
+                    "str": "input_index_tuple_exprs"
                   }
                 ]
               ],
@@ -1024,9 +1023,9 @@
                 [
                   "___94",
                   {
-                    "str": "output_dtypes"
+                    "str": "input_index_tuple_exprs"
                   },
-                  "output_dtypes"
+                  "input_index_tuple_exprs"
                 ]
               ],
               [
@@ -1035,7 +1034,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "input_index_tuple_exprs"
+                    "str": "output_index_tuple_exprs"
                   }
                 ]
               ],
@@ -1044,33 +1043,13 @@
                 [
                   "___96",
                   {
-                    "str": "input_index_tuple_exprs"
-                  },
-                  "input_index_tuple_exprs"
-                ]
-              ],
-              [
-                "___98",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___99",
-                [
-                  "___98",
-                  {
                     "str": "output_index_tuple_exprs"
                   },
                   "output_index_tuple_exprs"
                 ]
               ],
               [
-                "___100",
+                "___98",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1080,9 +1059,9 @@
                 ]
               ],
               [
-                "___101",
+                "___99",
                 [
-                  "___100",
+                  "___98",
                   {
                     "str": "attrs"
                   },
@@ -1099,7 +1078,7 @@
       ]
     ],
     [
-      "___102",
+      "___100",
       [
         "__builtin_getattr__",
         "__init__",
@@ -1109,13 +1088,13 @@
       ]
     ],
     [
-      "___103",
+      "___101",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___102"
+        "___100"
       ]
     ],
     [
@@ -1133,12 +1112,30 @@
             "__builtin_let__",
             [
               [
-                "___104",
+                "___102",
                 [
                   "__builtin_getattr__",
                   "self",
                   {
                     "str": "output_index_tuple_exprs"
+                  }
+                ]
+              ],
+              [
+                "___103",
+                [
+                  "__builtin_getitem__",
+                  "___102",
+                  0
+                ]
+              ],
+              [
+                "___104",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "output_dtypes"
                   }
                 ]
               ],
@@ -1156,37 +1153,19 @@
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "output_dtypes"
+                    "str": "unique_op_name"
                   }
                 ]
               ],
               [
                 "___107",
                 [
-                  "__builtin_getitem__",
-                  "___106",
-                  0
+                  "__builtin_ToString__",
+                  "___106"
                 ]
               ],
               [
                 "___108",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "unique_op_name"
-                  }
-                ]
-              ],
-              [
-                "___109",
-                [
-                  "__builtin_ToString__",
-                  "___108"
-                ]
-              ],
-              [
-                "___110",
                 [
                   "__builtin_ToString__",
                   {
@@ -1195,31 +1174,31 @@
                 ]
               ],
               [
-                "___111",
+                "___109",
                 [
                   "__builtin_Add__",
-                  "___109",
-                  "___110"
+                  "___107",
+                  "___108"
                 ]
               ],
               [
-                "___112",
+                "___110",
                 [
                   "CodeGenValue",
+                  "___103",
                   "___105",
-                  "___107",
-                  "___111"
+                  "___109"
                 ]
               ],
               [
                 "out",
                 [
                   "__builtin_identity__",
-                  "___112"
+                  "___110"
                 ]
               ],
               [
-                "___113",
+                "___111",
                 [
                   "__builtin_ToString__",
                   {
@@ -1228,7 +1207,7 @@
                 ]
               ],
               [
-                "___114",
+                "___112",
                 [
                   "__builtin_getattr__",
                   "x",
@@ -1238,22 +1217,22 @@
                 ]
               ],
               [
-                "___115",
+                "___113",
                 [
                   "__builtin_ToString__",
-                  "___114"
+                  "___112"
                 ]
               ],
               [
-                "___116",
+                "___114",
                 [
                   "__builtin_Add__",
-                  "___113",
-                  "___115"
+                  "___111",
+                  "___113"
                 ]
               ],
               [
-                "___117",
+                "___115",
                 [
                   "__builtin_ToString__",
                   {
@@ -1262,22 +1241,22 @@
                 ]
               ],
               [
-                "___118",
+                "___116",
                 [
                   "__builtin_Add__",
-                  "___116",
-                  "___117"
+                  "___114",
+                  "___115"
                 ]
               ],
               [
                 "val",
                 [
                   "__builtin_identity__",
-                  "___118"
+                  "___116"
                 ]
               ],
               [
-                "___119",
+                "___117",
                 [
                   "__builtin_getattr__",
                   "lir_code_gen_ctx",
@@ -1287,7 +1266,7 @@
                 ]
               ],
               [
-                "___120",
+                "___118",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -1297,7 +1276,7 @@
                 ]
               ],
               [
-                "___121",
+                "___119",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -1307,33 +1286,33 @@
                 ]
               ],
               [
-                "___122",
+                "___120",
                 [
+                  "___117",
+                  "___118",
                   "___119",
-                  "___120",
-                  "___121",
                   "val"
                 ]
               ],
               [
-                "___123",
+                "___121",
                 [
                   "__builtin_identity__",
-                  "___122"
+                  "___120"
                 ]
               ],
               [
-                "___124",
+                "___122",
                 [
                   "__builtin_list__",
                   "out"
                 ]
               ],
               [
-                "___125",
+                "___123",
                 [
                   "__builtin_return__",
-                  "___124"
+                  "___122"
                 ]
               ]
             ],
@@ -1346,7 +1325,7 @@
       ]
     ],
     [
-      "___126",
+      "___124",
       [
         "__builtin_getattr__",
         "__call__",
@@ -1356,64 +1335,64 @@
       ]
     ],
     [
-      "___127",
+      "___125",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___126"
+        "___124"
       ]
     ],
     [
-      "___128",
+      "___126",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___129",
+      "___127",
       [
         "__builtin_list__",
-        "___103",
+        "___101",
+        "___125"
+      ]
+    ],
+    [
+      "___128",
+      [
+        "__builtin_PackedArgs__",
+        "___126",
         "___127"
+      ]
+    ],
+    [
+      "___129",
+      [
+        "BuiltinSerializableAttrMap",
+        "___128"
       ]
     ],
     [
       "___130",
       [
-        "__builtin_PackedArgs__",
-        "___128",
-        "___129"
-      ]
-    ],
-    [
-      "___131",
-      [
-        "BuiltinSerializableAttrMap",
-        "___130"
-      ]
-    ],
-    [
-      "___132",
-      [
         "type",
         {
           "str": "PdOpExpCodeGen"
         },
-        "___87",
-        "___131"
+        "___85",
+        "___129"
       ]
     ],
     [
       "PdOpExpCodeGen",
       [
         "__builtin_identity__",
-        "___132"
+        "___130"
       ]
     ],
     [
-      "___133",
+      "___131",
       [
         "__builtin_list__"
       ]
@@ -1438,12 +1417,32 @@
             "__builtin_let__",
             [
               [
-                "___134",
+                "___132",
                 [
                   "__builtin_setattr__",
                   "self",
                   {
                     "str": "index_expr_code_gen"
+                  }
+                ]
+              ],
+              [
+                "___133",
+                [
+                  "___132",
+                  {
+                    "str": "index_expr_code_gen"
+                  },
+                  "index_expr_code_gen"
+                ]
+              ],
+              [
+                "___134",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "unique_op_name"
                   }
                 ]
               ],
@@ -1452,9 +1451,9 @@
                 [
                   "___134",
                   {
-                    "str": "index_expr_code_gen"
+                    "str": "unique_op_name"
                   },
-                  "index_expr_code_gen"
+                  "unique_op_name"
                 ]
               ],
               [
@@ -1463,7 +1462,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "unique_op_name"
+                    "str": "input_dtypes"
                   }
                 ]
               ],
@@ -1472,9 +1471,9 @@
                 [
                   "___136",
                   {
-                    "str": "unique_op_name"
+                    "str": "input_dtypes"
                   },
-                  "unique_op_name"
+                  "input_dtypes"
                 ]
               ],
               [
@@ -1483,7 +1482,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "input_dtypes"
+                    "str": "output_dtypes"
                   }
                 ]
               ],
@@ -1492,9 +1491,9 @@
                 [
                   "___138",
                   {
-                    "str": "input_dtypes"
+                    "str": "output_dtypes"
                   },
-                  "input_dtypes"
+                  "output_dtypes"
                 ]
               ],
               [
@@ -1503,7 +1502,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "output_dtypes"
+                    "str": "input_index_tuple_exprs"
                   }
                 ]
               ],
@@ -1512,9 +1511,9 @@
                 [
                   "___140",
                   {
-                    "str": "output_dtypes"
+                    "str": "input_index_tuple_exprs"
                   },
-                  "output_dtypes"
+                  "input_index_tuple_exprs"
                 ]
               ],
               [
@@ -1523,7 +1522,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "input_index_tuple_exprs"
+                    "str": "output_index_tuple_exprs"
                   }
                 ]
               ],
@@ -1532,33 +1531,13 @@
                 [
                   "___142",
                   {
-                    "str": "input_index_tuple_exprs"
-                  },
-                  "input_index_tuple_exprs"
-                ]
-              ],
-              [
-                "___144",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___145",
-                [
-                  "___144",
-                  {
                     "str": "output_index_tuple_exprs"
                   },
                   "output_index_tuple_exprs"
                 ]
               ],
               [
-                "___146",
+                "___144",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1568,9 +1547,9 @@
                 ]
               ],
               [
-                "___147",
+                "___145",
                 [
-                  "___146",
+                  "___144",
                   {
                     "str": "attrs"
                   },
@@ -1587,7 +1566,7 @@
       ]
     ],
     [
-      "___148",
+      "___146",
       [
         "__builtin_getattr__",
         "__init__",
@@ -1597,13 +1576,13 @@
       ]
     ],
     [
-      "___149",
+      "___147",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___148"
+        "___146"
       ]
     ],
     [
@@ -1615,18 +1594,37 @@
           [
             "self",
             "lir_code_gen_ctx",
-            "x"
+            "a",
+            "b"
           ],
           [
             "__builtin_let__",
             [
+              [
+                "___148",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "output_index_tuple_exprs"
+                  }
+                ]
+              ],
+              [
+                "___149",
+                [
+                  "__builtin_getitem__",
+                  "___148",
+                  0
+                ]
+              ],
               [
                 "___150",
                 [
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "output_index_tuple_exprs"
+                    "str": "output_dtypes"
                   }
                 ]
               ],
@@ -1644,1056 +1642,61 @@
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "output_dtypes"
+                    "str": "unique_op_name"
                   }
                 ]
               ],
               [
                 "___153",
                 [
-                  "__builtin_getitem__",
-                  "___152",
-                  0
+                  "__builtin_ToString__",
+                  "___152"
                 ]
               ],
               [
                 "___154",
                 [
-                  "__builtin_getattr__",
-                  "self",
+                  "__builtin_ToString__",
                   {
-                    "str": "unique_op_name"
+                    "str": "_0"
                   }
                 ]
               ],
               [
                 "___155",
                 [
-                  "__builtin_ToString__",
+                  "__builtin_Add__",
+                  "___153",
                   "___154"
                 ]
               ],
               [
                 "___156",
                 [
-                  "__builtin_ToString__",
-                  {
-                    "str": "_0"
-                  }
+                  "CodeGenValue",
+                  "___149",
+                  "___151",
+                  "___155"
+                ]
+              ],
+              [
+                "out",
+                [
+                  "__builtin_identity__",
+                  "___156"
                 ]
               ],
               [
                 "___157",
                 [
-                  "__builtin_Add__",
-                  "___155",
-                  "___156"
+                  "__builtin_ToString__",
+                  {
+                    "str": "("
+                  }
                 ]
               ],
               [
                 "___158",
-                [
-                  "CodeGenValue",
-                  "___151",
-                  "___153",
-                  "___157"
-                ]
-              ],
-              [
-                "out",
-                [
-                  "__builtin_identity__",
-                  "___158"
-                ]
-              ],
-              [
-                "___159",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": "sin("
-                  }
-                ]
-              ],
-              [
-                "___160",
-                [
-                  "__builtin_getattr__",
-                  "x",
-                  {
-                    "str": "var_name"
-                  }
-                ]
-              ],
-              [
-                "___161",
-                [
-                  "__builtin_ToString__",
-                  "___160"
-                ]
-              ],
-              [
-                "___162",
-                [
-                  "__builtin_Add__",
-                  "___159",
-                  "___161"
-                ]
-              ],
-              [
-                "___163",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": ")"
-                  }
-                ]
-              ],
-              [
-                "___164",
-                [
-                  "__builtin_Add__",
-                  "___162",
-                  "___163"
-                ]
-              ],
-              [
-                "val",
-                [
-                  "__builtin_identity__",
-                  "___164"
-                ]
-              ],
-              [
-                "___165",
-                [
-                  "__builtin_getattr__",
-                  "lir_code_gen_ctx",
-                  {
-                    "str": "let"
-                  }
-                ]
-              ],
-              [
-                "___166",
-                [
-                  "__builtin_getattr__",
-                  "out",
-                  {
-                    "str": "dtype"
-                  }
-                ]
-              ],
-              [
-                "___167",
-                [
-                  "__builtin_getattr__",
-                  "out",
-                  {
-                    "str": "var_name"
-                  }
-                ]
-              ],
-              [
-                "___168",
-                [
-                  "___165",
-                  "___166",
-                  "___167",
-                  "val"
-                ]
-              ],
-              [
-                "___169",
-                [
-                  "__builtin_identity__",
-                  "___168"
-                ]
-              ],
-              [
-                "___170",
-                [
-                  "__builtin_list__",
-                  "out"
-                ]
-              ],
-              [
-                "___171",
-                [
-                  "__builtin_return__",
-                  "___170"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___172",
-      [
-        "__builtin_getattr__",
-        "__call__",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___173",
-      [
-        "__builtin_list__",
-        {
-          "str": "__call__"
-        },
-        "___172"
-      ]
-    ],
-    [
-      "___174",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___175",
-      [
-        "__builtin_list__",
-        "___149",
-        "___173"
-      ]
-    ],
-    [
-      "___176",
-      [
-        "__builtin_PackedArgs__",
-        "___174",
-        "___175"
-      ]
-    ],
-    [
-      "___177",
-      [
-        "BuiltinSerializableAttrMap",
-        "___176"
-      ]
-    ],
-    [
-      "___178",
-      [
-        "type",
-        {
-          "str": "PdOpSinCodeGen"
-        },
-        "___133",
-        "___177"
-      ]
-    ],
-    [
-      "PdOpSinCodeGen",
-      [
-        "__builtin_identity__",
-        "___178"
-      ]
-    ],
-    [
-      "___179",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "__init__",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "index_expr_code_gen",
-            "unique_op_name",
-            "input_dtypes",
-            "output_dtypes",
-            "input_index_tuple_exprs",
-            "output_index_tuple_exprs",
-            "attrs"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___180",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "index_expr_code_gen"
-                  }
-                ]
-              ],
-              [
-                "___181",
-                [
-                  "___180",
-                  {
-                    "str": "index_expr_code_gen"
-                  },
-                  "index_expr_code_gen"
-                ]
-              ],
-              [
-                "___182",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "unique_op_name"
-                  }
-                ]
-              ],
-              [
-                "___183",
-                [
-                  "___182",
-                  {
-                    "str": "unique_op_name"
-                  },
-                  "unique_op_name"
-                ]
-              ],
-              [
-                "___184",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "input_dtypes"
-                  }
-                ]
-              ],
-              [
-                "___185",
-                [
-                  "___184",
-                  {
-                    "str": "input_dtypes"
-                  },
-                  "input_dtypes"
-                ]
-              ],
-              [
-                "___186",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "output_dtypes"
-                  }
-                ]
-              ],
-              [
-                "___187",
-                [
-                  "___186",
-                  {
-                    "str": "output_dtypes"
-                  },
-                  "output_dtypes"
-                ]
-              ],
-              [
-                "___188",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "input_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___189",
-                [
-                  "___188",
-                  {
-                    "str": "input_index_tuple_exprs"
-                  },
-                  "input_index_tuple_exprs"
-                ]
-              ],
-              [
-                "___190",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___191",
-                [
-                  "___190",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  },
-                  "output_index_tuple_exprs"
-                ]
-              ],
-              [
-                "___192",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "attrs"
-                  }
-                ]
-              ],
-              [
-                "___193",
-                [
-                  "___192",
-                  {
-                    "str": "attrs"
-                  },
-                  "attrs"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___194",
-      [
-        "__builtin_getattr__",
-        "__init__",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___195",
-      [
-        "__builtin_list__",
-        {
-          "str": "__init__"
-        },
-        "___194"
-      ]
-    ],
-    [
-      "__call__",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "lir_code_gen_ctx",
-            "x"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___196",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___197",
-                [
-                  "__builtin_getitem__",
-                  "___196",
-                  0
-                ]
-              ],
-              [
-                "___198",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "output_dtypes"
-                  }
-                ]
-              ],
-              [
-                "___199",
-                [
-                  "__builtin_getitem__",
-                  "___198",
-                  0
-                ]
-              ],
-              [
-                "___200",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "unique_op_name"
-                  }
-                ]
-              ],
-              [
-                "___201",
-                [
-                  "__builtin_ToString__",
-                  "___200"
-                ]
-              ],
-              [
-                "___202",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": "_0"
-                  }
-                ]
-              ],
-              [
-                "___203",
-                [
-                  "__builtin_Add__",
-                  "___201",
-                  "___202"
-                ]
-              ],
-              [
-                "___204",
-                [
-                  "CodeGenValue",
-                  "___197",
-                  "___199",
-                  "___203"
-                ]
-              ],
-              [
-                "out",
-                [
-                  "__builtin_identity__",
-                  "___204"
-                ]
-              ],
-              [
-                "___205",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": "("
-                  }
-                ]
-              ],
-              [
-                "___206",
-                [
-                  "__builtin_getattr__",
-                  "x",
-                  {
-                    "str": "var_name"
-                  }
-                ]
-              ],
-              [
-                "___207",
-                [
-                  "__builtin_ToString__",
-                  "___206"
-                ]
-              ],
-              [
-                "___208",
-                [
-                  "__builtin_Add__",
-                  "___205",
-                  "___207"
-                ]
-              ],
-              [
-                "___209",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": ") * static_cast<float>(0.1)"
-                  }
-                ]
-              ],
-              [
-                "___210",
-                [
-                  "__builtin_Add__",
-                  "___208",
-                  "___209"
-                ]
-              ],
-              [
-                "val",
-                [
-                  "__builtin_identity__",
-                  "___210"
-                ]
-              ],
-              [
-                "___211",
-                [
-                  "__builtin_getattr__",
-                  "lir_code_gen_ctx",
-                  {
-                    "str": "let"
-                  }
-                ]
-              ],
-              [
-                "___212",
-                [
-                  "__builtin_getattr__",
-                  "out",
-                  {
-                    "str": "dtype"
-                  }
-                ]
-              ],
-              [
-                "___213",
-                [
-                  "__builtin_getattr__",
-                  "out",
-                  {
-                    "str": "var_name"
-                  }
-                ]
-              ],
-              [
-                "___214",
-                [
-                  "___211",
-                  "___212",
-                  "___213",
-                  "val"
-                ]
-              ],
-              [
-                "___215",
-                [
-                  "__builtin_identity__",
-                  "___214"
-                ]
-              ],
-              [
-                "___216",
-                [
-                  "__builtin_list__",
-                  "out"
-                ]
-              ],
-              [
-                "___217",
-                [
-                  "__builtin_return__",
-                  "___216"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___218",
-      [
-        "__builtin_getattr__",
-        "__call__",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___219",
-      [
-        "__builtin_list__",
-        {
-          "str": "__call__"
-        },
-        "___218"
-      ]
-    ],
-    [
-      "___220",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___221",
-      [
-        "__builtin_list__",
-        "___195",
-        "___219"
-      ]
-    ],
-    [
-      "___222",
-      [
-        "__builtin_PackedArgs__",
-        "___220",
-        "___221"
-      ]
-    ],
-    [
-      "___223",
-      [
-        "BuiltinSerializableAttrMap",
-        "___222"
-      ]
-    ],
-    [
-      "___224",
-      [
-        "type",
-        {
-          "str": "PdOpScaleCodeGen"
-        },
-        "___179",
-        "___223"
-      ]
-    ],
-    [
-      "PdOpScaleCodeGen",
-      [
-        "__builtin_identity__",
-        "___224"
-      ]
-    ],
-    [
-      "___225",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "__init__",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "index_expr_code_gen",
-            "unique_op_name",
-            "input_dtypes",
-            "output_dtypes",
-            "input_index_tuple_exprs",
-            "output_index_tuple_exprs",
-            "attrs"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___226",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "index_expr_code_gen"
-                  }
-                ]
-              ],
-              [
-                "___227",
-                [
-                  "___226",
-                  {
-                    "str": "index_expr_code_gen"
-                  },
-                  "index_expr_code_gen"
-                ]
-              ],
-              [
-                "___228",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "unique_op_name"
-                  }
-                ]
-              ],
-              [
-                "___229",
-                [
-                  "___228",
-                  {
-                    "str": "unique_op_name"
-                  },
-                  "unique_op_name"
-                ]
-              ],
-              [
-                "___230",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "input_dtypes"
-                  }
-                ]
-              ],
-              [
-                "___231",
-                [
-                  "___230",
-                  {
-                    "str": "input_dtypes"
-                  },
-                  "input_dtypes"
-                ]
-              ],
-              [
-                "___232",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "output_dtypes"
-                  }
-                ]
-              ],
-              [
-                "___233",
-                [
-                  "___232",
-                  {
-                    "str": "output_dtypes"
-                  },
-                  "output_dtypes"
-                ]
-              ],
-              [
-                "___234",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "input_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___235",
-                [
-                  "___234",
-                  {
-                    "str": "input_index_tuple_exprs"
-                  },
-                  "input_index_tuple_exprs"
-                ]
-              ],
-              [
-                "___236",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___237",
-                [
-                  "___236",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  },
-                  "output_index_tuple_exprs"
-                ]
-              ],
-              [
-                "___238",
-                [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "attrs"
-                  }
-                ]
-              ],
-              [
-                "___239",
-                [
-                  "___238",
-                  {
-                    "str": "attrs"
-                  },
-                  "attrs"
-                ]
-              ]
-            ],
-            [
-              "__builtin_identity__",
-              null
-            ]
-          ]
-        ]
-      ]
-    ],
-    [
-      "___240",
-      [
-        "__builtin_getattr__",
-        "__init__",
-        {
-          "str": "__function__"
-        }
-      ]
-    ],
-    [
-      "___241",
-      [
-        "__builtin_list__",
-        {
-          "str": "__init__"
-        },
-        "___240"
-      ]
-    ],
-    [
-      "__call__",
-      [
-        "__builtin_identity__",
-        [
-          "lambda",
-          [
-            "self",
-            "lir_code_gen_ctx",
-            "a",
-            "b"
-          ],
-          [
-            "__builtin_let__",
-            [
-              [
-                "___242",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "output_index_tuple_exprs"
-                  }
-                ]
-              ],
-              [
-                "___243",
-                [
-                  "__builtin_getitem__",
-                  "___242",
-                  0
-                ]
-              ],
-              [
-                "___244",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "output_dtypes"
-                  }
-                ]
-              ],
-              [
-                "___245",
-                [
-                  "__builtin_getitem__",
-                  "___244",
-                  0
-                ]
-              ],
-              [
-                "___246",
-                [
-                  "__builtin_getattr__",
-                  "self",
-                  {
-                    "str": "unique_op_name"
-                  }
-                ]
-              ],
-              [
-                "___247",
-                [
-                  "__builtin_ToString__",
-                  "___246"
-                ]
-              ],
-              [
-                "___248",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": "_0"
-                  }
-                ]
-              ],
-              [
-                "___249",
-                [
-                  "__builtin_Add__",
-                  "___247",
-                  "___248"
-                ]
-              ],
-              [
-                "___250",
-                [
-                  "CodeGenValue",
-                  "___243",
-                  "___245",
-                  "___249"
-                ]
-              ],
-              [
-                "out",
-                [
-                  "__builtin_identity__",
-                  "___250"
-                ]
-              ],
-              [
-                "___251",
-                [
-                  "__builtin_ToString__",
-                  {
-                    "str": "("
-                  }
-                ]
-              ],
-              [
-                "___252",
                 [
                   "__builtin_getattr__",
                   "a",
@@ -2703,22 +1706,22 @@
                 ]
               ],
               [
-                "___253",
+                "___159",
                 [
                   "__builtin_ToString__",
-                  "___252"
+                  "___158"
                 ]
               ],
               [
-                "___254",
+                "___160",
                 [
                   "__builtin_Add__",
-                  "___251",
-                  "___253"
+                  "___157",
+                  "___159"
                 ]
               ],
               [
-                "___255",
+                "___161",
                 [
                   "__builtin_ToString__",
                   {
@@ -2727,15 +1730,15 @@
                 ]
               ],
               [
-                "___256",
+                "___162",
                 [
                   "__builtin_Add__",
-                  "___254",
-                  "___255"
+                  "___160",
+                  "___161"
                 ]
               ],
               [
-                "___257",
+                "___163",
                 [
                   "__builtin_getattr__",
                   "b",
@@ -2745,22 +1748,22 @@
                 ]
               ],
               [
-                "___258",
+                "___164",
                 [
                   "__builtin_ToString__",
-                  "___257"
+                  "___163"
                 ]
               ],
               [
-                "___259",
+                "___165",
                 [
                   "__builtin_Add__",
-                  "___256",
-                  "___258"
+                  "___162",
+                  "___164"
                 ]
               ],
               [
-                "___260",
+                "___166",
                 [
                   "__builtin_ToString__",
                   {
@@ -2769,22 +1772,22 @@
                 ]
               ],
               [
-                "___261",
+                "___167",
                 [
                   "__builtin_Add__",
-                  "___259",
-                  "___260"
+                  "___165",
+                  "___166"
                 ]
               ],
               [
                 "val",
                 [
                   "__builtin_identity__",
-                  "___261"
+                  "___167"
                 ]
               ],
               [
-                "___262",
+                "___168",
                 [
                   "__builtin_getattr__",
                   "lir_code_gen_ctx",
@@ -2794,7 +1797,7 @@
                 ]
               ],
               [
-                "___263",
+                "___169",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -2804,7 +1807,7 @@
                 ]
               ],
               [
-                "___264",
+                "___170",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -2814,33 +1817,33 @@
                 ]
               ],
               [
-                "___265",
+                "___171",
                 [
-                  "___262",
-                  "___263",
-                  "___264",
+                  "___168",
+                  "___169",
+                  "___170",
                   "val"
                 ]
               ],
               [
-                "___266",
+                "___172",
                 [
                   "__builtin_identity__",
-                  "___265"
+                  "___171"
                 ]
               ],
               [
-                "___267",
+                "___173",
                 [
                   "__builtin_list__",
                   "out"
                 ]
               ],
               [
-                "___268",
+                "___174",
                 [
                   "__builtin_return__",
-                  "___267"
+                  "___173"
                 ]
               ]
             ],
@@ -2853,7 +1856,7 @@
       ]
     ],
     [
-      "___269",
+      "___175",
       [
         "__builtin_getattr__",
         "__call__",
@@ -2863,64 +1866,64 @@
       ]
     ],
     [
-      "___270",
+      "___176",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___269"
+        "___175"
       ]
     ],
     [
-      "___271",
+      "___177",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___272",
+      "___178",
       [
         "__builtin_list__",
-        "___241",
-        "___270"
+        "___147",
+        "___176"
       ]
     ],
     [
-      "___273",
+      "___179",
       [
         "__builtin_PackedArgs__",
-        "___271",
-        "___272"
+        "___177",
+        "___178"
       ]
     ],
     [
-      "___274",
+      "___180",
       [
         "BuiltinSerializableAttrMap",
-        "___273"
+        "___179"
       ]
     ],
     [
-      "___275",
+      "___181",
       [
         "type",
         {
           "str": "PdOpSubstractCodeGen"
         },
-        "___225",
-        "___274"
+        "___131",
+        "___180"
       ]
     ],
     [
       "PdOpSubstractCodeGen",
       [
         "__builtin_identity__",
-        "___275"
+        "___181"
       ]
     ],
     [
-      "___276",
+      "___182",
       [
         "__builtin_list__"
       ]
@@ -2945,7 +1948,7 @@
             "__builtin_let__",
             [
               [
-                "___277",
+                "___183",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -2955,9 +1958,9 @@
                 ]
               ],
               [
-                "___278",
+                "___184",
                 [
-                  "___277",
+                  "___183",
                   {
                     "str": "index_expr_code_gen"
                   },
@@ -2965,7 +1968,7 @@
                 ]
               ],
               [
-                "___279",
+                "___185",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -2975,9 +1978,9 @@
                 ]
               ],
               [
-                "___280",
+                "___186",
                 [
-                  "___279",
+                  "___185",
                   {
                     "str": "unique_op_name"
                   },
@@ -2985,7 +1988,7 @@
                 ]
               ],
               [
-                "___281",
+                "___187",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -2995,9 +1998,9 @@
                 ]
               ],
               [
-                "___282",
+                "___188",
                 [
-                  "___281",
+                  "___187",
                   {
                     "str": "input_dtypes"
                   },
@@ -3005,7 +2008,7 @@
                 ]
               ],
               [
-                "___283",
+                "___189",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3015,9 +2018,9 @@
                 ]
               ],
               [
-                "___284",
+                "___190",
                 [
-                  "___283",
+                  "___189",
                   {
                     "str": "output_dtypes"
                   },
@@ -3025,7 +2028,7 @@
                 ]
               ],
               [
-                "___285",
+                "___191",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3035,9 +2038,9 @@
                 ]
               ],
               [
-                "___286",
+                "___192",
                 [
-                  "___285",
+                  "___191",
                   {
                     "str": "input_index_tuple_exprs"
                   },
@@ -3045,7 +2048,7 @@
                 ]
               ],
               [
-                "___287",
+                "___193",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3055,9 +2058,9 @@
                 ]
               ],
               [
-                "___288",
+                "___194",
                 [
-                  "___287",
+                  "___193",
                   {
                     "str": "output_index_tuple_exprs"
                   },
@@ -3065,7 +2068,7 @@
                 ]
               ],
               [
-                "___289",
+                "___195",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3075,9 +2078,9 @@
                 ]
               ],
               [
-                "___290",
+                "___196",
                 [
-                  "___289",
+                  "___195",
                   {
                     "str": "attrs"
                   },
@@ -3094,7 +2097,7 @@
       ]
     ],
     [
-      "___291",
+      "___197",
       [
         "__builtin_getattr__",
         "__init__",
@@ -3104,13 +2107,13 @@
       ]
     ],
     [
-      "___292",
+      "___198",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___291"
+        "___197"
       ]
     ],
     [
@@ -3129,7 +2132,7 @@
             "__builtin_let__",
             [
               [
-                "___293",
+                "___199",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -3139,15 +2142,15 @@
                 ]
               ],
               [
-                "___294",
+                "___200",
                 [
                   "__builtin_getitem__",
-                  "___293",
+                  "___199",
                   0
                 ]
               ],
               [
-                "___295",
+                "___201",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -3157,15 +2160,15 @@
                 ]
               ],
               [
-                "___296",
+                "___202",
                 [
                   "__builtin_getitem__",
-                  "___295",
+                  "___201",
                   0
                 ]
               ],
               [
-                "___297",
+                "___203",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -3175,14 +2178,14 @@
                 ]
               ],
               [
-                "___298",
+                "___204",
                 [
                   "__builtin_ToString__",
-                  "___297"
+                  "___203"
                 ]
               ],
               [
-                "___299",
+                "___205",
                 [
                   "__builtin_ToString__",
                   {
@@ -3191,31 +2194,31 @@
                 ]
               ],
               [
-                "___300",
+                "___206",
                 [
                   "__builtin_Add__",
-                  "___298",
-                  "___299"
+                  "___204",
+                  "___205"
                 ]
               ],
               [
-                "___301",
+                "___207",
                 [
                   "CodeGenValue",
-                  "___294",
-                  "___296",
-                  "___300"
+                  "___200",
+                  "___202",
+                  "___206"
                 ]
               ],
               [
                 "out",
                 [
                   "__builtin_identity__",
-                  "___301"
+                  "___207"
                 ]
               ],
               [
-                "___302",
+                "___208",
                 [
                   "__builtin_ToString__",
                   {
@@ -3224,7 +2227,7 @@
                 ]
               ],
               [
-                "___303",
+                "___209",
                 [
                   "__builtin_getattr__",
                   "a",
@@ -3234,22 +2237,22 @@
                 ]
               ],
               [
-                "___304",
+                "___210",
                 [
                   "__builtin_ToString__",
-                  "___303"
+                  "___209"
                 ]
               ],
               [
-                "___305",
+                "___211",
                 [
                   "__builtin_Add__",
-                  "___302",
-                  "___304"
+                  "___208",
+                  "___210"
                 ]
               ],
               [
-                "___306",
+                "___212",
                 [
                   "__builtin_ToString__",
                   {
@@ -3258,15 +2261,15 @@
                 ]
               ],
               [
-                "___307",
+                "___213",
                 [
                   "__builtin_Add__",
-                  "___305",
-                  "___306"
+                  "___211",
+                  "___212"
                 ]
               ],
               [
-                "___308",
+                "___214",
                 [
                   "__builtin_getattr__",
                   "b",
@@ -3276,22 +2279,22 @@
                 ]
               ],
               [
-                "___309",
+                "___215",
                 [
                   "__builtin_ToString__",
-                  "___308"
+                  "___214"
                 ]
               ],
               [
-                "___310",
+                "___216",
                 [
                   "__builtin_Add__",
-                  "___307",
-                  "___309"
+                  "___213",
+                  "___215"
                 ]
               ],
               [
-                "___311",
+                "___217",
                 [
                   "__builtin_ToString__",
                   {
@@ -3300,22 +2303,22 @@
                 ]
               ],
               [
-                "___312",
+                "___218",
                 [
                   "__builtin_Add__",
-                  "___310",
-                  "___311"
+                  "___216",
+                  "___217"
                 ]
               ],
               [
                 "val",
                 [
                   "__builtin_identity__",
-                  "___312"
+                  "___218"
                 ]
               ],
               [
-                "___313",
+                "___219",
                 [
                   "__builtin_getattr__",
                   "lir_code_gen_ctx",
@@ -3325,7 +2328,7 @@
                 ]
               ],
               [
-                "___314",
+                "___220",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -3335,7 +2338,7 @@
                 ]
               ],
               [
-                "___315",
+                "___221",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -3345,33 +2348,33 @@
                 ]
               ],
               [
-                "___316",
+                "___222",
                 [
-                  "___313",
-                  "___314",
-                  "___315",
+                  "___219",
+                  "___220",
+                  "___221",
                   "val"
                 ]
               ],
               [
-                "___317",
+                "___223",
                 [
                   "__builtin_identity__",
-                  "___316"
+                  "___222"
                 ]
               ],
               [
-                "___318",
+                "___224",
                 [
                   "__builtin_list__",
                   "out"
                 ]
               ],
               [
-                "___319",
+                "___225",
                 [
                   "__builtin_return__",
-                  "___318"
+                  "___224"
                 ]
               ]
             ],
@@ -3384,7 +2387,7 @@
       ]
     ],
     [
-      "___320",
+      "___226",
       [
         "__builtin_getattr__",
         "__call__",
@@ -3394,64 +2397,64 @@
       ]
     ],
     [
-      "___321",
+      "___227",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___320"
+        "___226"
       ]
     ],
     [
-      "___322",
+      "___228",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___323",
+      "___229",
       [
         "__builtin_list__",
-        "___292",
-        "___321"
+        "___198",
+        "___227"
       ]
     ],
     [
-      "___324",
+      "___230",
       [
         "__builtin_PackedArgs__",
-        "___322",
-        "___323"
+        "___228",
+        "___229"
       ]
     ],
     [
-      "___325",
+      "___231",
       [
         "BuiltinSerializableAttrMap",
-        "___324"
+        "___230"
       ]
     ],
     [
-      "___326",
+      "___232",
       [
         "type",
         {
           "str": "PdOpAddCodeGen"
         },
-        "___276",
-        "___325"
+        "___182",
+        "___231"
       ]
     ],
     [
       "PdOpAddCodeGen",
       [
         "__builtin_identity__",
-        "___326"
+        "___232"
       ]
     ],
     [
-      "___327",
+      "___233",
       [
         "__builtin_list__"
       ]
@@ -3476,7 +2479,7 @@
             "__builtin_let__",
             [
               [
-                "___328",
+                "___234",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3486,9 +2489,9 @@
                 ]
               ],
               [
-                "___329",
+                "___235",
                 [
-                  "___328",
+                  "___234",
                   {
                     "str": "index_expr_code_gen"
                   },
@@ -3496,7 +2499,7 @@
                 ]
               ],
               [
-                "___330",
+                "___236",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3506,9 +2509,9 @@
                 ]
               ],
               [
-                "___331",
+                "___237",
                 [
-                  "___330",
+                  "___236",
                   {
                     "str": "unique_op_name"
                   },
@@ -3516,7 +2519,7 @@
                 ]
               ],
               [
-                "___332",
+                "___238",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3526,9 +2529,9 @@
                 ]
               ],
               [
-                "___333",
+                "___239",
                 [
-                  "___332",
+                  "___238",
                   {
                     "str": "input_dtypes"
                   },
@@ -3536,7 +2539,7 @@
                 ]
               ],
               [
-                "___334",
+                "___240",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3546,9 +2549,9 @@
                 ]
               ],
               [
-                "___335",
+                "___241",
                 [
-                  "___334",
+                  "___240",
                   {
                     "str": "output_dtypes"
                   },
@@ -3556,7 +2559,7 @@
                 ]
               ],
               [
-                "___336",
+                "___242",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3566,9 +2569,9 @@
                 ]
               ],
               [
-                "___337",
+                "___243",
                 [
-                  "___336",
+                  "___242",
                   {
                     "str": "input_index_tuple_exprs"
                   },
@@ -3576,7 +2579,7 @@
                 ]
               ],
               [
-                "___338",
+                "___244",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3586,9 +2589,9 @@
                 ]
               ],
               [
-                "___339",
+                "___245",
                 [
-                  "___338",
+                  "___244",
                   {
                     "str": "output_index_tuple_exprs"
                   },
@@ -3596,7 +2599,7 @@
                 ]
               ],
               [
-                "___340",
+                "___246",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -3606,9 +2609,9 @@
                 ]
               ],
               [
-                "___341",
+                "___247",
                 [
-                  "___340",
+                  "___246",
                   {
                     "str": "attrs"
                   },
@@ -3625,7 +2628,7 @@
       ]
     ],
     [
-      "___342",
+      "___248",
       [
         "__builtin_getattr__",
         "__init__",
@@ -3635,13 +2638,13 @@
       ]
     ],
     [
-      "___343",
+      "___249",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___342"
+        "___248"
       ]
     ],
     [
@@ -3660,7 +2663,7 @@
             "__builtin_let__",
             [
               [
-                "___344",
+                "___250",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -3670,15 +2673,15 @@
                 ]
               ],
               [
-                "___345",
+                "___251",
                 [
                   "__builtin_getitem__",
-                  "___344",
+                  "___250",
                   0
                 ]
               ],
               [
-                "___346",
+                "___252",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -3688,15 +2691,15 @@
                 ]
               ],
               [
-                "___347",
+                "___253",
                 [
                   "__builtin_getitem__",
-                  "___346",
+                  "___252",
                   0
                 ]
               ],
               [
-                "___348",
+                "___254",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -3706,14 +2709,14 @@
                 ]
               ],
               [
-                "___349",
+                "___255",
                 [
                   "__builtin_ToString__",
-                  "___348"
+                  "___254"
                 ]
               ],
               [
-                "___350",
+                "___256",
                 [
                   "__builtin_ToString__",
                   {
@@ -3722,31 +2725,31 @@
                 ]
               ],
               [
-                "___351",
+                "___257",
                 [
                   "__builtin_Add__",
-                  "___349",
-                  "___350"
+                  "___255",
+                  "___256"
                 ]
               ],
               [
-                "___352",
+                "___258",
                 [
                   "CodeGenValue",
-                  "___345",
-                  "___347",
-                  "___351"
+                  "___251",
+                  "___253",
+                  "___257"
                 ]
               ],
               [
                 "out",
                 [
                   "__builtin_identity__",
-                  "___352"
+                  "___258"
                 ]
               ],
               [
-                "___353",
+                "___259",
                 [
                   "__builtin_ToString__",
                   {
@@ -3755,7 +2758,7 @@
                 ]
               ],
               [
-                "___354",
+                "___260",
                 [
                   "__builtin_getattr__",
                   "a",
@@ -3765,22 +2768,22 @@
                 ]
               ],
               [
-                "___355",
+                "___261",
                 [
                   "__builtin_ToString__",
-                  "___354"
+                  "___260"
                 ]
               ],
               [
-                "___356",
+                "___262",
                 [
                   "__builtin_Add__",
-                  "___353",
-                  "___355"
+                  "___259",
+                  "___261"
                 ]
               ],
               [
-                "___357",
+                "___263",
                 [
                   "__builtin_ToString__",
                   {
@@ -3789,15 +2792,15 @@
                 ]
               ],
               [
-                "___358",
+                "___264",
                 [
                   "__builtin_Add__",
-                  "___356",
-                  "___357"
+                  "___262",
+                  "___263"
                 ]
               ],
               [
-                "___359",
+                "___265",
                 [
                   "__builtin_getattr__",
                   "b",
@@ -3807,22 +2810,22 @@
                 ]
               ],
               [
-                "___360",
+                "___266",
                 [
                   "__builtin_ToString__",
-                  "___359"
+                  "___265"
                 ]
               ],
               [
-                "___361",
+                "___267",
                 [
                   "__builtin_Add__",
-                  "___358",
-                  "___360"
+                  "___264",
+                  "___266"
                 ]
               ],
               [
-                "___362",
+                "___268",
                 [
                   "__builtin_ToString__",
                   {
@@ -3831,22 +2834,22 @@
                 ]
               ],
               [
-                "___363",
+                "___269",
                 [
                   "__builtin_Add__",
-                  "___361",
-                  "___362"
+                  "___267",
+                  "___268"
                 ]
               ],
               [
                 "val",
                 [
                   "__builtin_identity__",
-                  "___363"
+                  "___269"
                 ]
               ],
               [
-                "___364",
+                "___270",
                 [
                   "__builtin_getattr__",
                   "lir_code_gen_ctx",
@@ -3856,7 +2859,7 @@
                 ]
               ],
               [
-                "___365",
+                "___271",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -3866,7 +2869,7 @@
                 ]
               ],
               [
-                "___366",
+                "___272",
                 [
                   "__builtin_getattr__",
                   "out",
@@ -3876,33 +2879,33 @@
                 ]
               ],
               [
-                "___367",
+                "___273",
                 [
-                  "___364",
-                  "___365",
-                  "___366",
+                  "___270",
+                  "___271",
+                  "___272",
                   "val"
                 ]
               ],
               [
-                "___368",
+                "___274",
                 [
                   "__builtin_identity__",
-                  "___367"
+                  "___273"
                 ]
               ],
               [
-                "___369",
+                "___275",
                 [
                   "__builtin_list__",
                   "out"
                 ]
               ],
               [
-                "___370",
+                "___276",
                 [
                   "__builtin_return__",
-                  "___369"
+                  "___275"
                 ]
               ]
             ],
@@ -3915,7 +2918,7 @@
       ]
     ],
     [
-      "___371",
+      "___277",
       [
         "__builtin_getattr__",
         "__call__",
@@ -3925,64 +2928,64 @@
       ]
     ],
     [
-      "___372",
+      "___278",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___371"
+        "___277"
       ]
     ],
     [
-      "___373",
+      "___279",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___374",
+      "___280",
       [
         "__builtin_list__",
-        "___343",
-        "___372"
+        "___249",
+        "___278"
       ]
     ],
     [
-      "___375",
+      "___281",
       [
         "__builtin_PackedArgs__",
-        "___373",
-        "___374"
+        "___279",
+        "___280"
       ]
     ],
     [
-      "___376",
+      "___282",
       [
         "BuiltinSerializableAttrMap",
-        "___375"
+        "___281"
       ]
     ],
     [
-      "___377",
+      "___283",
       [
         "type",
         {
           "str": "PdOpMultiplyCodeGen"
         },
-        "___327",
-        "___376"
+        "___233",
+        "___282"
       ]
     ],
     [
       "PdOpMultiplyCodeGen",
       [
         "__builtin_identity__",
-        "___377"
+        "___283"
       ]
     ],
     [
-      "___378",
+      "___284",
       [
         "__builtin_list__"
       ]
@@ -4007,7 +3010,7 @@
             "__builtin_let__",
             [
               [
-                "___379",
+                "___285",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4017,9 +3020,9 @@
                 ]
               ],
               [
-                "___380",
+                "___286",
                 [
-                  "___379",
+                  "___285",
                   {
                     "str": "index_expr_code_gen"
                   },
@@ -4027,7 +3030,7 @@
                 ]
               ],
               [
-                "___381",
+                "___287",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4037,9 +3040,9 @@
                 ]
               ],
               [
-                "___382",
+                "___288",
                 [
-                  "___381",
+                  "___287",
                   {
                     "str": "unique_op_name"
                   },
@@ -4047,7 +3050,7 @@
                 ]
               ],
               [
-                "___383",
+                "___289",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4057,9 +3060,9 @@
                 ]
               ],
               [
-                "___384",
+                "___290",
                 [
-                  "___383",
+                  "___289",
                   {
                     "str": "input_dtypes"
                   },
@@ -4067,7 +3070,7 @@
                 ]
               ],
               [
-                "___385",
+                "___291",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4077,9 +3080,9 @@
                 ]
               ],
               [
-                "___386",
+                "___292",
                 [
-                  "___385",
+                  "___291",
                   {
                     "str": "output_dtypes"
                   },
@@ -4087,7 +3090,7 @@
                 ]
               ],
               [
-                "___387",
+                "___293",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4097,9 +3100,9 @@
                 ]
               ],
               [
-                "___388",
+                "___294",
                 [
-                  "___387",
+                  "___293",
                   {
                     "str": "input_index_tuple_exprs"
                   },
@@ -4107,7 +3110,7 @@
                 ]
               ],
               [
-                "___389",
+                "___295",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4117,9 +3120,9 @@
                 ]
               ],
               [
-                "___390",
+                "___296",
                 [
-                  "___389",
+                  "___295",
                   {
                     "str": "output_index_tuple_exprs"
                   },
@@ -4127,7 +3130,7 @@
                 ]
               ],
               [
-                "___391",
+                "___297",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4137,9 +3140,9 @@
                 ]
               ],
               [
-                "___392",
+                "___298",
                 [
-                  "___391",
+                  "___297",
                   {
                     "str": "attrs"
                   },
@@ -4156,7 +3159,7 @@
       ]
     ],
     [
-      "___393",
+      "___299",
       [
         "__builtin_getattr__",
         "__init__",
@@ -4166,13 +3169,13 @@
       ]
     ],
     [
-      "___394",
+      "___300",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___393"
+        "___299"
       ]
     ],
     [
@@ -4190,17 +3193,17 @@
             "__builtin_let__",
             [
               [
-                "___395",
+                "___301",
                 [
                   "__builtin_list__",
                   "x"
                 ]
               ],
               [
-                "___396",
+                "___302",
                 [
                   "__builtin_return__",
-                  "___395"
+                  "___301"
                 ]
               ]
             ],
@@ -4213,7 +3216,7 @@
       ]
     ],
     [
-      "___397",
+      "___303",
       [
         "__builtin_getattr__",
         "__call__",
@@ -4223,64 +3226,64 @@
       ]
     ],
     [
-      "___398",
+      "___304",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___397"
+        "___303"
       ]
     ],
     [
-      "___399",
+      "___305",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___400",
+      "___306",
       [
         "__builtin_list__",
-        "___394",
-        "___398"
+        "___300",
+        "___304"
       ]
     ],
     [
-      "___401",
+      "___307",
       [
         "__builtin_PackedArgs__",
-        "___399",
-        "___400"
+        "___305",
+        "___306"
       ]
     ],
     [
-      "___402",
+      "___308",
       [
         "BuiltinSerializableAttrMap",
-        "___401"
+        "___307"
       ]
     ],
     [
-      "___403",
+      "___309",
       [
         "type",
         {
           "str": "CinnOpYieldStoreCodeGen"
         },
-        "___378",
-        "___402"
+        "___284",
+        "___308"
       ]
     ],
     [
       "CinnOpYieldStoreCodeGen",
       [
         "__builtin_identity__",
-        "___403"
+        "___309"
       ]
     ],
     [
-      "___404",
+      "___310",
       [
         "__builtin_list__"
       ]
@@ -4305,7 +3308,7 @@
             "__builtin_let__",
             [
               [
-                "___405",
+                "___311",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4315,9 +3318,9 @@
                 ]
               ],
               [
-                "___406",
+                "___312",
                 [
-                  "___405",
+                  "___311",
                   {
                     "str": "index_expr_code_gen"
                   },
@@ -4325,7 +3328,7 @@
                 ]
               ],
               [
-                "___407",
+                "___313",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4335,9 +3338,9 @@
                 ]
               ],
               [
-                "___408",
+                "___314",
                 [
-                  "___407",
+                  "___313",
                   {
                     "str": "unique_op_name"
                   },
@@ -4345,7 +3348,7 @@
                 ]
               ],
               [
-                "___409",
+                "___315",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4355,9 +3358,9 @@
                 ]
               ],
               [
-                "___410",
+                "___316",
                 [
-                  "___409",
+                  "___315",
                   {
                     "str": "input_dtypes"
                   },
@@ -4365,7 +3368,7 @@
                 ]
               ],
               [
-                "___411",
+                "___317",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4375,9 +3378,9 @@
                 ]
               ],
               [
-                "___412",
+                "___318",
                 [
-                  "___411",
+                  "___317",
                   {
                     "str": "output_dtypes"
                   },
@@ -4385,7 +3388,7 @@
                 ]
               ],
               [
-                "___413",
+                "___319",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4395,9 +3398,9 @@
                 ]
               ],
               [
-                "___414",
+                "___320",
                 [
-                  "___413",
+                  "___319",
                   {
                     "str": "input_index_tuple_exprs"
                   },
@@ -4405,7 +3408,7 @@
                 ]
               ],
               [
-                "___415",
+                "___321",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4415,9 +3418,9 @@
                 ]
               ],
               [
-                "___416",
+                "___322",
                 [
-                  "___415",
+                  "___321",
                   {
                     "str": "output_index_tuple_exprs"
                   },
@@ -4425,7 +3428,7 @@
                 ]
               ],
               [
-                "___417",
+                "___323",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4435,9 +3438,9 @@
                 ]
               ],
               [
-                "___418",
+                "___324",
                 [
-                  "___417",
+                  "___323",
                   {
                     "str": "attrs"
                   },
@@ -4454,7 +3457,7 @@
       ]
     ],
     [
-      "___419",
+      "___325",
       [
         "__builtin_getattr__",
         "__init__",
@@ -4464,13 +3467,13 @@
       ]
     ],
     [
-      "___420",
+      "___326",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___419"
+        "___325"
       ]
     ],
     [
@@ -4488,17 +3491,17 @@
             "__builtin_let__",
             [
               [
-                "___421",
+                "___327",
                 [
                   "__builtin_list__",
                   "x"
                 ]
               ],
               [
-                "___422",
+                "___328",
                 [
                   "__builtin_return__",
-                  "___421"
+                  "___327"
                 ]
               ]
             ],
@@ -4511,7 +3514,7 @@
       ]
     ],
     [
-      "___423",
+      "___329",
       [
         "__builtin_getattr__",
         "__call__",
@@ -4521,64 +3524,64 @@
       ]
     ],
     [
-      "___424",
+      "___330",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___423"
+        "___329"
       ]
     ],
     [
-      "___425",
+      "___331",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___426",
+      "___332",
       [
         "__builtin_list__",
-        "___420",
-        "___424"
+        "___326",
+        "___330"
       ]
     ],
     [
-      "___427",
+      "___333",
       [
         "__builtin_PackedArgs__",
-        "___425",
-        "___426"
+        "___331",
+        "___332"
       ]
     ],
     [
-      "___428",
+      "___334",
       [
         "BuiltinSerializableAttrMap",
-        "___427"
+        "___333"
       ]
     ],
     [
-      "___429",
+      "___335",
       [
         "type",
         {
           "str": "CinnOpBroadcastCodeGen"
         },
-        "___404",
-        "___428"
+        "___310",
+        "___334"
       ]
     ],
     [
       "CinnOpBroadcastCodeGen",
       [
         "__builtin_identity__",
-        "___429"
+        "___335"
       ]
     ],
     [
-      "___430",
+      "___336",
       [
         "__builtin_list__"
       ]
@@ -4603,7 +3606,7 @@
             "__builtin_let__",
             [
               [
-                "___431",
+                "___337",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4613,9 +3616,9 @@
                 ]
               ],
               [
-                "___432",
+                "___338",
                 [
-                  "___431",
+                  "___337",
                   {
                     "str": "index_expr_code_gen"
                   },
@@ -4623,7 +3626,7 @@
                 ]
               ],
               [
-                "___433",
+                "___339",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4633,9 +3636,9 @@
                 ]
               ],
               [
-                "___434",
+                "___340",
                 [
-                  "___433",
+                  "___339",
                   {
                     "str": "unique_op_name"
                   },
@@ -4643,7 +3646,7 @@
                 ]
               ],
               [
-                "___435",
+                "___341",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4653,9 +3656,9 @@
                 ]
               ],
               [
-                "___436",
+                "___342",
                 [
-                  "___435",
+                  "___341",
                   {
                     "str": "input_dtypes"
                   },
@@ -4663,7 +3666,7 @@
                 ]
               ],
               [
-                "___437",
+                "___343",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4673,9 +3676,9 @@
                 ]
               ],
               [
-                "___438",
+                "___344",
                 [
-                  "___437",
+                  "___343",
                   {
                     "str": "output_dtypes"
                   },
@@ -4683,7 +3686,7 @@
                 ]
               ],
               [
-                "___439",
+                "___345",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4693,9 +3696,9 @@
                 ]
               ],
               [
-                "___440",
+                "___346",
                 [
-                  "___439",
+                  "___345",
                   {
                     "str": "input_index_tuple_exprs"
                   },
@@ -4703,7 +3706,7 @@
                 ]
               ],
               [
-                "___441",
+                "___347",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4713,9 +3716,9 @@
                 ]
               ],
               [
-                "___442",
+                "___348",
                 [
-                  "___441",
+                  "___347",
                   {
                     "str": "output_index_tuple_exprs"
                   },
@@ -4723,7 +3726,7 @@
                 ]
               ],
               [
-                "___443",
+                "___349",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -4733,9 +3736,9 @@
                 ]
               ],
               [
-                "___444",
+                "___350",
                 [
-                  "___443",
+                  "___349",
                   {
                     "str": "attrs"
                   },
@@ -4752,7 +3755,7 @@
       ]
     ],
     [
-      "___445",
+      "___351",
       [
         "__builtin_getattr__",
         "__init__",
@@ -4762,13 +3765,13 @@
       ]
     ],
     [
-      "___446",
+      "___352",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___445"
+        "___351"
       ]
     ],
     [
@@ -4786,7 +3789,7 @@
             "__builtin_let__",
             [
               [
-                "___447",
+                "___353",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -4796,15 +3799,15 @@
                 ]
               ],
               [
-                "___448",
+                "___354",
                 [
                   "__builtin_getitem__",
-                  "___447",
+                  "___353",
                   0
                 ]
               ],
               [
-                "___449",
+                "___355",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -4814,15 +3817,15 @@
                 ]
               ],
               [
-                "___450",
+                "___356",
                 [
                   "__builtin_getitem__",
-                  "___449",
+                  "___355",
                   0
                 ]
               ],
               [
-                "___451",
+                "___357",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -4832,14 +3835,14 @@
                 ]
               ],
               [
-                "___452",
+                "___358",
                 [
                   "__builtin_ToString__",
-                  "___451"
+                  "___357"
                 ]
               ],
               [
-                "___453",
+                "___359",
                 [
                   "__builtin_ToString__",
                   {
@@ -4848,41 +3851,41 @@
                 ]
               ],
               [
-                "___454",
+                "___360",
                 [
                   "__builtin_Add__",
-                  "___452",
-                  "___453"
+                  "___358",
+                  "___359"
                 ]
               ],
               [
-                "___455",
+                "___361",
                 [
                   "CodeGenValue",
-                  "___448",
-                  "___450",
-                  "___454"
+                  "___354",
+                  "___356",
+                  "___360"
                 ]
               ],
               [
                 "out",
                 [
                   "__builtin_identity__",
-                  "___455"
+                  "___361"
                 ]
               ],
               [
-                "___456",
+                "___362",
                 [
                   "__builtin_list__",
                   "out"
                 ]
               ],
               [
-                "___457",
+                "___363",
                 [
                   "__builtin_return__",
-                  "___456"
+                  "___362"
                 ]
               ]
             ],
@@ -4895,7 +3898,7 @@
       ]
     ],
     [
-      "___458",
+      "___364",
       [
         "__builtin_getattr__",
         "__call__",
@@ -4905,64 +3908,64 @@
       ]
     ],
     [
-      "___459",
+      "___365",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___458"
+        "___364"
       ]
     ],
     [
-      "___460",
+      "___366",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___461",
+      "___367",
       [
         "__builtin_list__",
-        "___446",
-        "___459"
+        "___352",
+        "___365"
       ]
     ],
     [
-      "___462",
+      "___368",
       [
         "__builtin_PackedArgs__",
-        "___460",
-        "___461"
+        "___366",
+        "___367"
       ]
     ],
     [
-      "___463",
+      "___369",
       [
         "BuiltinSerializableAttrMap",
-        "___462"
+        "___368"
       ]
     ],
     [
-      "___464",
+      "___370",
       [
         "type",
         {
           "str": "CinnOpGenerateShapeCodeGen"
         },
-        "___430",
-        "___463"
+        "___336",
+        "___369"
       ]
     ],
     [
       "CinnOpGenerateShapeCodeGen",
       [
         "__builtin_identity__",
-        "___464"
+        "___370"
       ]
     ],
     [
-      "___465",
+      "___371",
       [
         "__builtin_list__"
       ]
@@ -4980,7 +3983,7 @@
             "__builtin_let__",
             [
               [
-                "___466",
+                "___372",
                 [
                   "__builtin_list__",
                   {
@@ -4990,27 +3993,7 @@
                 ]
               ],
               [
-                "___467",
-                [
-                  "__builtin_list__",
-                  {
-                    "str": "pd_op.sin"
-                  },
-                  "PdOpSinCodeGen"
-                ]
-              ],
-              [
-                "___468",
-                [
-                  "__builtin_list__",
-                  {
-                    "str": "cinn_op.scale"
-                  },
-                  "PdOpScaleCodeGen"
-                ]
-              ],
-              [
-                "___469",
+                "___373",
                 [
                   "__builtin_list__",
                   {
@@ -5020,7 +4003,7 @@
                 ]
               ],
               [
-                "___470",
+                "___374",
                 [
                   "__builtin_list__",
                   {
@@ -5030,7 +4013,7 @@
                 ]
               ],
               [
-                "___471",
+                "___375",
                 [
                   "__builtin_list__",
                   {
@@ -5040,7 +4023,7 @@
                 ]
               ],
               [
-                "___472",
+                "___376",
                 [
                   "__builtin_list__",
                   {
@@ -5050,7 +4033,7 @@
                 ]
               ],
               [
-                "___473",
+                "___377",
                 [
                   "__builtin_list__",
                   {
@@ -5060,7 +4043,7 @@
                 ]
               ],
               [
-                "___474",
+                "___378",
                 [
                   "__builtin_list__",
                   {
@@ -5070,29 +4053,27 @@
                 ]
               ],
               [
-                "___475",
+                "___379",
                 [
                   "__builtin_list__",
-                  "___466",
-                  "___467",
-                  "___468",
-                  "___469",
-                  "___470",
-                  "___471",
-                  "___472",
-                  "___473",
-                  "___474"
+                  "___372",
+                  "___373",
+                  "___374",
+                  "___375",
+                  "___376",
+                  "___377",
+                  "___378"
                 ]
               ],
               [
-                "___476",
+                "___380",
                 [
                   "OrderedDict",
-                  "___475"
+                  "___379"
                 ]
               ],
               [
-                "___477",
+                "___381",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -5102,13 +4083,13 @@
                 ]
               ],
               [
-                "___478",
+                "___382",
                 [
-                  "___477",
+                  "___381",
                   {
                     "str": "op_name2class"
                   },
-                  "___476"
+                  "___380"
                 ]
               ]
             ],
@@ -5121,7 +4102,7 @@
       ]
     ],
     [
-      "___479",
+      "___383",
       [
         "__builtin_getattr__",
         "__init__",
@@ -5131,13 +4112,13 @@
       ]
     ],
     [
-      "___480",
+      "___384",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___479"
+        "___383"
       ]
     ],
     [
@@ -5154,7 +4135,7 @@
             "__builtin_let__",
             [
               [
-                "___481",
+                "___385",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -5164,18 +4145,18 @@
                 ]
               ],
               [
-                "___482",
+                "___386",
                 [
                   "__builtin_getitem__",
-                  "___481",
+                  "___385",
                   "op_name"
                 ]
               ],
               [
-                "___483",
+                "___387",
                 [
                   "__builtin_return__",
-                  "___482"
+                  "___386"
                 ]
               ]
             ],
@@ -5188,7 +4169,7 @@
       ]
     ],
     [
-      "___484",
+      "___388",
       [
         "__builtin_getattr__",
         "__call__",
@@ -5198,64 +4179,64 @@
       ]
     ],
     [
-      "___485",
+      "___389",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___484"
+        "___388"
       ]
     ],
     [
-      "___486",
+      "___390",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___487",
+      "___391",
       [
         "__builtin_list__",
-        "___480",
-        "___485"
+        "___384",
+        "___389"
       ]
     ],
     [
-      "___488",
+      "___392",
       [
         "__builtin_PackedArgs__",
-        "___486",
-        "___487"
+        "___390",
+        "___391"
       ]
     ],
     [
-      "___489",
+      "___393",
       [
         "BuiltinSerializableAttrMap",
-        "___488"
+        "___392"
       ]
     ],
     [
-      "___490",
+      "___394",
       [
         "type",
         {
           "str": "NativeOpCodeGenClassFactory"
         },
-        "___465",
-        "___489"
+        "___371",
+        "___393"
       ]
     ],
     [
       "NativeOpCodeGenClassFactory",
       [
         "__builtin_identity__",
-        "___490"
+        "___394"
       ]
     ],
     [
-      "___491",
+      "___395",
       [
         "__builtin_list__"
       ]
@@ -5273,13 +4254,13 @@
             "__builtin_let__",
             [
               [
-                "___492",
+                "___396",
                 [
                   "NativeOpCodeGenClassFactory"
                 ]
               ],
               [
-                "___493",
+                "___397",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -5289,13 +4270,13 @@
                 ]
               ],
               [
-                "___494",
+                "___398",
                 [
-                  "___493",
+                  "___397",
                   {
                     "str": "native_op_code_gen_class_factory"
                   },
-                  "___492"
+                  "___396"
                 ]
               ]
             ],
@@ -5308,7 +4289,7 @@
       ]
     ],
     [
-      "___495",
+      "___399",
       [
         "__builtin_getattr__",
         "__init__",
@@ -5318,13 +4299,13 @@
       ]
     ],
     [
-      "___496",
+      "___400",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___495"
+        "___399"
       ]
     ],
     [
@@ -5340,7 +4321,7 @@
             "__builtin_let__",
             [
               [
-                "___497",
+                "___401",
                 [
                   "__builtin_return__",
                   "IndexExprCodeGen"
@@ -5356,7 +4337,7 @@
       ]
     ],
     [
-      "___498",
+      "___402",
       [
         "__builtin_getattr__",
         "get_index_expr_code_generator_class",
@@ -5366,13 +4347,13 @@
       ]
     ],
     [
-      "___499",
+      "___403",
       [
         "__builtin_list__",
         {
           "str": "get_index_expr_code_generator_class"
         },
-        "___498"
+        "___402"
       ]
     ],
     [
@@ -5388,7 +4369,7 @@
             "__builtin_let__",
             [
               [
-                "___500",
+                "___404",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -5398,10 +4379,10 @@
                 ]
               ],
               [
-                "___501",
+                "___405",
                 [
                   "__builtin_return__",
-                  "___500"
+                  "___404"
                 ]
               ]
             ],
@@ -5414,7 +4395,7 @@
       ]
     ],
     [
-      "___502",
+      "___406",
       [
         "__builtin_getattr__",
         "get_native_op_code_generator_class",
@@ -5424,13 +4405,13 @@
       ]
     ],
     [
-      "___503",
+      "___407",
       [
         "__builtin_list__",
         {
           "str": "get_native_op_code_generator_class"
         },
-        "___502"
+        "___406"
       ]
     ],
     [
@@ -5446,7 +4427,7 @@
             "__builtin_let__",
             [
               [
-                "___504",
+                "___408",
                 [
                   "__builtin_return__",
                   "CodeGenValue"
@@ -5462,7 +4443,7 @@
       ]
     ],
     [
-      "___505",
+      "___409",
       [
         "__builtin_getattr__",
         "get_value_class",
@@ -5472,67 +4453,67 @@
       ]
     ],
     [
-      "___506",
+      "___410",
       [
         "__builtin_list__",
         {
           "str": "get_value_class"
         },
-        "___505"
+        "___409"
       ]
     ],
     [
-      "___507",
+      "___411",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___508",
+      "___412",
       [
         "__builtin_list__",
-        "___496",
-        "___499",
-        "___503",
-        "___506"
+        "___400",
+        "___403",
+        "___407",
+        "___410"
       ]
     ],
     [
-      "___509",
+      "___413",
       [
         "__builtin_PackedArgs__",
-        "___507",
-        "___508"
+        "___411",
+        "___412"
       ]
     ],
     [
-      "___510",
+      "___414",
       [
         "BuiltinSerializableAttrMap",
-        "___509"
+        "___413"
       ]
     ],
     [
-      "___511",
+      "___415",
       [
         "type",
         {
           "str": "GeneratorClassFactory"
         },
-        "___491",
-        "___510"
+        "___395",
+        "___414"
       ]
     ],
     [
       "GeneratorClassFactory",
       [
         "__builtin_identity__",
-        "___511"
+        "___415"
       ]
     ]
   ],
   [
     "__builtin_identity__",
-    "___511"
+    "___415"
   ]
 ]
