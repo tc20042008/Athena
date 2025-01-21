@@ -177,7 +177,7 @@ __global__ void GemmKernel(size_t m, size_t n, size_t k, T const* A,
       if (C_row_idx < m && C_col_idx < n) {
         T tmp_C = C_thread_results[thread_tile_row_idx][thread_tile_col_idx];
         ap::GemmCoord3d coord{0, C_row_idx, C_col_idx};
-        C[C_row_idx * ldc + C_col_idx] = epilogue(tmp_C, coord, epilogue_args);
+        C[C_row_idx * ldc + C_col_idx] = epilogue(tmp_C, epilogue_args, coord);
       }
     }
   }

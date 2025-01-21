@@ -75,12 +75,14 @@ void MatmulAddUnaryKernel(cudaStream_t* stream, const void* input, const void* w
 
   params.stream = *stream;
 
-  // std::cout << "-- [MatmulAddUnaryKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
-  // std::cout << "-- [MatmulAddUnaryKernel] input: " << input << std::endl;
-  // std::cout << "-- [MatmulAddUnaryKernel] weight: " << weight << std::endl;
-  // std::cout << "-- [MatmulAddUnaryKernel] bias: " << bias << std::endl;
-  // std::cout << "-- [MatmulAddUnaryKernel] output: " << output << std::endl;
-  // std::cout << "-- [MatmulAddUnaryKernel] stream: " << stream << std::endl;
+#if DEBUG
+  std::cout << "-- [MatmulAddUnaryKernel] m: " << m << ", n: " << n << ", k: " << k << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] input: " << input << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] weight: " << weight << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] bias: " << bias << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] output: " << output << std::endl;
+  std::cout << "-- [MatmulAddUnaryKernel] stream: " << stream << std::endl;
+#endif
 
 #if USE_FLOAT16
   using ElementT = cutlass::half_t;

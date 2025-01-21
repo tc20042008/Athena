@@ -25,14 +25,15 @@ class MatmulBinaryTemplate:
             loop_index_tuple_expr=loop_index_tuple_expr,
             loop_var_names=["threadIdx.x"],
         )
-        lir_code_gen_ctx = self.lir_code_gen_ctx_class()
-        values = fusion_code_gen.load_from_register(lir_code_gen_ctx, "x", 0)
-        values = fusion_code_gen.load_from_register(lir_code_gen_ctx, "y", 0)
-        values = fusion_code_gen.compute(lir_code_gen_ctx, values)
-        values = fusion_code_gen.store_to_register(lir_code_gen_ctx, values, "out", 0)
-        trivial_code_str = lir_code_gen_ctx.get_stmts_joined_str()
+        trivial_code_str = ""
+        # lir_code_gen_ctx = self.lir_code_gen_ctx_class()
+        # values = fusion_code_gen.load_from_register(lir_code_gen_ctx, "x", 0)
+        # values = fusion_code_gen.load_from_register(lir_code_gen_ctx, "y", 0)
+        # values = fusion_code_gen.compute(lir_code_gen_ctx, values)
+        # values = fusion_code_gen.store_to_register(lir_code_gen_ctx, values, "out", 0)
+        # trivial_code_str = lir_code_gen_ctx.get_stmts_joined_str()
         print("===================================")
-        print("fusion_code_gen.compute(): ", values)
+        # print("fusion_code_gen.compute(): ", values)
         print("low level ir of fusion_op:\n", trivial_code_str)
         print("===================================")
 
@@ -63,22 +64,40 @@ class MatmulBinaryTemplate:
 
 namespace ap {
 
+struct BroadcastConfig {
+};
+
+struct InputExtra {
+  const void* ptr{nullptr};
+  bool need_broadcast{false};
+  BroadcastConfig config;
+};
+
 template <typename T, int NumIns = 1, int NumOuts = 1>
 struct AddFunctor {
   struct Arguments {
-    const void* ins[NumIns] = {nullptr};
+    int64_t out_shape_len{0};
+    int64_t out_shape[10];
+    InputExtra ins[NumIns];
   };
 
   __forceinline__ __host__ __device__
-  T Load(const void* ptr, const GemmCoord3d& coord) const {
-    // size_t offset = coord.k;
-    size_t offset = coord.j * 512 + coord.k;
-    return reinterpret_cast<const T*>(ptr)[offset];
+  T Load(const Arguments& args, const GemmCoord3d& coord, int idx) const {
+    // Specially for the case of out_shape_len = 2
+    size_t offset = coord.j * args.out_shape[1] + coord.k;
+    return reinterpret_cast<const T*>(args.ins[idx].ptr)[offset];
   }
 
   __forceinline__ __host__ __device__
-  T operator()(T x, const GemmCoord3d& coord, const Arguments& args) const {
-    T y = Load(args.ins[0], coord);
+  T LoadWithBroadcast(const Arguments& args, const GemmCoord3d& coord, int idx) const {
+    // Specially for the bias case
+    size_t offset = coord.k;
+    return reinterpret_cast<const T*>(args.ins[idx].ptr)[offset];
+  }
+
+  __forceinline__ __host__ __device__
+  T operator()(T x, const Arguments& args, const GemmCoord3d& coord) const {
+    T y = args.ins[0].need_broadcast ? LoadWithBroadcast(args, coord, 0) : Load(args, coord, 0);
     T out = x + y;
     // T out;
     // AP_GENERATED_BINARY_EPILOGUE_STRING;
@@ -114,7 +133,13 @@ void MatmulBinaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input
   // std::cout << "-- [MatmulBinaryKernel] stream=" << cuda_stream_ptr << std::endl;
 
   typename ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>::Arguments epilogue_args;
-  epilogue_args.ins[0] = bias;
+  epilogue_args.out_shape_len = 2;
+  epilogue_args.out_shape[0] = m;
+  epilogue_args.out_shape[1] = n;
+
+  epilogue_args.ins[0].ptr = bias;
+  epilogue_args.ins[0].need_broadcast = false;
+
   ap::NativeMatmulAdd<AP_GENERATED_ELEMENT_DTYPE, ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>>(params, epilogue_args);
 }
 }
