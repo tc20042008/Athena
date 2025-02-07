@@ -1,5 +1,14 @@
 import ap_tpl_codegen
 import low_level_ir_code_gen_ctx_util
+import kernel_arg_translator_util
+
+def make_kernel_arg_translator():
+    return kernel_arg_translator_util.KernelArgTranslator(
+        param_struct_name="param"
+    )
+
+def get_loop_iter_var_names():
+    return ["i", "j"]
 
 class MatmulBinaryTemplate:
     def __init__(

@@ -167,9 +167,7 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
     init_pass_manager.run(program)
 
   def _make_kernel_arg_translator(self):
-    return kernel_arg_translator_util.KernelArgTranslator(
-      param_struct_name="param"
-    )
+    return matmul_binary_tpl.make_kernel_arg_translator()
 
   def _apply_topo_access_passes(self, mut_program, anchor_data_op_name):
     init_pass_manager = ir_tools.create_pass_manager()
@@ -282,7 +280,7 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
     index_program_translator_map = index_program_translator_util.IndexProgramTranslatorMap(
       index_func_unique_id2index_program=index_func_unique_id2index_program,
       kernel_arg_translator=kernel_arg_translator,
-      loop_iter_var_names=["i", "j"]
+      loop_iter_var_names=matmul_binary_tpl.get_loop_iter_var_names()
     )
     print("mut_program:", mut_program)
     self._replace_with_load_from_register(
