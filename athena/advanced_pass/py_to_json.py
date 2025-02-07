@@ -150,6 +150,9 @@ class PyToAnfParser:
     def ParseAdd(self, tree):
         return AtomicAnfExpr("__builtin_Add__")
 
+    def ParseSub(self, tree):
+        return AtomicAnfExpr("__builtin_Sub__")
+
     def ParseMult(self, tree):
         return AtomicAnfExpr("__builtin_Mul__")
 
@@ -228,6 +231,16 @@ class PyToAnfParser:
         self.Bind(func_name, lmbd)
         return AtomicAnfExpr(func_name)
 
+    def ParseLambda(self, function_def: ast.Lambda):
+        return_count_constraint = ReturnCounterConstraint(limits=0)
+        parser = PyToAnfParser(self.seq_no_counter, return_count_constraint)
+        parse_result = parser(function_def.body)
+        args = [
+            arg.arg
+            for arg in function_def.args.args
+        ]
+        return AtomicAnfExpr(['lambda', args, parse_result.ConvertToAnfExpr().value])
+
     def ParseAssign(self, tree):
         assert len(tree.targets) == 1
         if isinstance(tree.targets[0], ast.Name):
@@ -248,6 +261,20 @@ class PyToAnfParser:
                 dict(str=attr.attr),
                 val.value
             ])
+        elif isinstance(tree.targets[0], ast.Subscript):
+            val = self.Parse(tree.value)
+            subscript = tree.targets[0]
+            slice_val = self.Parse(subscript.slice).value
+            f = self.BindToTmpVar([
+                '__builtin_setitem__',
+                self.Parse(subscript.value).value,
+                slice_val
+            ])
+            return self.BindToTmpVar([
+                f.value,
+                slice_val,
+                val.value
+            ])            
         else:
             raise NotImplementedError(tree.targets)
 
@@ -338,7 +365,7 @@ class PyToAnfParser:
         if isinstance(constant.value, (bool, int, float)):
             return AtomicAnfExpr(constant.value)
         if constant.value is None:
-            return AtomicAnfExpr("None")
+            return AtomicAnfExpr(None)
         raise NotImplementedError(f"{constant} not supported by anf_expr")
 
     def ParseJoinedStr(self, tree: ast.JoinedStr):

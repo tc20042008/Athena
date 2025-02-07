@@ -1,5 +1,4 @@
 
-
 class CodeGenValue:
   def __init__(self, index_tuple_expr, dtype, var_name):
     self.index_tuple_expr = index_tuple_expr

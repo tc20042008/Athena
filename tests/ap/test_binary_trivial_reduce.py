@@ -4,8 +4,25 @@ import op_convertion_drr_pass
 import trivial_reduce_tpl
 import ir_tools
 
-@abstract_drr.register_drr_pass("trivial_fusion", nice=0)
-class TrivialFusionDemo(abstract_drr.DrrPass):
+def DataDownSpiderYield(o, t):
+  o.data_op = o.ap_native_op("pd_op.data")
+  o.data_op(
+    [],
+    [t.data_op_out]
+  )
+  o.down_spider_op = o.ap_native_op("ap_op.down_spider")
+  o.down_spider_op(
+    [t.data_op_out],
+    [t.down_spider_op_out]
+  )
+  o.yield_op = o.ap_native_op("cf.yield")
+  o.yield_op(
+    [t.down_spider_op_out],
+    []
+  )
+
+@abstract_drr.register_drr_pass("binary_trivial_fusion", nice=0)
+class BinaryTrivialFusionDemo(abstract_drr.DrrPass):
 
   def source_pattern(self, o, t):
     o.trivial_op = o.ap_trivial_fusion_op()
@@ -28,7 +45,10 @@ class TrivialFusionDemo(abstract_drr.DrrPass):
     program = ir_tools.copy_fused_ops_to_program(o.trivial_op, tensor_match_ctx=t)
     print("before-access_topo_pass", program)
     init_pass_manager = ir_tools.create_pass_manager()
-    init_pass_manager.add_pass(ir_tools.create_access_topo_drr_one_step_pass("init_down_spider"))
+    init_down_spider = topo_drr_pass.InitDownSpiderAccessTopoPass("in0")
+    init_pass_manager.add_pass(
+        ir_tools.create_access_topo_drr_one_step_pass(init_down_spider)
+    )
     init_pass_manager.run(program)
     print("after-init-access_topo_pass", program)
     pass_manager = ir_tools.create_pass_manager()
@@ -36,26 +56,9 @@ class TrivialFusionDemo(abstract_drr.DrrPass):
     pass_manager.add_pass(ir_tools.create_dce_pass())
     pass_manager.run(program)
     print("after-apply-access_topo_pass", program)
-    matched = ir_tools.match(program, self.DataDownSpiderYield)
+    matched = ir_tools.match(program, DataDownSpiderYield.__function__)
     print("DataDownSpiderYield matched: ", matched)
     return matched
-
-  def DataDownSpiderYield(self, o, t):
-    o.data_op = o.ap_native_op("pd_op.data")
-    o.data_op(
-      [],
-      [t.data_op_out]
-    )
-    o.down_spider_op = o.ap_native_op("ap_op.down_spider")
-    o.down_spider_op(
-      [t.data_op_out],
-      [t.down_spider_op_out]
-    )
-    o.yield_op = o.ap_native_op("cf.yield")
-    o.yield_op(
-      [t.down_spider_op_out],
-      []
-    )
 
   def result_pattern(self, o, t):
     o.fustion_op = o.ap_pattern_fusion_op(self.code_gen)

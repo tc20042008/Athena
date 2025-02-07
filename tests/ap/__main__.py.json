@@ -2,11 +2,11 @@
   "__builtin_let__",
   [
     [
-      "test_trivial_reduce",
+      "test_matmul_binary",
       [
         "import",
         {
-          "str": "test_trivial_reduce"
+          "str": "test_matmul_binary"
         }
       ]
     ]
