@@ -94,7 +94,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "kernel_id_arg_id2unique_name"
+                    "str": "generated_kernel_arg_id2unique_name"
                   }
                 ]
               ],
@@ -103,7 +103,7 @@
                 [
                   "___8",
                   {
-                    "str": "kernel_id_arg_id2unique_name"
+                    "str": "generated_kernel_arg_id2unique_name"
                   },
                   "___7"
                 ]
@@ -111,17 +111,43 @@
               [
                 "___10",
                 [
-                  "__builtin_setattr__",
-                  "self",
-                  {
-                    "str": "in_tensor_data_ptr_seq_no"
-                  }
+                  "MutableOrderedDict"
                 ]
               ],
               [
                 "___11",
                 [
-                  "___10",
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "kernel_arg_id2unique_name"
+                  }
+                ]
+              ],
+              [
+                "___12",
+                [
+                  "___11",
+                  {
+                    "str": "kernel_arg_id2unique_name"
+                  },
+                  "___10"
+                ]
+              ],
+              [
+                "___13",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "in_tensor_data_ptr_seq_no"
+                  }
+                ]
+              ],
+              [
+                "___14",
+                [
+                  "___13",
                   {
                     "str": "in_tensor_data_ptr_seq_no"
                   },
@@ -129,7 +155,7 @@
                 ]
               ],
               [
-                "___12",
+                "___15",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -139,9 +165,9 @@
                 ]
               ],
               [
-                "___13",
+                "___16",
                 [
-                  "___12",
+                  "___15",
                   {
                     "str": "out_tensor_data_ptr_seq_no"
                   },
@@ -149,7 +175,7 @@
                 ]
               ],
               [
-                "___14",
+                "___17",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -159,9 +185,9 @@
                 ]
               ],
               [
-                "___15",
+                "___18",
                 [
-                  "___14",
+                  "___17",
                   {
                     "str": "dim_expr_seq_no"
                   },
@@ -178,7 +204,7 @@
       ]
     ],
     [
-      "___16",
+      "___19",
       [
         "__builtin_getattr__",
         "__init__",
@@ -188,58 +214,73 @@
       ]
     ],
     [
-      "___17",
+      "___20",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___16"
+        "___19"
       ]
     ],
     [
-      "items",
+      "get_or_create_kernel_arg_id_manul_var_name",
       [
         "__builtin_identity__",
         [
           "lambda",
           [
-            "self"
+            "self",
+            "kernel_arg_id",
+            "cpp_var_name"
           ],
           [
             "__builtin_let__",
             [
               [
-                "___19",
+                "create",
+                [
+                  "__builtin_identity__",
+                  [
+                    "lambda",
+                    [],
+                    "cpp_var_name"
+                  ]
+                ]
+              ],
+              [
+                "___22",
                 [
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "kernel_id_arg_id2unique_name"
+                    "str": "kernel_arg_id2unique_name"
                   }
-                ]
-              ],
-              [
-                "___18",
-                [
-                  "__builtin_getattr__",
-                  "___19",
-                  {
-                    "str": "items"
-                  }
-                ]
-              ],
-              [
-                "___20",
-                [
-                  "___18"
                 ]
               ],
               [
                 "___21",
                 [
+                  "__builtin_getattr__",
+                  "___22",
+                  {
+                    "str": "get_or_create"
+                  }
+                ]
+              ],
+              [
+                "___23",
+                [
+                  "___21",
+                  "kernel_arg_id",
+                  "create"
+                ]
+              ],
+              [
+                "___24",
+                [
                   "__builtin_return__",
-                  "___20"
+                  "___23"
                 ]
               ]
             ],
@@ -252,23 +293,23 @@
       ]
     ],
     [
-      "___22",
+      "___25",
       [
         "__builtin_getattr__",
-        "items",
+        "get_or_create_kernel_arg_id_manul_var_name",
         {
           "str": "__function__"
         }
       ]
     ],
     [
-      "___23",
+      "___26",
       [
         "__builtin_list__",
         {
-          "str": "items"
+          "str": "get_or_create_kernel_arg_id_manul_var_name"
         },
-        "___22"
+        "___25"
       ]
     ],
     [
@@ -285,7 +326,7 @@
             "__builtin_let__",
             [
               [
-                "___24",
+                "___27",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -295,10 +336,10 @@
                 ]
               ],
               [
-                "___25",
+                "___28",
                 [
                   "getattr",
-                  "___24",
+                  "___27",
                   "in_ir_value_name"
                 ]
               ],
@@ -306,11 +347,11 @@
                 "ir_value",
                 [
                   "__builtin_identity__",
-                  "___25"
+                  "___28"
                 ]
               ],
               [
-                "___27",
+                "___30",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -320,19 +361,19 @@
                 ]
               ],
               [
-                "___26",
+                "___29",
                 [
                   "__builtin_getattr__",
-                  "___27",
+                  "___30",
                   {
                     "str": "in_tensor_data_ptr_kernel_arg_id"
                   }
                 ]
               ],
               [
-                "___28",
+                "___31",
                 [
-                  "___26",
+                  "___29",
                   "ir_value"
                 ]
               ],
@@ -340,11 +381,21 @@
                 "kernel_arg_id",
                 [
                   "__builtin_identity__",
-                  "___28"
+                  "___31"
                 ]
               ],
               [
-                "___29",
+                "___32",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "_get_creator"
+                  }
+                ]
+              ],
+              [
+                "___33",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -354,45 +405,53 @@
                 ]
               ],
               [
-                "create",
+                "___34",
                 [
-                  "__builtin_identity__",
-                  "___29"
+                  "___32",
+                  "kernel_arg_id",
+                  "___33"
                 ]
               ],
               [
-                "___31",
+                "create",
+                [
+                  "__builtin_identity__",
+                  "___34"
+                ]
+              ],
+              [
+                "___36",
                 [
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "kernel_id_arg_id2unique_name"
+                    "str": "generated_kernel_arg_id2unique_name"
                   }
                 ]
               ],
               [
-                "___30",
+                "___35",
                 [
                   "__builtin_getattr__",
-                  "___31",
+                  "___36",
                   {
                     "str": "get_or_create"
                   }
                 ]
               ],
               [
-                "___32",
+                "___37",
                 [
-                  "___30",
+                  "___35",
                   "kernel_arg_id",
                   "create"
                 ]
               ],
               [
-                "___33",
+                "___38",
                 [
                   "__builtin_return__",
-                  "___32"
+                  "___37"
                 ]
               ]
             ],
@@ -405,7 +464,7 @@
       ]
     ],
     [
-      "___34",
+      "___39",
       [
         "__builtin_getattr__",
         "get_in_tensor_data_ptr_var_name",
@@ -415,13 +474,103 @@
       ]
     ],
     [
-      "___35",
+      "___40",
       [
         "__builtin_list__",
         {
           "str": "get_in_tensor_data_ptr_var_name"
         },
-        "___34"
+        "___39"
+      ]
+    ],
+    [
+      "_get_creator",
+      [
+        "__builtin_identity__",
+        [
+          "lambda",
+          [
+            "self",
+            "kernel_arg_id",
+            "backend_creator"
+          ],
+          [
+            "__builtin_let__",
+            [
+              [
+                "___44",
+                [
+                  "__builtin_return__",
+                  [
+                    "lambda",
+                    [],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___42",
+                          [
+                            "__builtin_getattr__",
+                            "self",
+                            {
+                              "str": "kernel_arg_id2unique_name"
+                            }
+                          ]
+                        ],
+                        [
+                          "___41",
+                          [
+                            "__builtin_getattr__",
+                            "___42",
+                            {
+                              "str": "get_or_create"
+                            }
+                          ]
+                        ],
+                        [
+                          "___43",
+                          [
+                            "___41",
+                            "kernel_arg_id",
+                            "backend_creator"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___43"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "__builtin_identity__",
+              null
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "___45",
+      [
+        "__builtin_getattr__",
+        "_get_creator",
+        {
+          "str": "__function__"
+        }
+      ]
+    ],
+    [
+      "___46",
+      [
+        "__builtin_list__",
+        {
+          "str": "_get_creator"
+        },
+        "___45"
       ]
     ],
     [
@@ -437,7 +586,7 @@
             "__builtin_let__",
             [
               [
-                "___36",
+                "___47",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -447,14 +596,14 @@
                 ]
               ],
               [
-                "___37",
+                "___48",
                 [
                   "__builtin_ToString__",
-                  "___36"
+                  "___47"
                 ]
               ],
               [
-                "___38",
+                "___49",
                 [
                   "__builtin_ToString__",
                   {
@@ -463,15 +612,15 @@
                 ]
               ],
               [
-                "___39",
+                "___50",
                 [
                   "__builtin_Add__",
-                  "___37",
-                  "___38"
+                  "___48",
+                  "___49"
                 ]
               ],
               [
-                "___40",
+                "___51",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -481,29 +630,29 @@
                 ]
               ],
               [
-                "___41",
+                "___52",
                 [
                   "__builtin_ToString__",
-                  "___40"
+                  "___51"
                 ]
               ],
               [
-                "___42",
+                "___53",
                 [
                   "__builtin_Add__",
-                  "___39",
-                  "___41"
+                  "___50",
+                  "___52"
                 ]
               ],
               [
                 "name",
                 [
                   "__builtin_identity__",
-                  "___42"
+                  "___53"
                 ]
               ],
               [
-                "___43",
+                "___54",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -513,15 +662,15 @@
                 ]
               ],
               [
-                "___44",
+                "___55",
                 [
                   "__builtin_Add__",
-                  "___43",
+                  "___54",
                   1
                 ]
               ],
               [
-                "___45",
+                "___56",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -531,17 +680,17 @@
                 ]
               ],
               [
-                "___46",
+                "___57",
                 [
-                  "___45",
+                  "___56",
                   {
                     "str": "in_tensor_data_ptr_seq_no"
                   },
-                  "___44"
+                  "___55"
                 ]
               ],
               [
-                "___47",
+                "___58",
                 [
                   "__builtin_return__",
                   "name"
@@ -557,7 +706,7 @@
       ]
     ],
     [
-      "___48",
+      "___59",
       [
         "__builtin_getattr__",
         "_create_in_tensor_data_ptr_var_name",
@@ -567,13 +716,13 @@
       ]
     ],
     [
-      "___49",
+      "___60",
       [
         "__builtin_list__",
         {
           "str": "_create_in_tensor_data_ptr_var_name"
         },
-        "___48"
+        "___59"
       ]
     ],
     [
@@ -590,7 +739,7 @@
             "__builtin_let__",
             [
               [
-                "___50",
+                "___61",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -600,10 +749,10 @@
                 ]
               ],
               [
-                "___51",
+                "___62",
                 [
                   "getattr",
-                  "___50",
+                  "___61",
                   "out_ir_value_name"
                 ]
               ],
@@ -611,11 +760,11 @@
                 "ir_value",
                 [
                   "__builtin_identity__",
-                  "___51"
+                  "___62"
                 ]
               ],
               [
-                "___53",
+                "___64",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -625,19 +774,19 @@
                 ]
               ],
               [
-                "___52",
+                "___63",
                 [
                   "__builtin_getattr__",
-                  "___53",
+                  "___64",
                   {
                     "str": "out_tensor_data_ptr_kernel_arg_id"
                   }
                 ]
               ],
               [
-                "___54",
+                "___65",
                 [
-                  "___52",
+                  "___63",
                   "ir_value"
                 ]
               ],
@@ -645,11 +794,21 @@
                 "kernel_arg_id",
                 [
                   "__builtin_identity__",
-                  "___54"
+                  "___65"
                 ]
               ],
               [
-                "___55",
+                "___66",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "_get_creator"
+                  }
+                ]
+              ],
+              [
+                "___67",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -659,45 +818,53 @@
                 ]
               ],
               [
-                "create",
+                "___68",
                 [
-                  "__builtin_identity__",
-                  "___55"
+                  "___66",
+                  "kernel_arg_id",
+                  "___67"
                 ]
               ],
               [
-                "___57",
+                "create",
+                [
+                  "__builtin_identity__",
+                  "___68"
+                ]
+              ],
+              [
+                "___70",
                 [
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "kernel_id_arg_id2unique_name"
+                    "str": "generated_kernel_arg_id2unique_name"
                   }
                 ]
               ],
               [
-                "___56",
+                "___69",
                 [
                   "__builtin_getattr__",
-                  "___57",
+                  "___70",
                   {
                     "str": "get_or_create"
                   }
                 ]
               ],
               [
-                "___58",
+                "___71",
                 [
-                  "___56",
+                  "___69",
                   "kernel_arg_id",
                   "create"
                 ]
               ],
               [
-                "___59",
+                "___72",
                 [
                   "__builtin_return__",
-                  "___58"
+                  "___71"
                 ]
               ]
             ],
@@ -710,7 +877,7 @@
       ]
     ],
     [
-      "___60",
+      "___73",
       [
         "__builtin_getattr__",
         "get_out_tensor_data_ptr_var_name",
@@ -720,13 +887,13 @@
       ]
     ],
     [
-      "___61",
+      "___74",
       [
         "__builtin_list__",
         {
           "str": "get_out_tensor_data_ptr_var_name"
         },
-        "___60"
+        "___73"
       ]
     ],
     [
@@ -742,7 +909,7 @@
             "__builtin_let__",
             [
               [
-                "___62",
+                "___75",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -752,14 +919,14 @@
                 ]
               ],
               [
-                "___63",
+                "___76",
                 [
                   "__builtin_ToString__",
-                  "___62"
+                  "___75"
                 ]
               ],
               [
-                "___64",
+                "___77",
                 [
                   "__builtin_ToString__",
                   {
@@ -768,15 +935,15 @@
                 ]
               ],
               [
-                "___65",
+                "___78",
                 [
                   "__builtin_Add__",
-                  "___63",
-                  "___64"
+                  "___76",
+                  "___77"
                 ]
               ],
               [
-                "___66",
+                "___79",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -786,29 +953,29 @@
                 ]
               ],
               [
-                "___67",
+                "___80",
                 [
                   "__builtin_ToString__",
-                  "___66"
+                  "___79"
                 ]
               ],
               [
-                "___68",
+                "___81",
                 [
                   "__builtin_Add__",
-                  "___65",
-                  "___67"
+                  "___78",
+                  "___80"
                 ]
               ],
               [
                 "name",
                 [
                   "__builtin_identity__",
-                  "___68"
+                  "___81"
                 ]
               ],
               [
-                "___69",
+                "___82",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -818,15 +985,15 @@
                 ]
               ],
               [
-                "___70",
+                "___83",
                 [
                   "__builtin_Add__",
-                  "___69",
+                  "___82",
                   1
                 ]
               ],
               [
-                "___71",
+                "___84",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -836,17 +1003,17 @@
                 ]
               ],
               [
-                "___72",
+                "___85",
                 [
-                  "___71",
+                  "___84",
                   {
                     "str": "out_tensor_data_ptr_seq_no"
                   },
-                  "___70"
+                  "___83"
                 ]
               ],
               [
-                "___73",
+                "___86",
                 [
                   "__builtin_return__",
                   "name"
@@ -862,7 +1029,7 @@
       ]
     ],
     [
-      "___74",
+      "___87",
       [
         "__builtin_getattr__",
         "_create_out_tensor_data_ptr_var_name",
@@ -872,13 +1039,13 @@
       ]
     ],
     [
-      "___75",
+      "___88",
       [
         "__builtin_list__",
         {
           "str": "_create_out_tensor_data_ptr_var_name"
         },
-        "___74"
+        "___87"
       ]
     ],
     [
@@ -895,7 +1062,7 @@
             "__builtin_let__",
             [
               [
-                "___77",
+                "___90",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -905,19 +1072,19 @@
                 ]
               ],
               [
-                "___76",
+                "___89",
                 [
                   "__builtin_getattr__",
-                  "___77",
+                  "___90",
                   {
                     "str": "dim_expr_kernel_arg_id"
                   }
                 ]
               ],
               [
-                "___78",
+                "___91",
                 [
-                  "___76",
+                  "___89",
                   "dim_expr"
                 ]
               ],
@@ -925,11 +1092,21 @@
                 "kernel_arg_id",
                 [
                   "__builtin_identity__",
-                  "___78"
+                  "___91"
                 ]
               ],
               [
-                "___79",
+                "___92",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "_get_creator"
+                  }
+                ]
+              ],
+              [
+                "___93",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -939,45 +1116,53 @@
                 ]
               ],
               [
-                "create",
+                "___94",
                 [
-                  "__builtin_identity__",
-                  "___79"
+                  "___92",
+                  "kernel_arg_id",
+                  "___93"
                 ]
               ],
               [
-                "___81",
+                "create",
+                [
+                  "__builtin_identity__",
+                  "___94"
+                ]
+              ],
+              [
+                "___96",
                 [
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "kernel_id_arg_id2unique_name"
+                    "str": "generated_kernel_arg_id2unique_name"
                   }
                 ]
               ],
               [
-                "___80",
+                "___95",
                 [
                   "__builtin_getattr__",
-                  "___81",
+                  "___96",
                   {
                     "str": "get_or_create"
                   }
                 ]
               ],
               [
-                "___82",
+                "___97",
                 [
-                  "___80",
+                  "___95",
                   "kernel_arg_id",
                   "create"
                 ]
               ],
               [
-                "___83",
+                "___98",
                 [
                   "__builtin_return__",
-                  "___82"
+                  "___97"
                 ]
               ]
             ],
@@ -990,7 +1175,7 @@
       ]
     ],
     [
-      "___84",
+      "___99",
       [
         "__builtin_getattr__",
         "get_dim_expr_var_name",
@@ -1000,13 +1185,13 @@
       ]
     ],
     [
-      "___85",
+      "___100",
       [
         "__builtin_list__",
         {
           "str": "get_dim_expr_var_name"
         },
-        "___84"
+        "___99"
       ]
     ],
     [
@@ -1022,7 +1207,7 @@
             "__builtin_let__",
             [
               [
-                "___86",
+                "___101",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -1032,14 +1217,14 @@
                 ]
               ],
               [
-                "___87",
+                "___102",
                 [
                   "__builtin_ToString__",
-                  "___86"
+                  "___101"
                 ]
               ],
               [
-                "___88",
+                "___103",
                 [
                   "__builtin_ToString__",
                   {
@@ -1048,15 +1233,15 @@
                 ]
               ],
               [
-                "___89",
+                "___104",
                 [
                   "__builtin_Add__",
-                  "___87",
-                  "___88"
+                  "___102",
+                  "___103"
                 ]
               ],
               [
-                "___90",
+                "___105",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -1066,29 +1251,29 @@
                 ]
               ],
               [
-                "___91",
+                "___106",
                 [
                   "__builtin_ToString__",
-                  "___90"
+                  "___105"
                 ]
               ],
               [
-                "___92",
+                "___107",
                 [
                   "__builtin_Add__",
-                  "___89",
-                  "___91"
+                  "___104",
+                  "___106"
                 ]
               ],
               [
                 "name",
                 [
                   "__builtin_identity__",
-                  "___92"
+                  "___107"
                 ]
               ],
               [
-                "___93",
+                "___108",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -1098,15 +1283,15 @@
                 ]
               ],
               [
-                "___94",
+                "___109",
                 [
                   "__builtin_Add__",
-                  "___93",
+                  "___108",
                   1
                 ]
               ],
               [
-                "___95",
+                "___110",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1116,17 +1301,17 @@
                 ]
               ],
               [
-                "___96",
+                "___111",
                 [
-                  "___95",
+                  "___110",
                   {
                     "str": "dim_expr_seq_no"
                   },
-                  "___94"
+                  "___109"
                 ]
               ],
               [
-                "___97",
+                "___112",
                 [
                   "__builtin_return__",
                   "name"
@@ -1142,7 +1327,7 @@
       ]
     ],
     [
-      "___98",
+      "___113",
       [
         "__builtin_getattr__",
         "_create_dim_expr_var_name",
@@ -1152,71 +1337,72 @@
       ]
     ],
     [
-      "___99",
+      "___114",
       [
         "__builtin_list__",
         {
           "str": "_create_dim_expr_var_name"
         },
-        "___98"
+        "___113"
       ]
     ],
     [
-      "___100",
+      "___115",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___101",
+      "___116",
       [
         "__builtin_list__",
-        "___17",
-        "___23",
-        "___35",
-        "___49",
-        "___61",
-        "___75",
-        "___85",
-        "___99"
+        "___20",
+        "___26",
+        "___40",
+        "___46",
+        "___60",
+        "___74",
+        "___88",
+        "___100",
+        "___114"
       ]
     ],
     [
-      "___102",
+      "___117",
       [
         "__builtin_PackedArgs__",
-        "___100",
-        "___101"
+        "___115",
+        "___116"
       ]
     ],
     [
-      "___103",
+      "___118",
       [
         "BuiltinSerializableAttrMap",
-        "___102"
+        "___117"
       ]
     ],
     [
-      "___104",
+      "___119",
       [
         "type",
         {
           "str": "KernelArgIdNameLazyContext"
         },
         "___0",
-        "___103"
+        "___118"
       ]
     ],
     [
       "KernelArgIdNameLazyContext",
       [
         "__builtin_identity__",
-        "___104"
+        "___119"
       ]
     ]
   ],
   [
     "__builtin_identity__",
-    "___104"
+    "___119"
   ]
 ]

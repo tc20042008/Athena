@@ -37,7 +37,44 @@ class RemoveDataOpPairPass(access_topo_drr.DrrPass):
   def result_pattern(self, o, t):
     pass
 
-class RemoveInputIndexPass(access_topo_drr.DrrPass):
+class RemoveDataOp2SumOp2DataOpPass(access_topo_drr.DrrPass):
+  def __init__(self, src_data_op_name, dst_data_op_name):
+    self.src_data_op_name = pir.a_str(src_data_op_name)
+    self.dst_data_op_name = pir.a_str(dst_data_op_name)
+
+  def source_pattern(self, o, t):
+    o.src_data_op = o.ap_native_op("pd_op.data")
+    o.src_data_op.name = self.src_data_op_name
+    o.src_data_op(
+      [],
+      [t.input0]
+    )
+    o.full_int_array_op = o.ap_native_op("pd_op.full_int_array")
+    o.full_int_array_op(
+      [],
+      [t.axis]
+    )
+    o.sum_op = o.ap_native_op("pd_op.sum")
+    o.sum_op(
+      [t.input0, t.axis],
+      [t.sum_out]
+    )
+    o.dst_data_op = o.ap_native_op("pd_op.data")
+    o.dst_data_op.name = self.dst_data_op_name
+    o.dst_data_op(
+      [],
+      [t.input1]
+    )
+    o.up_spider_op = o.ap_native_op("ap_op.up_spider")
+    o.up_spider_op(
+      [t.sum_out, t.input1],
+      []
+    )
+    
+  def result_pattern(self, o, t):
+    pass
+
+class RemoveElementInputIndexPass(access_topo_drr.DrrPass):
 
   def __init__(self, src_data_op_name, dst_load_from_global_op_name):
     self.src_data_op_name = pir.a_str(src_data_op_name)
@@ -63,6 +100,43 @@ class RemoveInputIndexPass(access_topo_drr.DrrPass):
       []
     )
 
+  def result_pattern(self, o, t):
+    pass
+
+class RemoveBroadcastInputIndexPass(access_topo_drr.DrrPass):
+  def __init__(self, src_data_op_name, dst_load_from_global_op_name):
+    self.src_data_op_name = pir.a_str(src_data_op_name)
+    self.dst_load_from_global_op_name = pir.a_str(dst_load_from_global_op_name)
+
+  def source_pattern(self, o, t):
+    o.src_data_op = o.ap_native_op("pd_op.data")
+    o.src_data_op.name = self.src_data_op_name
+    o.src_data_op(
+      [],
+      [t.input0]
+    )
+    o.full_int_array_op = o.ap_native_op("pd_op.full_int_array")
+    o.full_int_array_op(
+      [],
+      [t.axis]
+    )
+    o.sum_op = o.ap_native_op("pd_op.sum")
+    o.sum_op(
+      [t.input0, t.axis],
+      [t.sum_out]
+    )
+    o.dst_load_from_global_op = o.ap_native_op("ap_op.load_from_global")
+    o.dst_load_from_global_op.index_func_unique_id = self.dst_load_from_global_op_name
+    o.dst_load_from_global_op(
+      [t.dst_input],
+      [t.dst_load_from_global_output]
+    )
+    o.up_spider_op = o.ap_native_op("ap_op.up_spider")
+    o.up_spider_op(
+      [t.sum_out, t.dst_load_from_global_output],
+      []
+    )
+    
   def result_pattern(self, o, t):
     pass
 
@@ -135,15 +209,24 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
     pass_manager.run(program)
     print("after-apply-access_topo_pass", program)
     pass_manager = ir_tools.create_pass_manager()
-    remove_input1_pass = RemoveDataOpPairPass(
+    remove_data_op_pair_pass = RemoveDataOpPairPass(
       src_data_op_name="mm_out",
       dst_data_op_name="input2"
     )
+    pass_manager.add_pass(ir_tools.create_access_topo_drr_one_step_pass(
+      remove_data_op_pair_pass
+    ))
+    remove_data_op2sum_op2data_op_pass = RemoveDataOp2SumOp2DataOpPass(
+      src_data_op_name="mm_out",
+      dst_data_op_name="input2"
+    )
+    pass_manager.add_pass(ir_tools.create_access_topo_drr_one_step_pass(
+      remove_data_op2sum_op2data_op_pass
+    ))
     remove_output_pass = RemoveDataOpPairPass(
       src_data_op_name="mm_out",
       dst_data_op_name="output"
     )
-    pass_manager.add_pass(ir_tools.create_access_topo_drr_one_step_pass(remove_input1_pass))
     pass_manager.add_pass(ir_tools.create_access_topo_drr_one_step_pass(remove_output_pass))
     pass_manager.add_pass(ir_tools.create_dce_pass())
     pass_manager.run(program)
@@ -196,16 +279,27 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
     def MatchAndCopyInputIndex(dst_input_name):
         pass_manager = ir_tools.create_pass_manager()
         removed_programs = MutableList()
-        drr_pass = RemoveInputIndexPass(
+        rm_elementwise_drr_pass = RemoveElementInputIndexPass(
             src_data_op_name=anchor_data_op_name,
             dst_load_from_global_op_name=dst_input_name
         )
-        ir_pass = ir_tools.create_access_topo_drr_one_step_pass(
-            drr_pass,
+        rm_elementwise_ir_pass = ir_tools.create_access_topo_drr_one_step_pass(
+            rm_elementwise_drr_pass,
             matched_pattern_mut_list=removed_programs
         )
-        pass_manager.add_pass(ir_pass)
+        pass_manager.add_pass(rm_elementwise_ir_pass)
+        rm_broadcast_drr_pass = RemoveBroadcastInputIndexPass(
+            src_data_op_name=anchor_data_op_name,
+            dst_load_from_global_op_name=dst_input_name
+        )
+        rm_broadcast_ir_pass = ir_tools.create_access_topo_drr_one_step_pass(
+            rm_broadcast_drr_pass,
+            matched_pattern_mut_list=removed_programs
+        )
+        pass_manager.add_pass(rm_broadcast_ir_pass)
+        print("before-remove-input-full-index-program:", full_index_program)
         pass_manager.run(full_index_program)
+        print("after-remove-input-full-index-program:", full_index_program)
         def Converter(program):
           return [dst_input_name, self._simplify_index_program(program)]
         return map(Converter, removed_programs)
@@ -272,26 +366,20 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
     index_func_unique_id2index_program = self._make_index_func_unique_id2index_program(
       mut_program,
       anchor_data_op_name="mm_out",
-      # input_names=["input2"],
-      input_names=[],
+      input_names=["input2"],
       output_names=[],
     )
     print("index_func_unique_id2index_program:\n", index_func_unique_id2index_program)
     index_program_translator_map = index_program_translator_util.IndexProgramTranslatorMap(
       index_func_unique_id2index_program=index_func_unique_id2index_program,
       kernel_arg_translator=kernel_arg_translator,
-      loop_iter_var_names=matmul_binary_tpl.get_loop_iter_var_names()
+      anchor_iter_var_names=matmul_binary_tpl.get_anchor_iter_var_names()
     )
     print("mut_program:", mut_program)
     self._replace_with_load_from_register(
       mut_program,
       load_ir_value_name="mm_out",
       register_var_name="x"
-    )
-    self._replace_with_load_from_register(
-      mut_program,
-      load_ir_value_name="input2",
-      register_var_name="y"
     )
     print("mut_program after _replace_with_load_from_register:", mut_program)
     self._replace_with_store_to_register(
@@ -317,8 +405,8 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
       name_prefix=""
     )
     template_module = matmul_binary_tpl.MatmulBinaryTemplate(
-        program_translator=program_translator,
-        mut_kernel_arg_id_lazy_ctx=mut_kernel_arg_id_lazy_ctx,
+      program_translator=program_translator,
+      mut_kernel_arg_id_lazy_ctx=mut_kernel_arg_id_lazy_ctx,
     )
     dtypes = [t.input0.dtype, t.input1.dtype, t.input2.dtype, t.output.dtype]
     return template_module.compile(

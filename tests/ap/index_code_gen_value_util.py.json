@@ -39,6 +39,26 @@
                   },
                   "iter_var_names"
                 ]
+              ],
+              [
+                "___3",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "const_data"
+                  }
+                ]
+              ],
+              [
+                "___4",
+                [
+                  "___3",
+                  {
+                    "str": "const_data"
+                  },
+                  null
+                ]
               ]
             ],
             [
@@ -50,7 +70,7 @@
       ]
     ],
     [
-      "___3",
+      "___5",
       [
         "__builtin_getattr__",
         "__init__",
@@ -60,64 +80,64 @@
       ]
     ],
     [
-      "___4",
+      "___6",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___3"
-      ]
-    ],
-    [
-      "___5",
-      [
-        "__builtin_list__"
-      ]
-    ],
-    [
-      "___6",
-      [
-        "__builtin_list__",
-        "___4"
+        "___5"
       ]
     ],
     [
       "___7",
       [
-        "__builtin_PackedArgs__",
-        "___5",
-        "___6"
+        "__builtin_list__"
       ]
     ],
     [
       "___8",
       [
-        "BuiltinSerializableAttrMap",
-        "___7"
+        "__builtin_list__",
+        "___6"
       ]
     ],
     [
       "___9",
+      [
+        "__builtin_PackedArgs__",
+        "___7",
+        "___8"
+      ]
+    ],
+    [
+      "___10",
+      [
+        "BuiltinSerializableAttrMap",
+        "___9"
+      ]
+    ],
+    [
+      "___11",
       [
         "type",
         {
           "str": "IndexCodeGenValue"
         },
         "___0",
-        "___8"
+        "___10"
       ]
     ],
     [
       "IndexCodeGenValue",
       [
         "__builtin_identity__",
-        "___9"
+        "___11"
       ]
     ]
   ],
   [
     "__builtin_identity__",
-    "___9"
+    "___11"
   ]
 ]

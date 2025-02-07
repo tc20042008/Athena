@@ -3,6 +3,7 @@ class CodeGenValue:
   def __init__(self, pir_type, var_name):
     self.pir_type = pir_type
     self.var_name = var_name
+    self.const_value = None
 
   def get_dtype(self):
     def convert_to_dtype(pir_dtype, shape, data_layout):

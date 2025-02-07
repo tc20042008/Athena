@@ -56,7 +56,7 @@
                     "str": "param_struct_name"
                   },
                   {
-                    "str": "param"
+                    "str": "args"
                   }
                 ]
               ],
@@ -105,7 +105,7 @@
       ]
     ],
     [
-      "get_loop_iter_var_names",
+      "get_anchor_iter_var_names",
       [
         "__builtin_identity__",
         [
@@ -119,10 +119,10 @@
                 [
                   "__builtin_list__",
                   {
-                    "str": "i"
+                    "str": "coord.j"
                   },
                   {
-                    "str": "j"
+                    "str": "coord.k"
                   }
                 ]
               ],
@@ -201,6 +201,212 @@
                   },
                   "mut_kernel_arg_id_lazy_ctx"
                 ]
+              ],
+              [
+                "___14",
+                [
+                  "make_kernel_arg_translator"
+                ]
+              ],
+              [
+                "___15",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "kernel_arg_translator"
+                  }
+                ]
+              ],
+              [
+                "___16",
+                [
+                  "___15",
+                  {
+                    "str": "kernel_arg_translator"
+                  },
+                  "___14"
+                ]
+              ],
+              [
+                "___17",
+                [
+                  "__builtin_getattr__",
+                  "PointerType",
+                  {
+                    "str": "const_float_ptr"
+                  }
+                ]
+              ],
+              [
+                "___18",
+                [
+                  "__builtin_list__",
+                  "___17",
+                  {
+                    "str": "const float*"
+                  }
+                ]
+              ],
+              [
+                "___19",
+                [
+                  "__builtin_getattr__",
+                  "PointerType",
+                  {
+                    "str": "const_float16_ptr"
+                  }
+                ]
+              ],
+              [
+                "___20",
+                [
+                  "__builtin_list__",
+                  "___19",
+                  {
+                    "str": "const half*"
+                  }
+                ]
+              ],
+              [
+                "___21",
+                [
+                  "__builtin_getattr__",
+                  "PointerType",
+                  {
+                    "str": "float_ptr"
+                  }
+                ]
+              ],
+              [
+                "___22",
+                [
+                  "__builtin_list__",
+                  "___21",
+                  {
+                    "str": "float*"
+                  }
+                ]
+              ],
+              [
+                "___23",
+                [
+                  "__builtin_getattr__",
+                  "PointerType",
+                  {
+                    "str": "float16_ptr"
+                  }
+                ]
+              ],
+              [
+                "___24",
+                [
+                  "__builtin_list__",
+                  "___23",
+                  {
+                    "str": "half*"
+                  }
+                ]
+              ],
+              [
+                "___25",
+                [
+                  "__builtin_getattr__",
+                  "DataType",
+                  {
+                    "str": "float"
+                  }
+                ]
+              ],
+              [
+                "___26",
+                [
+                  "__builtin_list__",
+                  "___25",
+                  {
+                    "str": "float"
+                  }
+                ]
+              ],
+              [
+                "___27",
+                [
+                  "__builtin_getattr__",
+                  "DataType",
+                  {
+                    "str": "float16"
+                  }
+                ]
+              ],
+              [
+                "___28",
+                [
+                  "__builtin_list__",
+                  "___27",
+                  {
+                    "str": "half"
+                  }
+                ]
+              ],
+              [
+                "___29",
+                [
+                  "__builtin_getattr__",
+                  "DataType",
+                  {
+                    "str": "int64_t"
+                  }
+                ]
+              ],
+              [
+                "___30",
+                [
+                  "__builtin_list__",
+                  "___29",
+                  {
+                    "str": "int64_t"
+                  }
+                ]
+              ],
+              [
+                "___31",
+                [
+                  "__builtin_list__",
+                  "___18",
+                  "___20",
+                  "___22",
+                  "___24",
+                  "___26",
+                  "___28",
+                  "___30"
+                ]
+              ],
+              [
+                "___32",
+                [
+                  "OrderedDict",
+                  "___31"
+                ]
+              ],
+              [
+                "___33",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "dtype2type_name"
+                  }
+                ]
+              ],
+              [
+                "___34",
+                [
+                  "___33",
+                  {
+                    "str": "dtype2type_name"
+                  },
+                  "___32"
+                ]
               ]
             ],
             [
@@ -212,7 +418,7 @@
       ]
     ],
     [
-      "___14",
+      "___35",
       [
         "__builtin_getattr__",
         "__init__",
@@ -222,13 +428,154 @@
       ]
     ],
     [
-      "___15",
+      "___36",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___14"
+        "___35"
+      ]
+    ],
+    [
+      "_register_name",
+      [
+        "__builtin_identity__",
+        [
+          "lambda",
+          [
+            "self",
+            "pair"
+          ],
+          [
+            "__builtin_let__",
+            [
+              [
+                "___37",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "mut_kernel_arg_id_lazy_ctx"
+                  }
+                ]
+              ],
+              [
+                "registry",
+                [
+                  "__builtin_identity__",
+                  "___37"
+                ]
+              ],
+              [
+                "___38",
+                [
+                  "__builtin_getattr__",
+                  "registry",
+                  {
+                    "str": "get_or_create_kernel_arg_id_manul_var_name"
+                  }
+                ]
+              ],
+              [
+                "___39",
+                [
+                  "__builtin_getitem__",
+                  "pair",
+                  0
+                ]
+              ],
+              [
+                "___40",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "kernel_arg_id"
+                  },
+                  "___39"
+                ]
+              ],
+              [
+                "___41",
+                [
+                  "__builtin_getitem__",
+                  "pair",
+                  1
+                ]
+              ],
+              [
+                "___42",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "cpp_var_name"
+                  },
+                  "___41"
+                ]
+              ],
+              [
+                "___43",
+                [
+                  "__builtin_list__",
+                  "___40",
+                  "___42"
+                ]
+              ],
+              [
+                "___44",
+                [
+                  "__builtin_list__"
+                ]
+              ],
+              [
+                "___45",
+                [
+                  "__builtin_PackedArgs__",
+                  "___44",
+                  "___43"
+                ]
+              ],
+              [
+                "___46",
+                [
+                  "___38",
+                  "___45"
+                ]
+              ],
+              [
+                "___47",
+                [
+                  "__builtin_identity__",
+                  "___46"
+                ]
+              ]
+            ],
+            [
+              "__builtin_identity__",
+              null
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "___48",
+      [
+        "__builtin_getattr__",
+        "_register_name",
+        {
+          "str": "__function__"
+        }
+      ]
+    ],
+    [
+      "___49",
+      [
+        "__builtin_list__",
+        {
+          "str": "_register_name"
+        },
+        "___48"
       ]
     ],
     [
@@ -252,7 +599,122 @@
             "__builtin_let__",
             [
               [
-                "___16",
+                "___50",
+                [
+                  "__builtin_list__",
+                  "input0_karg",
+                  {
+                    "str": "input"
+                  }
+                ]
+              ],
+              [
+                "___51",
+                [
+                  "__builtin_list__",
+                  "input1_karg",
+                  {
+                    "str": "weight"
+                  }
+                ]
+              ],
+              [
+                "___52",
+                [
+                  "__builtin_list__",
+                  "input2_karg",
+                  {
+                    "str": "bias"
+                  }
+                ]
+              ],
+              [
+                "___53",
+                [
+                  "__builtin_list__",
+                  "output_karg",
+                  {
+                    "str": "output"
+                  }
+                ]
+              ],
+              [
+                "___54",
+                [
+                  "__builtin_list__",
+                  "m_karg",
+                  {
+                    "str": "m"
+                  }
+                ]
+              ],
+              [
+                "___55",
+                [
+                  "__builtin_list__",
+                  "n_karg",
+                  {
+                    "str": "n"
+                  }
+                ]
+              ],
+              [
+                "___56",
+                [
+                  "__builtin_list__",
+                  "k_karg",
+                  {
+                    "str": "k"
+                  }
+                ]
+              ],
+              [
+                "___57",
+                [
+                  "__builtin_list__",
+                  "___50",
+                  "___51",
+                  "___52",
+                  "___53",
+                  "___54",
+                  "___55",
+                  "___56"
+                ]
+              ],
+              [
+                "kernel_arg_id_and_names",
+                [
+                  "__builtin_identity__",
+                  "___57"
+                ]
+              ],
+              [
+                "___58",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "_register_name"
+                  }
+                ]
+              ],
+              [
+                "___59",
+                [
+                  "map",
+                  "___58",
+                  "kernel_arg_id_and_names"
+                ]
+              ],
+              [
+                "___60",
+                [
+                  "__builtin_identity__",
+                  "___59"
+                ]
+              ],
+              [
+                "___61",
                 [
                   "__builtin_getattr__",
                   "low_level_ir_code_gen_ctx_util",
@@ -262,20 +724,20 @@
                 ]
               ],
               [
-                "___17",
+                "___62",
                 [
-                  "___16"
+                  "___61"
                 ]
               ],
               [
                 "mut_lir_code_gen_ctx",
                 [
                   "__builtin_identity__",
-                  "___17"
+                  "___62"
                 ]
               ],
               [
-                "___19",
+                "___64",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -285,17 +747,17 @@
                 ]
               ],
               [
-                "___18",
+                "___63",
                 [
                   "__builtin_getattr__",
-                  "___19",
+                  "___64",
                   {
                     "str": "translate"
                   }
                 ]
               ],
               [
-                "___20",
+                "___65",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -305,17 +767,17 @@
                 ]
               ],
               [
-                "___21",
+                "___66",
                 [
                   "__builtin_list__",
                   {
                     "str": "mut_kernel_arg_id_lazy_ctx"
                   },
-                  "___20"
+                  "___65"
                 ]
               ],
               [
-                "___22",
+                "___67",
                 [
                   "__builtin_list__",
                   {
@@ -325,43 +787,43 @@
                 ]
               ],
               [
-                "___23",
+                "___68",
                 [
                   "__builtin_list__",
-                  "___21",
-                  "___22"
+                  "___66",
+                  "___67"
                 ]
               ],
               [
-                "___24",
+                "___69",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___25",
+                "___70",
                 [
                   "__builtin_PackedArgs__",
-                  "___24",
-                  "___23"
+                  "___69",
+                  "___68"
                 ]
               ],
               [
-                "___26",
+                "___71",
                 [
-                  "___18",
-                  "___25"
+                  "___63",
+                  "___70"
                 ]
               ],
               [
-                "___27",
+                "___72",
                 [
                   "__builtin_identity__",
-                  "___26"
+                  "___71"
                 ]
               ],
               [
-                "___28",
+                "___73",
                 [
                   "__builtin_getattr__",
                   "mut_lir_code_gen_ctx",
@@ -371,20 +833,20 @@
                 ]
               ],
               [
-                "___29",
+                "___74",
                 [
-                  "___28"
+                  "___73"
                 ]
               ],
               [
                 "trivial_code_str",
                 [
                   "__builtin_identity__",
-                  "___29"
+                  "___74"
                 ]
               ],
               [
-                "___30",
+                "___75",
                 [
                   "print",
                   {
@@ -394,14 +856,885 @@
                 ]
               ],
               [
-                "___31",
+                "___76",
                 [
                   "__builtin_identity__",
-                  "___30"
+                  "___75"
                 ]
               ],
               [
-                "___32",
+                "___79",
+                [
+                  "map",
+                  [
+                    "lambda",
+                    [
+                      "pair"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___78",
+                          [
+                            "__builtin_getitem__",
+                            "pair",
+                            0
+                          ]
+                        ],
+                        [
+                          "___77",
+                          [
+                            "__builtin_getattr__",
+                            "___78",
+                            {
+                              "str": "type"
+                            }
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___77"
+                      ]
+                    ]
+                  ],
+                  "kernel_arg_id_and_names"
+                ]
+              ],
+              [
+                "arg_type_list",
+                [
+                  "__builtin_identity__",
+                  "___79"
+                ]
+              ],
+              [
+                "get_kernel_arg_list_str",
+                [
+                  "__builtin_identity__",
+                  [
+                    "lambda",
+                    [],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "declare_epilogue_arguments_field",
+                          [
+                            "__builtin_identity__",
+                            [
+                              "lambda",
+                              [
+                                "pair"
+                              ],
+                              [
+                                "__builtin_let__",
+                                [
+                                  [
+                                    "___80",
+                                    [
+                                      "__builtin_getitem__",
+                                      "pair",
+                                      0
+                                    ]
+                                  ],
+                                  [
+                                    "kernel_arg_id",
+                                    [
+                                      "__builtin_identity__",
+                                      "___80"
+                                    ]
+                                  ],
+                                  [
+                                    "___81",
+                                    [
+                                      "__builtin_getitem__",
+                                      "pair",
+                                      1
+                                    ]
+                                  ],
+                                  [
+                                    "var_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___81"
+                                    ]
+                                  ],
+                                  [
+                                    "___83",
+                                    [
+                                      "__builtin_getattr__",
+                                      "self",
+                                      {
+                                        "str": "kernel_arg_translator"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___82",
+                                    [
+                                      "__builtin_getattr__",
+                                      "___83",
+                                      {
+                                        "str": "get_param_struct_field_name"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___84",
+                                    [
+                                      "___82",
+                                      "var_name"
+                                    ]
+                                  ],
+                                  [
+                                    "field_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___84"
+                                    ]
+                                  ],
+                                  [
+                                    "___85",
+                                    [
+                                      "__builtin_getattr__",
+                                      "kernel_arg_id",
+                                      {
+                                        "str": "type"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "dtype",
+                                    [
+                                      "__builtin_identity__",
+                                      "___85"
+                                    ]
+                                  ],
+                                  [
+                                    "___86",
+                                    [
+                                      "__builtin_getattr__",
+                                      "self",
+                                      {
+                                        "str": "dtype2type_name"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___87",
+                                    [
+                                      "__builtin_getitem__",
+                                      "___86",
+                                      "dtype"
+                                    ]
+                                  ],
+                                  [
+                                    "type_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___87"
+                                    ]
+                                  ],
+                                  [
+                                    "___88",
+                                    [
+                                      "__builtin_ToString__",
+                                      "type_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___89",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": " "
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___90",
+                                    [
+                                      "__builtin_Add__",
+                                      "___88",
+                                      "___89"
+                                    ]
+                                  ],
+                                  [
+                                    "___91",
+                                    [
+                                      "__builtin_ToString__",
+                                      "field_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___92",
+                                    [
+                                      "__builtin_Add__",
+                                      "___90",
+                                      "___91"
+                                    ]
+                                  ],
+                                  [
+                                    "___93",
+                                    [
+                                      "__builtin_return__",
+                                      "___92"
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  "__builtin_identity__",
+                                  null
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          "___94",
+                          [
+                            "__builtin_getattr__",
+                            {
+                              "str": ", "
+                            },
+                            {
+                              "str": "join"
+                            }
+                          ]
+                        ],
+                        [
+                          "___95",
+                          [
+                            "map",
+                            "declare_epilogue_arguments_field",
+                            "kernel_arg_id_and_names"
+                          ]
+                        ],
+                        [
+                          "___96",
+                          [
+                            "___94",
+                            "___95"
+                          ]
+                        ],
+                        [
+                          "___97",
+                          [
+                            "__builtin_return__",
+                            "___96"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        null
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "get_epilogue_arguments_fields_str",
+                [
+                  "__builtin_identity__",
+                  [
+                    "lambda",
+                    [],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "declare_epilogue_arguments_field",
+                          [
+                            "__builtin_identity__",
+                            [
+                              "lambda",
+                              [
+                                "pair"
+                              ],
+                              [
+                                "__builtin_let__",
+                                [
+                                  [
+                                    "___98",
+                                    [
+                                      "__builtin_getitem__",
+                                      "pair",
+                                      0
+                                    ]
+                                  ],
+                                  [
+                                    "kernel_arg_id",
+                                    [
+                                      "__builtin_identity__",
+                                      "___98"
+                                    ]
+                                  ],
+                                  [
+                                    "___99",
+                                    [
+                                      "__builtin_getitem__",
+                                      "pair",
+                                      1
+                                    ]
+                                  ],
+                                  [
+                                    "var_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___99"
+                                    ]
+                                  ],
+                                  [
+                                    "___101",
+                                    [
+                                      "__builtin_getattr__",
+                                      "self",
+                                      {
+                                        "str": "kernel_arg_translator"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___100",
+                                    [
+                                      "__builtin_getattr__",
+                                      "___101",
+                                      {
+                                        "str": "get_param_struct_field_name"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___102",
+                                    [
+                                      "___100",
+                                      "var_name"
+                                    ]
+                                  ],
+                                  [
+                                    "field_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___102"
+                                    ]
+                                  ],
+                                  [
+                                    "___103",
+                                    [
+                                      "__builtin_getattr__",
+                                      "kernel_arg_id",
+                                      {
+                                        "str": "type"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "dtype",
+                                    [
+                                      "__builtin_identity__",
+                                      "___103"
+                                    ]
+                                  ],
+                                  [
+                                    "___104",
+                                    [
+                                      "__builtin_getattr__",
+                                      "self",
+                                      {
+                                        "str": "dtype2type_name"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___105",
+                                    [
+                                      "__builtin_getitem__",
+                                      "___104",
+                                      "dtype"
+                                    ]
+                                  ],
+                                  [
+                                    "type_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___105"
+                                    ]
+                                  ],
+                                  [
+                                    "___106",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": "    "
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___107",
+                                    [
+                                      "__builtin_ToString__",
+                                      "type_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___108",
+                                    [
+                                      "__builtin_Add__",
+                                      "___106",
+                                      "___107"
+                                    ]
+                                  ],
+                                  [
+                                    "___109",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": " "
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___110",
+                                    [
+                                      "__builtin_Add__",
+                                      "___108",
+                                      "___109"
+                                    ]
+                                  ],
+                                  [
+                                    "___111",
+                                    [
+                                      "__builtin_ToString__",
+                                      "field_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___112",
+                                    [
+                                      "__builtin_Add__",
+                                      "___110",
+                                      "___111"
+                                    ]
+                                  ],
+                                  [
+                                    "___113",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": ";"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___114",
+                                    [
+                                      "__builtin_Add__",
+                                      "___112",
+                                      "___113"
+                                    ]
+                                  ],
+                                  [
+                                    "___115",
+                                    [
+                                      "__builtin_return__",
+                                      "___114"
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  "__builtin_identity__",
+                                  null
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          "___118",
+                          [
+                            "__builtin_getattr__",
+                            "self",
+                            {
+                              "str": "mut_kernel_arg_id_lazy_ctx"
+                            }
+                          ]
+                        ],
+                        [
+                          "___117",
+                          [
+                            "__builtin_getattr__",
+                            "___118",
+                            {
+                              "str": "generated_kernel_arg_id2unique_name"
+                            }
+                          ]
+                        ],
+                        [
+                          "___116",
+                          [
+                            "__builtin_getattr__",
+                            "___117",
+                            {
+                              "str": "items"
+                            }
+                          ]
+                        ],
+                        [
+                          "___119",
+                          [
+                            "___116"
+                          ]
+                        ],
+                        [
+                          "generated_kernel_arg_id_and_names",
+                          [
+                            "__builtin_identity__",
+                            "___119"
+                          ]
+                        ],
+                        [
+                          "___120",
+                          [
+                            "__builtin_getattr__",
+                            {
+                              "str": "\n"
+                            },
+                            {
+                              "str": "join"
+                            }
+                          ]
+                        ],
+                        [
+                          "___121",
+                          [
+                            "map",
+                            "declare_epilogue_arguments_field",
+                            "generated_kernel_arg_id_and_names"
+                          ]
+                        ],
+                        [
+                          "___122",
+                          [
+                            "___120",
+                            "___121"
+                          ]
+                        ],
+                        [
+                          "___123",
+                          [
+                            "__builtin_return__",
+                            "___122"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        null
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "get_epilogue_arguments_init_str",
+                [
+                  "__builtin_identity__",
+                  [
+                    "lambda",
+                    [
+                      "param_obj_name"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "declare_epilogue_arguments_assign",
+                          [
+                            "__builtin_identity__",
+                            [
+                              "lambda",
+                              [
+                                "pair"
+                              ],
+                              [
+                                "__builtin_let__",
+                                [
+                                  [
+                                    "___124",
+                                    [
+                                      "__builtin_getitem__",
+                                      "pair",
+                                      0
+                                    ]
+                                  ],
+                                  [
+                                    "kernel_arg_id",
+                                    [
+                                      "__builtin_identity__",
+                                      "___124"
+                                    ]
+                                  ],
+                                  [
+                                    "___125",
+                                    [
+                                      "__builtin_getitem__",
+                                      "pair",
+                                      1
+                                    ]
+                                  ],
+                                  [
+                                    "var_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___125"
+                                    ]
+                                  ],
+                                  [
+                                    "___127",
+                                    [
+                                      "__builtin_getattr__",
+                                      "self",
+                                      {
+                                        "str": "kernel_arg_translator"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___126",
+                                    [
+                                      "__builtin_getattr__",
+                                      "___127",
+                                      {
+                                        "str": "get_param_struct_field_name"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___128",
+                                    [
+                                      "___126",
+                                      "var_name"
+                                    ]
+                                  ],
+                                  [
+                                    "field_name",
+                                    [
+                                      "__builtin_identity__",
+                                      "___128"
+                                    ]
+                                  ],
+                                  [
+                                    "___129",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": "  "
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___130",
+                                    [
+                                      "__builtin_ToString__",
+                                      "param_obj_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___131",
+                                    [
+                                      "__builtin_Add__",
+                                      "___129",
+                                      "___130"
+                                    ]
+                                  ],
+                                  [
+                                    "___132",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": "."
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___133",
+                                    [
+                                      "__builtin_Add__",
+                                      "___131",
+                                      "___132"
+                                    ]
+                                  ],
+                                  [
+                                    "___134",
+                                    [
+                                      "__builtin_ToString__",
+                                      "field_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___135",
+                                    [
+                                      "__builtin_Add__",
+                                      "___133",
+                                      "___134"
+                                    ]
+                                  ],
+                                  [
+                                    "___136",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": " = "
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___137",
+                                    [
+                                      "__builtin_Add__",
+                                      "___135",
+                                      "___136"
+                                    ]
+                                  ],
+                                  [
+                                    "___138",
+                                    [
+                                      "__builtin_ToString__",
+                                      "var_name"
+                                    ]
+                                  ],
+                                  [
+                                    "___139",
+                                    [
+                                      "__builtin_Add__",
+                                      "___137",
+                                      "___138"
+                                    ]
+                                  ],
+                                  [
+                                    "___140",
+                                    [
+                                      "__builtin_ToString__",
+                                      {
+                                        "str": ";"
+                                      }
+                                    ]
+                                  ],
+                                  [
+                                    "___141",
+                                    [
+                                      "__builtin_Add__",
+                                      "___139",
+                                      "___140"
+                                    ]
+                                  ],
+                                  [
+                                    "___142",
+                                    [
+                                      "__builtin_return__",
+                                      "___141"
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  "__builtin_identity__",
+                                  null
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          "___145",
+                          [
+                            "__builtin_getattr__",
+                            "self",
+                            {
+                              "str": "mut_kernel_arg_id_lazy_ctx"
+                            }
+                          ]
+                        ],
+                        [
+                          "___144",
+                          [
+                            "__builtin_getattr__",
+                            "___145",
+                            {
+                              "str": "generated_kernel_arg_id2unique_name"
+                            }
+                          ]
+                        ],
+                        [
+                          "___143",
+                          [
+                            "__builtin_getattr__",
+                            "___144",
+                            {
+                              "str": "items"
+                            }
+                          ]
+                        ],
+                        [
+                          "___146",
+                          [
+                            "___143"
+                          ]
+                        ],
+                        [
+                          "generated_kernel_arg_id_and_names",
+                          [
+                            "__builtin_identity__",
+                            "___146"
+                          ]
+                        ],
+                        [
+                          "___147",
+                          [
+                            "__builtin_getattr__",
+                            {
+                              "str": "\n"
+                            },
+                            {
+                              "str": "join"
+                            }
+                          ]
+                        ],
+                        [
+                          "___148",
+                          [
+                            "map",
+                            "declare_epilogue_arguments_assign",
+                            "generated_kernel_arg_id_and_names"
+                          ]
+                        ],
+                        [
+                          "___149",
+                          [
+                            "___147",
+                            "___148"
+                          ]
+                        ],
+                        [
+                          "___150",
+                          [
+                            "__builtin_return__",
+                            "___149"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        null
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "___151",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -411,22 +1744,26 @@
                 ]
               ],
               [
-                "___33",
+                "___152",
                 [
-                  "___32",
+                  "___151",
                   "trivial_code_str",
-                  "dtype_of_ptr_args"
+                  "dtype_of_ptr_args",
+                  "arg_type_list",
+                  "get_kernel_arg_list_str",
+                  "get_epilogue_arguments_fields_str",
+                  "get_epilogue_arguments_init_str"
                 ]
               ],
               [
                 "project_module",
                 [
                   "__builtin_identity__",
-                  "___33"
+                  "___152"
                 ]
               ],
               [
-                "___34",
+                "___153",
                 [
                   "__builtin_list__",
                   {
@@ -436,7 +1773,7 @@
                 ]
               ],
               [
-                "___35",
+                "___154",
                 [
                   "__builtin_list__",
                   {
@@ -446,171 +1783,128 @@
                 ]
               ],
               [
-                "___36",
+                "___157",
                 [
-                  "__builtin_getattr__",
-                  "input0_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
+                  "map",
+                  [
+                    "lambda",
+                    [
+                      "pair"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___156",
+                          [
+                            "__builtin_getitem__",
+                            "pair",
+                            0
+                          ]
+                        ],
+                        [
+                          "___155",
+                          [
+                            "__builtin_getattr__",
+                            "___156",
+                            {
+                              "str": "runtime_getter"
+                            }
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___155"
+                      ]
+                    ]
+                  ],
+                  "kernel_arg_id_and_names"
                 ]
               ],
               [
-                "___37",
-                [
-                  "__builtin_getattr__",
-                  "input1_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
-                ]
-              ],
-              [
-                "___38",
-                [
-                  "__builtin_getattr__",
-                  "input2_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
-                ]
-              ],
-              [
-                "___39",
-                [
-                  "__builtin_getattr__",
-                  "output_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
-                ]
-              ],
-              [
-                "___40",
-                [
-                  "__builtin_getattr__",
-                  "m_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
-                ]
-              ],
-              [
-                "___41",
-                [
-                  "__builtin_getattr__",
-                  "n_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
-                ]
-              ],
-              [
-                "___42",
-                [
-                  "__builtin_getattr__",
-                  "k_karg",
-                  {
-                    "str": "runtime_getter"
-                  }
-                ]
-              ],
-              [
-                "___43",
-                [
-                  "__builtin_list__",
-                  "___36",
-                  "___37",
-                  "___38",
-                  "___39",
-                  "___40",
-                  "___41",
-                  "___42"
-                ]
-              ],
-              [
-                "___44",
+                "___158",
                 [
                   "__builtin_list__",
                   {
                     "str": "kernel_args_getters"
                   },
-                  "___43"
+                  "___157"
                 ]
               ],
               [
-                "___45",
+                "___159",
                 [
                   "__builtin_list__",
-                  "___44"
+                  "___158"
                 ]
               ],
               [
-                "___46",
+                "___160",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___47",
+                "___161",
                 [
                   "__builtin_PackedArgs__",
-                  "___46",
-                  "___45"
+                  "___160",
+                  "___159"
                 ]
               ],
               [
-                "___48",
+                "___162",
                 [
                   "BuiltinSerializableAttrMap",
-                  "___47"
+                  "___161"
                 ]
               ],
               [
-                "___49",
+                "___163",
                 [
                   "__builtin_list__",
                   {
                     "str": "kernel_dispatch_const_data"
                   },
-                  "___48"
+                  "___162"
                 ]
               ],
               [
-                "___50",
+                "___164",
                 [
                   "__builtin_list__",
-                  "___34",
-                  "___35",
-                  "___49"
+                  "___153",
+                  "___154",
+                  "___163"
                 ]
               ],
               [
-                "___51",
+                "___165",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___52",
+                "___166",
                 [
                   "__builtin_PackedArgs__",
-                  "___51",
-                  "___50"
+                  "___165",
+                  "___164"
                 ]
               ],
               [
-                "___53",
+                "___167",
                 [
                   "CodeGenResult",
-                  "___52"
+                  "___166"
                 ]
               ],
               [
-                "___54",
+                "___168",
                 [
                   "__builtin_return__",
-                  "___53"
+                  "___167"
                 ]
               ]
             ],
@@ -623,7 +1917,7 @@
       ]
     ],
     [
-      "___55",
+      "___169",
       [
         "__builtin_getattr__",
         "compile",
@@ -633,13 +1927,13 @@
       ]
     ],
     [
-      "___56",
+      "___170",
       [
         "__builtin_list__",
         {
           "str": "compile"
         },
-        "___55"
+        "___169"
       ]
     ],
     [
@@ -651,7 +1945,11 @@
           [
             "self",
             "trivial_code_str",
-            "dtype_of_ptr_args"
+            "dtype_of_ptr_args",
+            "arg_type_list",
+            "get_kernel_arg_list_str",
+            "get_epilogue_arguments_fields_str",
+            "get_epilogue_arguments_init_str"
           ],
           [
             "__builtin_let__",
@@ -661,143 +1959,22 @@
                 [
                   "__builtin_identity__",
                   {
-                    "str": "\n// auto generated codes\n#include <cuda.h>\n#include <cuda_fp16.h>\n\n#include \"native_matmul.cuh\"\n\nnamespace ap {\n\nstruct BroadcastConfig {\n};\n\nstruct InputExtra {\n  const void* ptr{nullptr};\n  bool need_broadcast{false};\n  BroadcastConfig config;\n};\n\ntemplate <typename T, int NumIns = 1, int NumOuts = 1>\nstruct AddFunctor {\n  struct Arguments {\n    int out_shape_len{0};\n    int64_t out_shape[10];\n    InputExtra ins[NumIns];\n    // void* outs[NumOuts];\n  };\n\n  __forceinline__ __host__ __device__\n  T Load(const Arguments& args, const MatrixCoord& coord, int idx) const {\n    // Specially for the case of out_shape_len = 2\n    size_t offset = coord.j * args.out_shape[1] + coord.k;\n    return reinterpret_cast<const T*>(args.ins[idx].ptr)[offset];\n  }\n\n  __forceinline__ __host__ __device__\n  T LoadWithBroadcast(const Arguments& args, const MatrixCoord& coord, int idx) const {\n    // Specially for the bias case\n    size_t offset = coord.k;\n    return reinterpret_cast<const T*>(args.ins[idx].ptr)[offset];\n  }\n\n  // Note: need to support vectorized operation\n  __forceinline__ __host__ __device__\n  T operator()(T x, const Arguments& args, const MatrixCoord& coord) const {\n    T y = args.ins[0].need_broadcast ? LoadWithBroadcast(args, coord, 0) : Load(args, coord, 0);\n    T out;\n    AP_GENERATED_BINARY_EPILOGUE_STRING;\n    return out;\n    // return x + y;\n  }\n};\n\n}\n\nextern \"C\" {\n\nvoid MatmulBinaryKernel(void* stream_ptr, const AP_GENERATED_INPUT0_DTYPE* input, const AP_GENERATED_INPUT1_DTYPE* weight, const AP_GENERATED_INPUT2_DTYPE* bias, AP_GENERATED_OUTPUT_DTYPE* output, const int64_t m, const int64_t n, const int64_t k) {\n  ap::GemmEpilogueParams params;\n\n  params.batch_count = 1;\n  params.m = m;\n  params.n = n;\n  params.k = k;\n\n  params.input = input;\n  params.weight = weight;\n  params.bias = nullptr;\n  params.output = output;\n\n  cudaStream_t* cuda_stream_ptr = reinterpret_cast<cudaStream_t*>(stream_ptr);\n  params.stream = *cuda_stream_ptr;\n\n  // std::cout << \"-- [MatmulBinaryKernel] m=\" << m << \", n=\" << n << \", k=\" << k << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] input=\" << input << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] weight=\" << weight << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] bias=\" << bias << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] output=\" << output << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] stream=\" << cuda_stream_ptr << std::endl;\n\n  typename ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>::Arguments epilogue_args;\n  epilogue_args.out_shape_len = 2;\n  epilogue_args.out_shape[0] = m;\n  epilogue_args.out_shape[1] = n;\n\n  epilogue_args.ins[0].ptr = bias;\n  epilogue_args.ins[0].need_broadcast = false;\n\n  ap::NativeMatmulAdd<AP_GENERATED_ELEMENT_DTYPE, ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>>(params, epilogue_args);\n}\n}\n\n  "
+                    "str": "\n// auto generated codes\n#include <cuda.h>\n#include <cuda_fp16.h>\n\n#include \"native_matmul.cuh\"\n\nnamespace ap {\n\ntemplate <typename T, int NumIns = 1, int NumOuts = 1>\nstruct AddFunctor {\n  struct Arguments {\nEPILOGUE_ARGUMENTS_FIELDS\n  };\n\n  // Note: need to support vectorized operation\n  __forceinline__ __host__ __device__\n  T operator()(T x, const Arguments& args, const MatrixCoord& coord) const {\n    T out;\n    AP_GENERATED_BINARY_EPILOGUE_STRING;\n    return out;\n  }\n};\n\n}\n\nextern \"C\" {\n\nvoid MatmulBinaryKernel(void* stream_ptr, AP_KERNEL_ARGS_DECLARE) {\n  ap::GemmEpilogueParams params;\n\n  params.batch_count = 1;\n  params.m = m;\n  params.n = n;\n  params.k = k;\n\n  params.input = input;\n  params.weight = weight;\n  params.bias = nullptr;\n  params.output = output;\n\n  cudaStream_t* cuda_stream_ptr = reinterpret_cast<cudaStream_t*>(stream_ptr);\n  params.stream = *cuda_stream_ptr;\n\n  // std::cout << \"-- [MatmulBinaryKernel] m=\" << m << \", n=\" << n << \", k=\" << k << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] input=\" << input << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] weight=\" << weight << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] bias=\" << bias << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] output=\" << output << std::endl;\n  // std::cout << \"-- [MatmulBinaryKernel] stream=\" << cuda_stream_ptr << std::endl;\n\n  typename ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>::Arguments epilogue_args;\n\nEPILOGUE_ARGUMENTS_INIT\n\n  ap::NativeMatmulAdd<AP_GENERATED_ELEMENT_DTYPE, ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>>(params, epilogue_args);\n}\n}\n\n  "
                   }
                 ]
               ],
               [
-                "___57",
+                "___171",
                 [
                   "__builtin_getattr__",
-                  "DataType",
+                  "self",
                   {
-                    "str": "float"
+                    "str": "dtype2type_name"
                   }
                 ]
               ],
               [
-                "___58",
-                [
-                  "__builtin_list__",
-                  "___57",
-                  {
-                    "str": "float"
-                  }
-                ]
-              ],
-              [
-                "___59",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "float16"
-                  }
-                ]
-              ],
-              [
-                "___60",
-                [
-                  "__builtin_list__",
-                  "___59",
-                  {
-                    "str": "half"
-                  }
-                ]
-              ],
-              [
-                "___61",
-                [
-                  "__builtin_list__",
-                  "___58",
-                  "___60"
-                ]
-              ],
-              [
-                "___62",
-                [
-                  "OrderedDict",
-                  "___61"
-                ]
-              ],
-              [
-                "dtype2type_name",
-                [
-                  "__builtin_identity__",
-                  "___62"
-                ]
-              ],
-              [
-                "___63",
-                [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  0
-                ]
-              ],
-              [
-                "___64",
-                [
-                  "__builtin_getitem__",
-                  "dtype2type_name",
-                  "___63"
-                ]
-              ],
-              [
-                "input0_dtype",
-                [
-                  "__builtin_identity__",
-                  "___64"
-                ]
-              ],
-              [
-                "___65",
-                [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  1
-                ]
-              ],
-              [
-                "___66",
-                [
-                  "__builtin_getitem__",
-                  "dtype2type_name",
-                  "___65"
-                ]
-              ],
-              [
-                "input1_dtype",
-                [
-                  "__builtin_identity__",
-                  "___66"
-                ]
-              ],
-              [
-                "___67",
-                [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  2
-                ]
-              ],
-              [
-                "___68",
-                [
-                  "__builtin_getitem__",
-                  "dtype2type_name",
-                  "___67"
-                ]
-              ],
-              [
-                "input2_dtype",
-                [
-                  "__builtin_identity__",
-                  "___68"
-                ]
-              ],
-              [
-                "___69",
+                "___172",
                 [
                   "__builtin_getitem__",
                   "dtype_of_ptr_args",
@@ -805,22 +1982,22 @@
                 ]
               ],
               [
-                "___70",
+                "___173",
                 [
                   "__builtin_getitem__",
-                  "dtype2type_name",
-                  "___69"
+                  "___171",
+                  "___172"
                 ]
               ],
               [
                 "output_dtype",
                 [
                   "__builtin_identity__",
-                  "___70"
+                  "___173"
                 ]
               ],
               [
-                "___78",
+                "___178",
                 [
                   "__builtin_getattr__",
                   "code_template",
@@ -830,9 +2007,9 @@
                 ]
               ],
               [
-                "___79",
+                "___179",
                 [
-                  "___78",
+                  "___178",
                   {
                     "str": "AP_GENERATED_BINARY_EPILOGUE_STRING"
                   },
@@ -840,99 +2017,19 @@
                 ]
               ],
               [
-                "___77",
+                "___177",
                 [
                   "__builtin_getattr__",
-                  "___79",
+                  "___179",
                   {
                     "str": "replace"
                   }
                 ]
               ],
               [
-                "___80",
+                "___180",
                 [
-                  "___77",
-                  {
-                    "str": "AP_GENERATED_INPUT0_DTYPE"
-                  },
-                  "input0_dtype"
-                ]
-              ],
-              [
-                "___76",
-                [
-                  "__builtin_getattr__",
-                  "___80",
-                  {
-                    "str": "replace"
-                  }
-                ]
-              ],
-              [
-                "___81",
-                [
-                  "___76",
-                  {
-                    "str": "AP_GENERATED_INPUT1_DTYPE"
-                  },
-                  "input1_dtype"
-                ]
-              ],
-              [
-                "___75",
-                [
-                  "__builtin_getattr__",
-                  "___81",
-                  {
-                    "str": "replace"
-                  }
-                ]
-              ],
-              [
-                "___82",
-                [
-                  "___75",
-                  {
-                    "str": "AP_GENERATED_INPUT2_DTYPE"
-                  },
-                  "input1_dtype"
-                ]
-              ],
-              [
-                "___74",
-                [
-                  "__builtin_getattr__",
-                  "___82",
-                  {
-                    "str": "replace"
-                  }
-                ]
-              ],
-              [
-                "___83",
-                [
-                  "___74",
-                  {
-                    "str": "AP_GENERATED_OUTPUT_DTYPE"
-                  },
-                  "output_dtype"
-                ]
-              ],
-              [
-                "___73",
-                [
-                  "__builtin_getattr__",
-                  "___83",
-                  {
-                    "str": "replace"
-                  }
-                ]
-              ],
-              [
-                "___84",
-                [
-                  "___73",
+                  "___177",
                   {
                     "str": "AP_GENERATED_ELEMENT_DTYPE"
                   },
@@ -940,50 +2037,91 @@
                 ]
               ],
               [
-                "___72",
+                "___176",
                 [
                   "__builtin_getattr__",
-                  "___84",
+                  "___180",
                   {
                     "str": "replace"
                   }
                 ]
               ],
               [
-                "___85",
+                "___181",
                 [
-                  "___72",
-                  {
-                    "str": "AP_GENERATED_ELEMENT_DTYPE"
-                  },
-                  "output_dtype"
+                  "get_kernel_arg_list_str"
                 ]
               ],
               [
-                "___71",
+                "___182",
+                [
+                  "___176",
+                  {
+                    "str": "AP_KERNEL_ARGS_DECLARE"
+                  },
+                  "___181"
+                ]
+              ],
+              [
+                "___175",
                 [
                   "__builtin_getattr__",
-                  "___85",
+                  "___182",
                   {
                     "str": "replace"
                   }
                 ]
               ],
               [
-                "___86",
+                "___183",
                 [
-                  "___71",
+                  "get_epilogue_arguments_fields_str"
+                ]
+              ],
+              [
+                "___184",
+                [
+                  "___175",
                   {
-                    "str": "AP_GENERATED_ELEMENT_DTYPE"
+                    "str": "EPILOGUE_ARGUMENTS_FIELDS"
                   },
-                  "output_dtype"
+                  "___183"
+                ]
+              ],
+              [
+                "___174",
+                [
+                  "__builtin_getattr__",
+                  "___184",
+                  {
+                    "str": "replace"
+                  }
+                ]
+              ],
+              [
+                "___185",
+                [
+                  "get_epilogue_arguments_init_str",
+                  {
+                    "str": "epilogue_args"
+                  }
+                ]
+              ],
+              [
+                "___186",
+                [
+                  "___174",
+                  {
+                    "str": "EPILOGUE_ARGUMENTS_INIT"
+                  },
+                  "___185"
                 ]
               ],
               [
                 "code",
                 [
                   "__builtin_identity__",
-                  "___86"
+                  "___186"
                 ]
               ],
               [
@@ -1014,7 +2152,7 @@
                 ]
               ],
               [
-                "___87",
+                "___187",
                 [
                   "__builtin_Add__",
                   "compile_cmd",
@@ -1024,18 +2162,18 @@
                 ]
               ],
               [
-                "___88",
+                "___188",
                 [
                   "__builtin_Add__",
-                  "___87",
+                  "___187",
                   "cutlass_dir"
                 ]
               ],
               [
-                "___89",
+                "___189",
                 [
                   "__builtin_Add__",
-                  "___88",
+                  "___188",
                   {
                     "str": "/include"
                   }
@@ -1045,11 +2183,11 @@
                 "compile_cmd",
                 [
                   "__builtin_identity__",
-                  "___89"
+                  "___189"
                 ]
               ],
               [
-                "___90",
+                "___190",
                 [
                   "__builtin_Add__",
                   "compile_cmd",
@@ -1059,18 +2197,18 @@
                 ]
               ],
               [
-                "___91",
+                "___191",
                 [
                   "__builtin_Add__",
-                  "___90",
+                  "___190",
                   "cutlass_dir"
                 ]
               ],
               [
-                "___92",
+                "___192",
                 [
                   "__builtin_Add__",
-                  "___91",
+                  "___191",
                   {
                     "str": "/tools/util/include"
                   }
@@ -1080,11 +2218,11 @@
                 "compile_cmd",
                 [
                   "__builtin_identity__",
-                  "___92"
+                  "___192"
                 ]
               ],
               [
-                "___93",
+                "___193",
                 [
                   "__builtin_Add__",
                   "compile_cmd",
@@ -1094,10 +2232,10 @@
                 ]
               ],
               [
-                "___94",
+                "___194",
                 [
                   "__builtin_Add__",
-                  "___93",
+                  "___193",
                   "source_dir"
                 ]
               ],
@@ -1105,11 +2243,11 @@
                 "compile_cmd",
                 [
                   "__builtin_identity__",
-                  "___94"
+                  "___194"
                 ]
               ],
               [
-                "___95",
+                "___195",
                 [
                   "__builtin_Add__",
                   "compile_cmd",
@@ -1122,11 +2260,11 @@
                 "compile_cmd",
                 [
                   "__builtin_identity__",
-                  "___95"
+                  "___195"
                 ]
               ],
               [
-                "___96",
+                "___196",
                 [
                   "__builtin_Add__",
                   "compile_cmd",
@@ -1139,167 +2277,11 @@
                 "compile_cmd",
                 [
                   "__builtin_identity__",
-                  "___96"
+                  "___196"
                 ]
               ],
               [
-                "___97",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "float"
-                  }
-                ]
-              ],
-              [
-                "___98",
-                [
-                  "__builtin_getattr__",
-                  "PointerType",
-                  {
-                    "str": "const_float_ptr"
-                  }
-                ]
-              ],
-              [
-                "___99",
-                [
-                  "__builtin_list__",
-                  "___97",
-                  "___98"
-                ]
-              ],
-              [
-                "___100",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "float16"
-                  }
-                ]
-              ],
-              [
-                "___101",
-                [
-                  "__builtin_getattr__",
-                  "PointerType",
-                  {
-                    "str": "const_float16_ptr"
-                  }
-                ]
-              ],
-              [
-                "___102",
-                [
-                  "__builtin_list__",
-                  "___100",
-                  "___101"
-                ]
-              ],
-              [
-                "___103",
-                [
-                  "__builtin_list__",
-                  "___99",
-                  "___102"
-                ]
-              ],
-              [
-                "___104",
-                [
-                  "OrderedDict",
-                  "___103"
-                ]
-              ],
-              [
-                "dtype2const_pointer_type",
-                [
-                  "__builtin_identity__",
-                  "___104"
-                ]
-              ],
-              [
-                "___105",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "float"
-                  }
-                ]
-              ],
-              [
-                "___106",
-                [
-                  "__builtin_getattr__",
-                  "PointerType",
-                  {
-                    "str": "float_ptr"
-                  }
-                ]
-              ],
-              [
-                "___107",
-                [
-                  "__builtin_list__",
-                  "___105",
-                  "___106"
-                ]
-              ],
-              [
-                "___108",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "float16"
-                  }
-                ]
-              ],
-              [
-                "___109",
-                [
-                  "__builtin_getattr__",
-                  "PointerType",
-                  {
-                    "str": "float16_ptr"
-                  }
-                ]
-              ],
-              [
-                "___110",
-                [
-                  "__builtin_list__",
-                  "___108",
-                  "___109"
-                ]
-              ],
-              [
-                "___111",
-                [
-                  "__builtin_list__",
-                  "___107",
-                  "___110"
-                ]
-              ],
-              [
-                "___112",
-                [
-                  "OrderedDict",
-                  "___111"
-                ]
-              ],
-              [
-                "dtype2pointer_type",
-                [
-                  "__builtin_identity__",
-                  "___112"
-                ]
-              ],
-              [
-                "___113",
+                "___197",
                 [
                   "__builtin_getattr__",
                   "DataType",
@@ -1309,7 +2291,7 @@
                 ]
               ],
               [
-                "___114",
+                "___198",
                 [
                   "__builtin_getattr__",
                   "PointerType",
@@ -1319,126 +2301,33 @@
                 ]
               ],
               [
-                "___115",
+                "___199",
                 [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  0
+                  "__builtin_starred__",
+                  "arg_type_list"
                 ]
               ],
               [
-                "___116",
-                [
-                  "__builtin_getitem__",
-                  "dtype2const_pointer_type",
-                  "___115"
-                ]
-              ],
-              [
-                "___117",
-                [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  1
-                ]
-              ],
-              [
-                "___118",
-                [
-                  "__builtin_getitem__",
-                  "dtype2const_pointer_type",
-                  "___117"
-                ]
-              ],
-              [
-                "___119",
-                [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  2
-                ]
-              ],
-              [
-                "___120",
-                [
-                  "__builtin_getitem__",
-                  "dtype2const_pointer_type",
-                  "___119"
-                ]
-              ],
-              [
-                "___121",
-                [
-                  "__builtin_getitem__",
-                  "dtype_of_ptr_args",
-                  3
-                ]
-              ],
-              [
-                "___122",
-                [
-                  "__builtin_getitem__",
-                  "dtype2pointer_type",
-                  "___121"
-                ]
-              ],
-              [
-                "___123",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "const_int64"
-                  }
-                ]
-              ],
-              [
-                "___124",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "const_int64"
-                  }
-                ]
-              ],
-              [
-                "___125",
-                [
-                  "__builtin_getattr__",
-                  "DataType",
-                  {
-                    "str": "const_int64"
-                  }
-                ]
-              ],
-              [
-                "___126",
+                "___200",
                 [
                   "__builtin_list__",
-                  "___114",
-                  "___116",
-                  "___118",
-                  "___120",
-                  "___122",
-                  "___123",
-                  "___124",
-                  "___125"
+                  "___198",
+                  "___199"
                 ]
               ],
               [
-                "___127",
+                "___201",
                 [
                   "FuncDeclare",
-                  "___113",
+                  "___197",
                   {
                     "str": "MatmulBinaryKernel"
                   },
-                  "___126"
+                  "___200"
                 ]
               ],
               [
-                "___128",
+                "___202",
                 [
                   "__builtin_getattr__",
                   "Project",
@@ -1448,7 +2337,7 @@
                 ]
               ],
               [
-                "___129",
+                "___203",
                 [
                   "__builtin_getattr__",
                   "Project",
@@ -1458,24 +2347,24 @@
                 ]
               ],
               [
-                "___130",
+                "___204",
                 [
-                  "___129",
+                  "___203",
                   "code"
                 ]
               ],
               [
-                "___131",
+                "___205",
                 [
                   "__builtin_list__",
                   {
                     "str": "matmul_binary_kernel.cu"
                   },
-                  "___130"
+                  "___204"
                 ]
               ],
               [
-                "___132",
+                "___206",
                 [
                   "__builtin_getattr__",
                   "Project",
@@ -1485,42 +2374,42 @@
                 ]
               ],
               [
-                "___133",
+                "___207",
                 [
-                  "___132",
+                  "___206",
                   "compile_cmd"
                 ]
               ],
               [
-                "___134",
+                "___208",
                 [
                   "__builtin_list__",
                   {
                     "str": "make.sh"
                   },
-                  "___133"
+                  "___207"
                 ]
               ],
               [
-                "___135",
+                "___209",
                 [
-                  "___128",
-                  "___131",
-                  "___134"
+                  "___202",
+                  "___205",
+                  "___208"
                 ]
               ],
               [
-                "___136",
+                "___210",
                 [
                   "__builtin_list__",
                   {
                     "str": "nested_files"
                   },
-                  "___135"
+                  "___209"
                 ]
               ],
               [
-                "___137",
+                "___211",
                 [
                   "__builtin_list__",
                   {
@@ -1532,7 +2421,7 @@
                 ]
               ],
               [
-                "___138",
+                "___212",
                 [
                   "__builtin_list__",
                   {
@@ -1544,48 +2433,48 @@
                 ]
               ],
               [
-                "___139",
+                "___213",
                 [
                   "__builtin_list__",
-                  "___136",
-                  "___137",
-                  "___138"
+                  "___210",
+                  "___211",
+                  "___212"
                 ]
               ],
               [
-                "___140",
+                "___214",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___141",
+                "___215",
                 [
                   "__builtin_PackedArgs__",
-                  "___140",
-                  "___139"
+                  "___214",
+                  "___213"
                 ]
               ],
               [
-                "___142",
+                "___216",
                 [
                   "Project",
-                  "___141"
+                  "___215"
                 ]
               ],
               [
-                "___143",
+                "___217",
                 [
                   "CodeModule",
-                  "___127",
-                  "___142"
+                  "___201",
+                  "___216"
                 ]
               ],
               [
-                "___144",
+                "___218",
                 [
                   "__builtin_return__",
-                  "___143"
+                  "___217"
                 ]
               ]
             ],
@@ -1598,7 +2487,7 @@
       ]
     ],
     [
-      "___145",
+      "___219",
       [
         "__builtin_getattr__",
         "make_project",
@@ -1608,61 +2497,62 @@
       ]
     ],
     [
-      "___146",
+      "___220",
       [
         "__builtin_list__",
         {
           "str": "make_project"
         },
-        "___145"
+        "___219"
       ]
     ],
     [
-      "___147",
+      "___221",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___148",
+      "___222",
       [
         "__builtin_list__",
-        "___15",
-        "___56",
-        "___146"
+        "___36",
+        "___49",
+        "___170",
+        "___220"
       ]
     ],
     [
-      "___149",
+      "___223",
       [
         "__builtin_PackedArgs__",
-        "___147",
-        "___148"
+        "___221",
+        "___222"
       ]
     ],
     [
-      "___150",
+      "___224",
       [
         "BuiltinSerializableAttrMap",
-        "___149"
+        "___223"
       ]
     ],
     [
-      "___151",
+      "___225",
       [
         "type",
         {
           "str": "MatmulBinaryTemplate"
         },
         "___9",
-        "___150"
+        "___224"
       ]
     ],
     [
       "MatmulBinaryTemplate",
       [
         "__builtin_identity__",
-        "___151"
+        "___225"
       ]
     ],
     [
@@ -1678,7 +2568,7 @@
             "__builtin_let__",
             [
               [
-                "___152",
+                "___226",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -1688,9 +2578,9 @@
                 ]
               ],
               [
-                "___153",
+                "___227",
                 [
-                  "___152",
+                  "___226",
                   {
                     "str": "MatmulBinaryKernel"
                   }
@@ -1700,11 +2590,11 @@
                 "so_func",
                 [
                   "__builtin_identity__",
-                  "___153"
+                  "___227"
                 ]
               ],
               [
-                "___155",
+                "___229",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -1714,30 +2604,30 @@
                 ]
               ],
               [
-                "___154",
+                "___228",
                 [
                   "__builtin_getattr__",
-                  "___155",
+                  "___229",
                   {
                     "str": "get_stream_addr_as_void_ptr"
                   }
                 ]
               ],
               [
-                "___156",
+                "___230",
                 [
-                  "___154"
+                  "___228"
                 ]
               ],
               [
                 "stream_ptr",
                 [
                   "__builtin_identity__",
-                  "___156"
+                  "___230"
                 ]
               ],
               [
-                "___158",
+                "___232",
                 [
                   "__builtin_getattr__",
                   "ctx",
@@ -1747,10 +2637,10 @@
                 ]
               ],
               [
-                "___157",
+                "___231",
                 [
                   "__builtin_getattr__",
-                  "___158",
+                  "___232",
                   {
                     "str": "kernel_args_getters"
                   }
@@ -1760,182 +2650,73 @@
                 "getters",
                 [
                   "__builtin_identity__",
-                  "___157"
+                  "___231"
                 ]
               ],
               [
-                "___159",
+                "___234",
                 [
-                  "__builtin_getitem__",
-                  "getters",
-                  0
+                  "map",
+                  [
+                    "lambda",
+                    [
+                      "getter"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___233",
+                          [
+                            "getter",
+                            "ctx"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___233"
+                      ]
+                    ]
+                  ],
+                  "getters"
                 ]
               ],
               [
-                "___160",
+                "___235",
                 [
-                  "___159",
-                  "ctx"
+                  "__builtin_starred__",
+                  "___234"
                 ]
               ],
               [
-                "input",
+                "___236",
                 [
-                  "__builtin_identity__",
-                  "___160"
-                ]
-              ],
-              [
-                "___161",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  1
-                ]
-              ],
-              [
-                "___162",
-                [
-                  "___161",
-                  "ctx"
-                ]
-              ],
-              [
-                "weight",
-                [
-                  "__builtin_identity__",
-                  "___162"
-                ]
-              ],
-              [
-                "___163",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  2
-                ]
-              ],
-              [
-                "___164",
-                [
-                  "___163",
-                  "ctx"
-                ]
-              ],
-              [
-                "bias",
-                [
-                  "__builtin_identity__",
-                  "___164"
-                ]
-              ],
-              [
-                "___165",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  3
-                ]
-              ],
-              [
-                "___166",
-                [
-                  "___165",
-                  "ctx"
-                ]
-              ],
-              [
-                "output",
-                [
-                  "__builtin_identity__",
-                  "___166"
-                ]
-              ],
-              [
-                "___167",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  4
-                ]
-              ],
-              [
-                "___168",
-                [
-                  "___167",
-                  "ctx"
-                ]
-              ],
-              [
-                "m",
-                [
-                  "__builtin_identity__",
-                  "___168"
-                ]
-              ],
-              [
-                "___169",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  5
-                ]
-              ],
-              [
-                "___170",
-                [
-                  "___169",
-                  "ctx"
-                ]
-              ],
-              [
-                "n",
-                [
-                  "__builtin_identity__",
-                  "___170"
-                ]
-              ],
-              [
-                "___171",
-                [
-                  "__builtin_getitem__",
-                  "getters",
-                  6
-                ]
-              ],
-              [
-                "___172",
-                [
-                  "___171",
-                  "ctx"
-                ]
-              ],
-              [
-                "k",
-                [
-                  "__builtin_identity__",
-                  "___172"
-                ]
-              ],
-              [
-                "___173",
-                [
-                  "so_func",
+                  "__builtin_list__",
                   "stream_ptr",
-                  "input",
-                  "weight",
-                  "bias",
-                  "output",
-                  "m",
-                  "n",
-                  "k"
+                  "___235"
                 ]
               ],
               [
-                "___174",
+                "args",
                 [
                   "__builtin_identity__",
-                  "___173"
+                  "___236"
+                ]
+              ],
+              [
+                "___237",
+                [
+                  "apply",
+                  "so_func",
+                  "args"
+                ]
+              ],
+              [
+                "___238",
+                [
+                  "__builtin_identity__",
+                  "___237"
                 ]
               ]
             ],

@@ -40,7 +40,6 @@ class ApOpLoadFromGlobalCodeGen:
     self.index_program_translator_map = index_program_translator_map
 
   def __call__(self, inputs, mut_kernel_arg_id_lazy_ctx, mut_lir_code_gen_ctx):
-    print("ApOpLoadFromGlobalCodeGen.__call__ enter")
     index_func_unique_id_attr = self.op_property.attributes.index_func_unique_id
     index_func_unique_id = index_func_unique_id_attr.match(a_str=lambda x:x)
     offset_var_name = self.index_program_translator_map.get_offset_var_name(
@@ -52,9 +51,7 @@ class ApOpLoadFromGlobalCodeGen:
     arg_name = mut_kernel_arg_id_lazy_ctx.get_in_tensor_data_ptr_var_name(data_op_name)
     ptr_var_name = self.kernel_arg_translator.get_use_name(arg_name)
     out = self.get_out_cg_val(0)
-    print("out.var_name:", out.var_name)
     mut_lir_code_gen_ctx.let(out, f"{ptr_var_name}[{offset_var_name}]")
-    print("ApOpLoadFromGlobalCodeGen.__call__ leave")
     return [out]
 
   def get_out_cg_val(self, i):

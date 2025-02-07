@@ -8,10 +8,10 @@ class IndexProgramTranslatorMap:
     self,
     index_func_unique_id2index_program,
     kernel_arg_translator,
-    loop_iter_var_names
+    anchor_iter_var_names
   ):
     self.kernel_arg_translator = kernel_arg_translator
-    self.loop_iter_var_names = loop_iter_var_names
+    self.anchor_iter_var_names = anchor_iter_var_names
     items = index_func_unique_id2index_program.items()
     self.index_func_unique_id2translator = OrderedDict(
       map(
@@ -44,7 +44,7 @@ class IndexProgramTranslatorMap:
       program_id=program_id,
       kernel_arg_translator=self.kernel_arg_translator,
       index_op_translator_maker=op_index_translator_util.OpIndexTranslatorFactory(),
-      loop_iter_var_names=self.loop_iter_var_names
+      anchor_iter_var_names=self.anchor_iter_var_names
     )
 
 
@@ -56,13 +56,13 @@ class IndexProgramTranslator:
     program_id,
     kernel_arg_translator,
     index_op_translator_maker,
-    loop_iter_var_names
+    anchor_iter_var_names
   ):
     self.program_id = program_id
     self.program_property = index_program.copy_to_const_program_data()
     self.kernel_arg_translator = kernel_arg_translator
     self.index_op_translator_maker = index_op_translator_maker
-    self.loop_iter_var_names = loop_iter_var_names
+    self.anchor_iter_var_names = anchor_iter_var_names
     self.ir_value_index2translated_value = MutableList()
     def PushNone(x):
       self.ir_value_index2translated_value.append(None)
@@ -74,7 +74,6 @@ class IndexProgramTranslator:
     mut_lir_code_gen_ctx,
   ):
     def TranslateOp(op_property):
-      print("index_op_property:", op_property)
       self._translate_op(op_property, mut_kernel_arg_id_lazy_ctx, mut_lir_code_gen_ctx)
     map(TranslateOp, self.program_property.ops)
     return self.ir_value_index2translated_value[-1]
@@ -86,7 +85,7 @@ class IndexProgramTranslator:
       input_properties=map(self._get_value_property, op_property.input_value_indexes),
       output_properties=map(self._get_value_property, op_property.output_value_indexes),
       kernel_arg_translator=self.kernel_arg_translator,
-      loop_iter_var_names=self.loop_iter_var_names
+      anchor_iter_var_names=self.anchor_iter_var_names
     )
     print("index_op_translator:", index_op_translator)
     inputs = map(self._get_translated_value, op_property.input_value_indexes)

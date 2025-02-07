@@ -29,7 +29,7 @@
             "input_properties",
             "output_properties",
             "kernel_arg_translator",
-            "loop_iter_var_names"
+            "anchor_iter_var_names"
           ],
           [
             "__builtin_let__",
@@ -140,7 +140,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   }
                 ]
               ],
@@ -149,9 +149,9 @@
                 [
                   "___11",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   },
-                  "loop_iter_var_names"
+                  "anchor_iter_var_names"
                 ]
               ]
             ],
@@ -214,7 +214,7 @@
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   }
                 ]
               ],
@@ -334,7 +334,7 @@
             "input_properties",
             "output_properties",
             "kernel_arg_translator",
-            "loop_iter_var_names"
+            "anchor_iter_var_names"
           ],
           [
             "__builtin_let__",
@@ -445,7 +445,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   }
                 ]
               ],
@@ -454,9 +454,9 @@
                 [
                   "___38",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   },
-                  "loop_iter_var_names"
+                  "anchor_iter_var_names"
                 ]
               ]
             ],
@@ -504,7 +504,998 @@
             "__builtin_let__",
             [
               [
+                "___42",
+                [
+                  "__builtin_getattr__",
+                  "index_code_gen_value_util",
+                  {
+                    "str": "IndexCodeGenValue"
+                  }
+                ]
+              ],
+              [
                 "___43",
+                [
+                  "___42",
+                  null
+                ]
+              ],
+              [
+                "out",
+                [
+                  "__builtin_identity__",
+                  "___43"
+                ]
+              ],
+              [
+                "get_int64",
+                [
+                  "__builtin_identity__",
+                  [
+                    "lambda",
+                    [
+                      "attr"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___44",
+                          [
+                            "__builtin_getattr__",
+                            "attr",
+                            {
+                              "str": "match"
+                            }
+                          ]
+                        ],
+                        [
+                          "___45",
+                          [
+                            "__builtin_list__",
+                            {
+                              "str": "a_i64"
+                            },
+                            [
+                              "lambda",
+                              [
+                                "x"
+                              ],
+                              "x"
+                            ]
+                          ]
+                        ],
+                        [
+                          "___46",
+                          [
+                            "__builtin_list__",
+                            "___45"
+                          ]
+                        ],
+                        [
+                          "___47",
+                          [
+                            "__builtin_list__"
+                          ]
+                        ],
+                        [
+                          "___48",
+                          [
+                            "__builtin_PackedArgs__",
+                            "___47",
+                            "___46"
+                          ]
+                        ],
+                        [
+                          "___49",
+                          [
+                            "___44",
+                            "___48"
+                          ]
+                        ],
+                        [
+                          "___50",
+                          [
+                            "__builtin_return__",
+                            "___49"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        null
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "___54",
+                [
+                  "__builtin_getattr__",
+                  "self",
+                  {
+                    "str": "op_property"
+                  }
+                ]
+              ],
+              [
+                "___53",
+                [
+                  "__builtin_getattr__",
+                  "___54",
+                  {
+                    "str": "attributes"
+                  }
+                ]
+              ],
+              [
+                "___52",
+                [
+                  "__builtin_getattr__",
+                  "___53",
+                  {
+                    "str": "value"
+                  }
+                ]
+              ],
+              [
+                "___51",
+                [
+                  "__builtin_getattr__",
+                  "___52",
+                  {
+                    "str": "match"
+                  }
+                ]
+              ],
+              [
+                "___56",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "a_array"
+                  },
+                  [
+                    "lambda",
+                    [
+                      "lst"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___55",
+                          [
+                            "map",
+                            "get_int64",
+                            "lst"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___55"
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "___57",
+                [
+                  "__builtin_list__",
+                  "___56"
+                ]
+              ],
+              [
+                "___58",
+                [
+                  "__builtin_list__"
+                ]
+              ],
+              [
+                "___59",
+                [
+                  "__builtin_PackedArgs__",
+                  "___58",
+                  "___57"
+                ]
+              ],
+              [
+                "___60",
+                [
+                  "___51",
+                  "___59"
+                ]
+              ],
+              [
+                "___61",
+                [
+                  "__builtin_setattr__",
+                  "out",
+                  {
+                    "str": "const_data"
+                  }
+                ]
+              ],
+              [
+                "___62",
+                [
+                  "___61",
+                  {
+                    "str": "const_data"
+                  },
+                  "___60"
+                ]
+              ],
+              [
+                "___63",
+                [
+                  "__builtin_list__",
+                  "out"
+                ]
+              ],
+              [
+                "___64",
+                [
+                  "__builtin_return__",
+                  "___63"
+                ]
+              ]
+            ],
+            [
+              "__builtin_identity__",
+              null
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "___65",
+      [
+        "__builtin_getattr__",
+        "__call__",
+        {
+          "str": "__function__"
+        }
+      ]
+    ],
+    [
+      "___66",
+      [
+        "__builtin_list__",
+        {
+          "str": "__call__"
+        },
+        "___65"
+      ]
+    ],
+    [
+      "___67",
+      [
+        "__builtin_list__"
+      ]
+    ],
+    [
+      "___68",
+      [
+        "__builtin_list__",
+        "___41",
+        "___66"
+      ]
+    ],
+    [
+      "___69",
+      [
+        "__builtin_PackedArgs__",
+        "___67",
+        "___68"
+      ]
+    ],
+    [
+      "___70",
+      [
+        "BuiltinSerializableAttrMap",
+        "___69"
+      ]
+    ],
+    [
+      "___71",
+      [
+        "type",
+        {
+          "str": "PdOpFullIntArrayCodeGen"
+        },
+        "___27",
+        "___70"
+      ]
+    ],
+    [
+      "PdOpFullIntArrayCodeGen",
+      [
+        "__builtin_identity__",
+        "___71"
+      ]
+    ],
+    [
+      "___72",
+      [
+        "__builtin_list__"
+      ]
+    ],
+    [
+      "__init__",
+      [
+        "__builtin_identity__",
+        [
+          "lambda",
+          [
+            "self",
+            "index_program_id",
+            "op_property",
+            "input_properties",
+            "output_properties",
+            "kernel_arg_translator",
+            "anchor_iter_var_names"
+          ],
+          [
+            "__builtin_let__",
+            [
+              [
+                "___73",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "index_program_id"
+                  }
+                ]
+              ],
+              [
+                "___74",
+                [
+                  "___73",
+                  {
+                    "str": "index_program_id"
+                  },
+                  "index_program_id"
+                ]
+              ],
+              [
+                "___75",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "op_property"
+                  }
+                ]
+              ],
+              [
+                "___76",
+                [
+                  "___75",
+                  {
+                    "str": "op_property"
+                  },
+                  "op_property"
+                ]
+              ],
+              [
+                "___77",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "input_properties"
+                  }
+                ]
+              ],
+              [
+                "___78",
+                [
+                  "___77",
+                  {
+                    "str": "input_properties"
+                  },
+                  "input_properties"
+                ]
+              ],
+              [
+                "___79",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "output_properties"
+                  }
+                ]
+              ],
+              [
+                "___80",
+                [
+                  "___79",
+                  {
+                    "str": "output_properties"
+                  },
+                  "output_properties"
+                ]
+              ],
+              [
+                "___81",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "kernel_arg_translator"
+                  }
+                ]
+              ],
+              [
+                "___82",
+                [
+                  "___81",
+                  {
+                    "str": "kernel_arg_translator"
+                  },
+                  "kernel_arg_translator"
+                ]
+              ],
+              [
+                "___83",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "anchor_iter_var_names"
+                  }
+                ]
+              ],
+              [
+                "___84",
+                [
+                  "___83",
+                  {
+                    "str": "anchor_iter_var_names"
+                  },
+                  "anchor_iter_var_names"
+                ]
+              ]
+            ],
+            [
+              "__builtin_identity__",
+              null
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "___85",
+      [
+        "__builtin_getattr__",
+        "__init__",
+        {
+          "str": "__function__"
+        }
+      ]
+    ],
+    [
+      "___86",
+      [
+        "__builtin_list__",
+        {
+          "str": "__init__"
+        },
+        "___85"
+      ]
+    ],
+    [
+      "__call__",
+      [
+        "__builtin_identity__",
+        [
+          "lambda",
+          [
+            "self",
+            "inputs",
+            "mut_kernel_arg_id_lazy_ctx",
+            "mut_lir_code_gen_ctx"
+          ],
+          [
+            "__builtin_let__",
+            [
+              [
+                "___88",
+                [
+                  "__builtin_getitem__",
+                  "inputs",
+                  0
+                ]
+              ],
+              [
+                "___87",
+                [
+                  "__builtin_getattr__",
+                  "___88",
+                  {
+                    "str": "iter_var_names"
+                  }
+                ]
+              ],
+              [
+                "input_iter_var_names",
+                [
+                  "__builtin_identity__",
+                  "___87"
+                ]
+              ],
+              [
+                "___91",
+                [
+                  "__builtin_getitem__",
+                  "inputs",
+                  1
+                ]
+              ],
+              [
+                "___90",
+                [
+                  "__builtin_getattr__",
+                  "___91",
+                  {
+                    "str": "const_data"
+                  }
+                ]
+              ],
+              [
+                "___92",
+                [
+                  "map",
+                  [
+                    "lambda",
+                    [
+                      "x"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___89",
+                          [
+                            "__builtin_list__",
+                            "x",
+                            true
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___89"
+                      ]
+                    ]
+                  ],
+                  "___90"
+                ]
+              ],
+              [
+                "___93",
+                [
+                  "OrderedDict",
+                  "___92"
+                ]
+              ],
+              [
+                "reduced_axes_set",
+                [
+                  "__builtin_identity__",
+                  "___93"
+                ]
+              ],
+              [
+                "___97",
+                [
+                  "len",
+                  "input_iter_var_names"
+                ]
+              ],
+              [
+                "___98",
+                [
+                  "range",
+                  "___97"
+                ]
+              ],
+              [
+                "___99",
+                [
+                  "filter",
+                  [
+                    "lambda",
+                    [
+                      "x"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___94",
+                          [
+                            "__builtin_getattr__",
+                            "reduced_axes_set",
+                            {
+                              "str": "contains"
+                            }
+                          ]
+                        ],
+                        [
+                          "___95",
+                          [
+                            "___94",
+                            "x"
+                          ]
+                        ],
+                        [
+                          "___96",
+                          [
+                            "__builtin_EQ__",
+                            "___95",
+                            false
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___96"
+                      ]
+                    ]
+                  ],
+                  "___98"
+                ]
+              ],
+              [
+                "non_reduced_axes",
+                [
+                  "__builtin_identity__",
+                  "___99"
+                ]
+              ],
+              [
+                "___101",
+                [
+                  "map",
+                  [
+                    "lambda",
+                    [
+                      "i"
+                    ],
+                    [
+                      "__builtin_let__",
+                      [
+                        [
+                          "___100",
+                          [
+                            "__builtin_getitem__",
+                            "input_iter_var_names",
+                            "i"
+                          ]
+                        ]
+                      ],
+                      [
+                        "__builtin_identity__",
+                        "___100"
+                      ]
+                    ]
+                  ],
+                  "non_reduced_axes"
+                ]
+              ],
+              [
+                "output_iter_var_names",
+                [
+                  "__builtin_identity__",
+                  "___101"
+                ]
+              ],
+              [
+                "___102",
+                [
+                  "__builtin_getattr__",
+                  "index_code_gen_value_util",
+                  {
+                    "str": "IndexCodeGenValue"
+                  }
+                ]
+              ],
+              [
+                "___103",
+                [
+                  "___102",
+                  "output_iter_var_names"
+                ]
+              ],
+              [
+                "___104",
+                [
+                  "__builtin_list__",
+                  "___103"
+                ]
+              ],
+              [
+                "___105",
+                [
+                  "__builtin_return__",
+                  "___104"
+                ]
+              ]
+            ],
+            [
+              "__builtin_identity__",
+              null
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "___106",
+      [
+        "__builtin_getattr__",
+        "__call__",
+        {
+          "str": "__function__"
+        }
+      ]
+    ],
+    [
+      "___107",
+      [
+        "__builtin_list__",
+        {
+          "str": "__call__"
+        },
+        "___106"
+      ]
+    ],
+    [
+      "___108",
+      [
+        "__builtin_list__"
+      ]
+    ],
+    [
+      "___109",
+      [
+        "__builtin_list__",
+        "___86",
+        "___107"
+      ]
+    ],
+    [
+      "___110",
+      [
+        "__builtin_PackedArgs__",
+        "___108",
+        "___109"
+      ]
+    ],
+    [
+      "___111",
+      [
+        "BuiltinSerializableAttrMap",
+        "___110"
+      ]
+    ],
+    [
+      "___112",
+      [
+        "type",
+        {
+          "str": "PdOpSumCodeGen"
+        },
+        "___72",
+        "___111"
+      ]
+    ],
+    [
+      "PdOpSumCodeGen",
+      [
+        "__builtin_identity__",
+        "___112"
+      ]
+    ],
+    [
+      "___113",
+      [
+        "__builtin_list__"
+      ]
+    ],
+    [
+      "__init__",
+      [
+        "__builtin_identity__",
+        [
+          "lambda",
+          [
+            "self",
+            "index_program_id",
+            "op_property",
+            "input_properties",
+            "output_properties",
+            "kernel_arg_translator",
+            "anchor_iter_var_names"
+          ],
+          [
+            "__builtin_let__",
+            [
+              [
+                "___114",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "index_program_id"
+                  }
+                ]
+              ],
+              [
+                "___115",
+                [
+                  "___114",
+                  {
+                    "str": "index_program_id"
+                  },
+                  "index_program_id"
+                ]
+              ],
+              [
+                "___116",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "op_property"
+                  }
+                ]
+              ],
+              [
+                "___117",
+                [
+                  "___116",
+                  {
+                    "str": "op_property"
+                  },
+                  "op_property"
+                ]
+              ],
+              [
+                "___118",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "input_properties"
+                  }
+                ]
+              ],
+              [
+                "___119",
+                [
+                  "___118",
+                  {
+                    "str": "input_properties"
+                  },
+                  "input_properties"
+                ]
+              ],
+              [
+                "___120",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "output_properties"
+                  }
+                ]
+              ],
+              [
+                "___121",
+                [
+                  "___120",
+                  {
+                    "str": "output_properties"
+                  },
+                  "output_properties"
+                ]
+              ],
+              [
+                "___122",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "kernel_arg_translator"
+                  }
+                ]
+              ],
+              [
+                "___123",
+                [
+                  "___122",
+                  {
+                    "str": "kernel_arg_translator"
+                  },
+                  "kernel_arg_translator"
+                ]
+              ],
+              [
+                "___124",
+                [
+                  "__builtin_setattr__",
+                  "self",
+                  {
+                    "str": "anchor_iter_var_names"
+                  }
+                ]
+              ],
+              [
+                "___125",
+                [
+                  "___124",
+                  {
+                    "str": "anchor_iter_var_names"
+                  },
+                  "anchor_iter_var_names"
+                ]
+              ]
+            ],
+            [
+              "__builtin_identity__",
+              null
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
+      "___126",
+      [
+        "__builtin_getattr__",
+        "__init__",
+        {
+          "str": "__function__"
+        }
+      ]
+    ],
+    [
+      "___127",
+      [
+        "__builtin_list__",
+        {
+          "str": "__init__"
+        },
+        "___126"
+      ]
+    ],
+    [
+      "__call__",
+      [
+        "__builtin_identity__",
+        [
+          "lambda",
+          [
+            "self",
+            "inputs",
+            "mut_kernel_arg_id_lazy_ctx",
+            "mut_lir_code_gen_ctx"
+          ],
+          [
+            "__builtin_let__",
+            [
+              [
+                "___129",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -514,18 +1505,18 @@
                 ]
               ],
               [
-                "___44",
+                "___130",
                 [
                   "__builtin_getitem__",
-                  "___43",
+                  "___129",
                   0
                 ]
               ],
               [
-                "___42",
+                "___128",
                 [
                   "__builtin_getattr__",
-                  "___44",
+                  "___130",
                   {
                     "str": "symbolic_shape"
                   }
@@ -535,7 +1526,7 @@
                 "symbolic_shape",
                 [
                   "__builtin_identity__",
-                  "___42"
+                  "___128"
                 ]
               ],
               [
@@ -551,7 +1542,7 @@
                       "__builtin_let__",
                       [
                         [
-                          "___45",
+                          "___131",
                           [
                             "__builtin_getattr__",
                             "mut_kernel_arg_id_lazy_ctx",
@@ -561,9 +1552,9 @@
                           ]
                         ],
                         [
-                          "___46",
+                          "___132",
                           [
-                            "___45",
+                            "___131",
                             "dim_expr"
                           ]
                         ],
@@ -571,11 +1562,11 @@
                           "arg_var_name",
                           [
                             "__builtin_identity__",
-                            "___46"
+                            "___132"
                           ]
                         ],
                         [
-                          "___48",
+                          "___134",
                           [
                             "__builtin_getattr__",
                             "self",
@@ -585,27 +1576,27 @@
                           ]
                         ],
                         [
-                          "___47",
+                          "___133",
                           [
                             "__builtin_getattr__",
-                            "___48",
+                            "___134",
                             {
                               "str": "get_use_name"
                             }
                           ]
                         ],
                         [
-                          "___49",
+                          "___135",
                           [
-                            "___47",
+                            "___133",
                             "arg_var_name"
                           ]
                         ],
                         [
-                          "___50",
+                          "___136",
                           [
                             "__builtin_return__",
-                            "___49"
+                            "___135"
                           ]
                         ]
                       ],
@@ -630,7 +1621,7 @@
                       "__builtin_let__",
                       [
                         [
-                          "___51",
+                          "___137",
                           [
                             "__builtin_getitem__",
                             "symbolic_shape",
@@ -641,152 +1632,21 @@
                           "dim_expr",
                           [
                             "__builtin_identity__",
-                            "___51"
+                            "___137"
                           ]
                         ],
                         [
-                          "___52",
+                          "___138",
                           [
-                            "__builtin_getattr__",
-                            "dim_expr",
-                            {
-                              "str": "match"
-                            }
+                            "get_or_create_dim_var_name",
+                            "dim_expr"
                           ]
                         ],
                         [
-                          "___54",
-                          [
-                            "__builtin_list__",
-                            {
-                              "str": "int64"
-                            },
-                            [
-                              "lambda",
-                              [
-                                "dim"
-                              ],
-                              [
-                                "__builtin_let__",
-                                [
-                                  [
-                                    "___53",
-                                    [
-                                      "__builtin_ToString__",
-                                      "dim"
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  "__builtin_identity__",
-                                  "___53"
-                                ]
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          "___56",
-                          [
-                            "__builtin_list__",
-                            {
-                              "str": "symbol"
-                            },
-                            [
-                              "lambda",
-                              [
-                                "sym"
-                              ],
-                              [
-                                "__builtin_let__",
-                                [
-                                  [
-                                    "___55",
-                                    [
-                                      "get_or_create_dim_var_name",
-                                      "dim_expr"
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  "__builtin_identity__",
-                                  "___55"
-                                ]
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          "___58",
-                          [
-                            "__builtin_list__",
-                            {
-                              "str": "_"
-                            },
-                            [
-                              "lambda",
-                              [],
-                              [
-                                "__builtin_let__",
-                                [
-                                  [
-                                    "___57",
-                                    [
-                                      "get_or_create_dim_var_name",
-                                      "dim_expr"
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  "__builtin_identity__",
-                                  "___57"
-                                ]
-                              ]
-                            ]
-                          ]
-                        ],
-                        [
-                          "___59",
-                          [
-                            "__builtin_list__",
-                            "___54",
-                            "___56",
-                            "___58"
-                          ]
-                        ],
-                        [
-                          "___60",
-                          [
-                            "__builtin_list__"
-                          ]
-                        ],
-                        [
-                          "___61",
-                          [
-                            "__builtin_PackedArgs__",
-                            "___60",
-                            "___59"
-                          ]
-                        ],
-                        [
-                          "___62",
-                          [
-                            "___52",
-                            "___61"
-                          ]
-                        ],
-                        [
-                          "ret",
-                          [
-                            "__builtin_identity__",
-                            "___62"
-                          ]
-                        ],
-                        [
-                          "___63",
+                          "___139",
                           [
                             "__builtin_return__",
-                            "ret"
+                            "___138"
                           ]
                         ]
                       ],
@@ -799,7 +1659,7 @@
                 ]
               ],
               [
-                "___64",
+                "___140",
                 [
                   "len",
                   "symbolic_shape"
@@ -809,18 +1669,18 @@
                 "rank",
                 [
                   "__builtin_identity__",
-                  "___64"
+                  "___140"
                 ]
               ],
               [
-                "___71",
+                "___147",
                 [
                   "range",
                   "rank"
                 ]
               ],
               [
-                "___72",
+                "___148",
                 [
                   "map",
                   [
@@ -832,7 +1692,7 @@
                       "__builtin_let__",
                       [
                         [
-                          "___67",
+                          "___143",
                           [
                             "__builtin_Sub__",
                             "rank",
@@ -840,22 +1700,22 @@
                           ]
                         ],
                         [
-                          "___68",
+                          "___144",
                           [
                             "__builtin_Sub__",
-                            "___67",
+                            "___143",
                             "num_dims"
                           ]
                         ],
                         [
-                          "___69",
+                          "___145",
                           [
                             "range",
-                            "___68"
+                            "___144"
                           ]
                         ],
                         [
-                          "___70",
+                          "___146",
                           [
                             "map",
                             [
@@ -867,7 +1727,7 @@
                                 "__builtin_let__",
                                 [
                                   [
-                                    "___65",
+                                    "___141",
                                     [
                                       "__builtin_Add__",
                                       "i",
@@ -875,41 +1735,41 @@
                                     ]
                                   ],
                                   [
-                                    "___66",
+                                    "___142",
                                     [
                                       "get_dim_var_name",
-                                      "___65"
+                                      "___141"
                                     ]
                                   ]
                                 ],
                                 [
                                   "__builtin_identity__",
-                                  "___66"
+                                  "___142"
                                 ]
                               ]
                             ],
-                            "___69"
+                            "___145"
                           ]
                         ]
                       ],
                       [
                         "__builtin_identity__",
-                        "___70"
+                        "___146"
                       ]
                     ]
                   ],
-                  "___71"
+                  "___147"
                 ]
               ],
               [
                 "stride_dims_list",
                 [
                   "__builtin_identity__",
-                  "___72"
+                  "___148"
                 ]
               ],
               [
-                "___78",
+                "___154",
                 [
                   "__builtin_getitem__",
                   "inputs",
@@ -917,25 +1777,25 @@
                 ]
               ],
               [
-                "___77",
+                "___153",
                 [
                   "__builtin_getattr__",
-                  "___78",
+                  "___154",
                   {
                     "str": "iter_var_names"
                   }
                 ]
               ],
               [
-                "___79",
+                "___155",
                 [
                   "zip",
-                  "___77",
+                  "___153",
                   "stride_dims_list"
                 ]
               ],
               [
-                "___80",
+                "___156",
                 [
                   "map",
                   [
@@ -947,7 +1807,7 @@
                       "__builtin_let__",
                       [
                         [
-                          "___73",
+                          "___149",
                           [
                             "__builtin_getitem__",
                             "pair",
@@ -955,7 +1815,7 @@
                           ]
                         ],
                         [
-                          "___74",
+                          "___150",
                           [
                             "__builtin_getitem__",
                             "pair",
@@ -963,39 +1823,51 @@
                           ]
                         ],
                         [
-                          "___75",
+                          "___151",
                           [
                             "__builtin_starred__",
-                            "___74"
+                            "___150"
                           ]
                         ],
                         [
-                          "___76",
+                          "___152",
                           [
                             "__builtin_list__",
-                            "___73",
-                            "___75"
+                            "___149",
+                            "___151"
                           ]
                         ]
                       ],
                       [
                         "__builtin_identity__",
-                        "___76"
+                        "___152"
                       ]
                     ]
                   ],
-                  "___79"
+                  "___155"
                 ]
               ],
               [
                 "var_name_and_dims_list",
                 [
                   "__builtin_identity__",
-                  "___80"
+                  "___156"
                 ]
               ],
               [
-                "___92",
+                "___157",
+                [
+                  "__builtin_getattr__",
+                  {
+                    "str": " + "
+                  },
+                  {
+                    "str": "join"
+                  }
+                ]
+              ],
+              [
+                "___160",
                 [
                   "map",
                   [
@@ -1007,71 +1879,28 @@
                       "__builtin_let__",
                       [
                         [
-                          "___91",
+                          "___158",
                           [
-                            "reduce",
-                            [
-                              "lambda",
-                              [
-                                "elt",
-                                "acc"
-                              ],
-                              [
-                                "__builtin_let__",
-                                [
-                                  [
-                                    "___86",
-                                    [
-                                      "__builtin_ToString__",
-                                      "acc"
-                                    ]
-                                  ],
-                                  [
-                                    "___87",
-                                    [
-                                      "__builtin_ToString__",
-                                      {
-                                        "str": " * "
-                                      }
-                                    ]
-                                  ],
-                                  [
-                                    "___88",
-                                    [
-                                      "__builtin_Add__",
-                                      "___86",
-                                      "___87"
-                                    ]
-                                  ],
-                                  [
-                                    "___89",
-                                    [
-                                      "__builtin_ToString__",
-                                      "elt"
-                                    ]
-                                  ],
-                                  [
-                                    "___90",
-                                    [
-                                      "__builtin_Add__",
-                                      "___88",
-                                      "___89"
-                                    ]
-                                  ]
-                                ],
-                                [
-                                  "__builtin_identity__",
-                                  "___90"
-                                ]
-                              ]
-                            ],
+                            "__builtin_getattr__",
+                            {
+                              "str": " * "
+                            },
+                            {
+                              "str": "join"
+                            }
+                          ]
+                        ],
+                        [
+                          "___159",
+                          [
+                            "___158",
                             "elts"
                           ]
                         ]
                       ],
                       [
                         "__builtin_identity__",
-                        "___91"
+                        "___159"
                       ]
                     ]
                   ],
@@ -1079,76 +1908,21 @@
                 ]
               ],
               [
-                "___93",
+                "___161",
                 [
-                  "reduce",
-                  [
-                    "lambda",
-                    [
-                      "elt",
-                      "acc"
-                    ],
-                    [
-                      "__builtin_let__",
-                      [
-                        [
-                          "___81",
-                          [
-                            "__builtin_ToString__",
-                            "acc"
-                          ]
-                        ],
-                        [
-                          "___82",
-                          [
-                            "__builtin_ToString__",
-                            {
-                              "str": " + "
-                            }
-                          ]
-                        ],
-                        [
-                          "___83",
-                          [
-                            "__builtin_Add__",
-                            "___81",
-                            "___82"
-                          ]
-                        ],
-                        [
-                          "___84",
-                          [
-                            "__builtin_ToString__",
-                            "elt"
-                          ]
-                        ],
-                        [
-                          "___85",
-                          [
-                            "__builtin_Add__",
-                            "___83",
-                            "___84"
-                          ]
-                        ]
-                      ],
-                      [
-                        "__builtin_identity__",
-                        "___85"
-                      ]
-                    ]
-                  ],
-                  "___92"
+                  "___157",
+                  "___160"
                 ]
               ],
               [
                 "offset_expr",
                 [
                   "__builtin_identity__",
-                  "___93"
+                  "___161"
                 ]
               ],
               [
-                "___94",
+                "___162",
                 [
                   "__builtin_getattr__",
                   "index_code_gen_value_util",
@@ -1158,7 +1932,7 @@
                 ]
               ],
               [
-                "___95",
+                "___163",
                 [
                   "__builtin_ToString__",
                   {
@@ -1167,22 +1941,22 @@
                 ]
               ],
               [
-                "___96",
+                "___164",
                 [
                   "__builtin_ToString__",
                   "offset_expr"
                 ]
               ],
               [
-                "___97",
+                "___165",
                 [
                   "__builtin_Add__",
-                  "___95",
-                  "___96"
+                  "___163",
+                  "___164"
                 ]
               ],
               [
-                "___98",
+                "___166",
                 [
                   "__builtin_ToString__",
                   {
@@ -1191,39 +1965,39 @@
                 ]
               ],
               [
-                "___99",
+                "___167",
                 [
                   "__builtin_Add__",
-                  "___97",
-                  "___98"
+                  "___165",
+                  "___166"
                 ]
               ],
               [
-                "___100",
+                "___168",
                 [
                   "__builtin_list__",
-                  "___99"
+                  "___167"
                 ]
               ],
               [
-                "___101",
+                "___169",
                 [
-                  "___94",
-                  "___100"
+                  "___162",
+                  "___168"
                 ]
               ],
               [
-                "___102",
+                "___170",
                 [
                   "__builtin_list__",
-                  "___101"
+                  "___169"
                 ]
               ],
               [
-                "___103",
+                "___171",
                 [
                   "__builtin_return__",
-                  "___102"
+                  "___170"
                 ]
               ]
             ],
@@ -1236,7 +2010,7 @@
       ]
     ],
     [
-      "___104",
+      "___172",
       [
         "__builtin_getattr__",
         "__call__",
@@ -1246,64 +2020,64 @@
       ]
     ],
     [
-      "___105",
+      "___173",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___104"
+        "___172"
       ]
     ],
     [
-      "___106",
+      "___174",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___107",
+      "___175",
       [
         "__builtin_list__",
-        "___41",
-        "___105"
+        "___127",
+        "___173"
       ]
     ],
     [
-      "___108",
+      "___176",
       [
         "__builtin_PackedArgs__",
-        "___106",
-        "___107"
+        "___174",
+        "___175"
       ]
     ],
     [
-      "___109",
+      "___177",
       [
         "BuiltinSerializableAttrMap",
-        "___108"
+        "___176"
       ]
     ],
     [
-      "___110",
+      "___178",
       [
         "type",
         {
           "str": "CinnOpReshapeCodeGen"
         },
-        "___27",
-        "___109"
+        "___113",
+        "___177"
       ]
     ],
     [
       "CinnOpReshapeCodeGen",
       [
         "__builtin_identity__",
-        "___110"
+        "___178"
       ]
     ],
     [
-      "___111",
+      "___179",
       [
         "__builtin_list__"
       ]
@@ -1321,13 +2095,13 @@
             "input_properties",
             "output_properties",
             "kernel_arg_translator",
-            "loop_iter_var_names"
+            "anchor_iter_var_names"
           ],
           [
             "__builtin_let__",
             [
               [
-                "___112",
+                "___180",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1337,9 +2111,9 @@
                 ]
               ],
               [
-                "___113",
+                "___181",
                 [
-                  "___112",
+                  "___180",
                   {
                     "str": "index_program_id"
                   },
@@ -1347,7 +2121,7 @@
                 ]
               ],
               [
-                "___114",
+                "___182",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1357,9 +2131,9 @@
                 ]
               ],
               [
-                "___115",
+                "___183",
                 [
-                  "___114",
+                  "___182",
                   {
                     "str": "op_property"
                   },
@@ -1367,7 +2141,7 @@
                 ]
               ],
               [
-                "___116",
+                "___184",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1377,9 +2151,9 @@
                 ]
               ],
               [
-                "___117",
+                "___185",
                 [
-                  "___116",
+                  "___184",
                   {
                     "str": "input_properties"
                   },
@@ -1387,7 +2161,7 @@
                 ]
               ],
               [
-                "___118",
+                "___186",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1397,9 +2171,9 @@
                 ]
               ],
               [
-                "___119",
+                "___187",
                 [
-                  "___118",
+                  "___186",
                   {
                     "str": "output_properties"
                   },
@@ -1407,7 +2181,7 @@
                 ]
               ],
               [
-                "___120",
+                "___188",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1417,9 +2191,9 @@
                 ]
               ],
               [
-                "___121",
+                "___189",
                 [
-                  "___120",
+                  "___188",
                   {
                     "str": "kernel_arg_translator"
                   },
@@ -1427,23 +2201,23 @@
                 ]
               ],
               [
-                "___122",
+                "___190",
                 [
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   }
                 ]
               ],
               [
-                "___123",
+                "___191",
                 [
-                  "___122",
+                  "___190",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   },
-                  "loop_iter_var_names"
+                  "anchor_iter_var_names"
                 ]
               ]
             ],
@@ -1456,7 +2230,7 @@
       ]
     ],
     [
-      "___124",
+      "___192",
       [
         "__builtin_getattr__",
         "__init__",
@@ -1466,13 +2240,13 @@
       ]
     ],
     [
-      "___125",
+      "___193",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___124"
+        "___192"
       ]
     ],
     [
@@ -1491,16 +2265,16 @@
             "__builtin_let__",
             [
               [
-                "___126",
+                "___194",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___127",
+                "___195",
                 [
                   "__builtin_return__",
-                  "___126"
+                  "___194"
                 ]
               ]
             ],
@@ -1513,7 +2287,7 @@
       ]
     ],
     [
-      "___128",
+      "___196",
       [
         "__builtin_getattr__",
         "__call__",
@@ -1523,64 +2297,64 @@
       ]
     ],
     [
-      "___129",
+      "___197",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___128"
+        "___196"
       ]
     ],
     [
-      "___130",
+      "___198",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___131",
+      "___199",
       [
         "__builtin_list__",
-        "___125",
-        "___129"
+        "___193",
+        "___197"
       ]
     ],
     [
-      "___132",
+      "___200",
       [
         "__builtin_PackedArgs__",
-        "___130",
-        "___131"
+        "___198",
+        "___199"
       ]
     ],
     [
-      "___133",
+      "___201",
       [
         "BuiltinSerializableAttrMap",
-        "___132"
+        "___200"
       ]
     ],
     [
-      "___134",
+      "___202",
       [
         "type",
         {
           "str": "CfYieldCodeGen"
         },
-        "___111",
-        "___133"
+        "___179",
+        "___201"
       ]
     ],
     [
       "CfYieldCodeGen",
       [
         "__builtin_identity__",
-        "___134"
+        "___202"
       ]
     ],
     [
-      "___135",
+      "___203",
       [
         "__builtin_list__"
       ]
@@ -1598,7 +2372,7 @@
             "__builtin_let__",
             [
               [
-                "___136",
+                "___204",
                 [
                   "__builtin_list__",
                   {
@@ -1608,7 +2382,27 @@
                 ]
               ],
               [
-                "___137",
+                "___205",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "pd_op.full_int_array"
+                  },
+                  "PdOpFullIntArrayCodeGen"
+                ]
+              ],
+              [
+                "___206",
+                [
+                  "__builtin_list__",
+                  {
+                    "str": "pd_op.sum"
+                  },
+                  "PdOpSumCodeGen"
+                ]
+              ],
+              [
+                "___207",
                 [
                   "__builtin_list__",
                   {
@@ -1618,7 +2412,7 @@
                 ]
               ],
               [
-                "___138",
+                "___208",
                 [
                   "__builtin_list__",
                   {
@@ -1628,23 +2422,25 @@
                 ]
               ],
               [
-                "___139",
+                "___209",
                 [
                   "__builtin_list__",
-                  "___136",
-                  "___137",
-                  "___138"
+                  "___204",
+                  "___205",
+                  "___206",
+                  "___207",
+                  "___208"
                 ]
               ],
               [
-                "___140",
+                "___210",
                 [
                   "OrderedDict",
-                  "___139"
+                  "___209"
                 ]
               ],
               [
-                "___141",
+                "___211",
                 [
                   "__builtin_setattr__",
                   "self",
@@ -1654,13 +2450,13 @@
                 ]
               ],
               [
-                "___142",
+                "___212",
                 [
-                  "___141",
+                  "___211",
                   {
                     "str": "op_name2class"
                   },
-                  "___140"
+                  "___210"
                 ]
               ]
             ],
@@ -1673,7 +2469,7 @@
       ]
     ],
     [
-      "___143",
+      "___213",
       [
         "__builtin_getattr__",
         "__init__",
@@ -1683,13 +2479,13 @@
       ]
     ],
     [
-      "___144",
+      "___214",
       [
         "__builtin_list__",
         {
           "str": "__init__"
         },
-        "___143"
+        "___213"
       ]
     ],
     [
@@ -1705,13 +2501,13 @@
             "input_properties",
             "output_properties",
             "kernel_arg_translator",
-            "loop_iter_var_names"
+            "anchor_iter_var_names"
           ],
           [
             "__builtin_let__",
             [
               [
-                "___145",
+                "___215",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -1721,7 +2517,7 @@
                 ]
               ],
               [
-                "___146",
+                "___216",
                 [
                   "__builtin_getattr__",
                   "op_property",
@@ -1731,21 +2527,21 @@
                 ]
               ],
               [
-                "___147",
+                "___217",
                 [
-                  "___145",
-                  "___146"
+                  "___215",
+                  "___216"
                 ]
               ],
               [
                 "cls",
                 [
                   "__builtin_identity__",
-                  "___147"
+                  "___217"
                 ]
               ],
               [
-                "___148",
+                "___218",
                 [
                   "__builtin_list__",
                   {
@@ -1755,7 +2551,7 @@
                 ]
               ],
               [
-                "___149",
+                "___219",
                 [
                   "__builtin_list__",
                   {
@@ -1765,7 +2561,7 @@
                 ]
               ],
               [
-                "___150",
+                "___220",
                 [
                   "__builtin_list__",
                   {
@@ -1775,7 +2571,7 @@
                 ]
               ],
               [
-                "___151",
+                "___221",
                 [
                   "__builtin_list__",
                   {
@@ -1785,7 +2581,7 @@
                 ]
               ],
               [
-                "___152",
+                "___222",
                 [
                   "__builtin_list__",
                   {
@@ -1795,53 +2591,53 @@
                 ]
               ],
               [
-                "___153",
+                "___223",
                 [
                   "__builtin_list__",
                   {
-                    "str": "loop_iter_var_names"
+                    "str": "anchor_iter_var_names"
                   },
-                  "loop_iter_var_names"
+                  "anchor_iter_var_names"
                 ]
               ],
               [
-                "___154",
+                "___224",
                 [
                   "__builtin_list__",
-                  "___148",
-                  "___149",
-                  "___150",
-                  "___151",
-                  "___152",
-                  "___153"
+                  "___218",
+                  "___219",
+                  "___220",
+                  "___221",
+                  "___222",
+                  "___223"
                 ]
               ],
               [
-                "___155",
+                "___225",
                 [
                   "__builtin_list__"
                 ]
               ],
               [
-                "___156",
+                "___226",
                 [
                   "__builtin_PackedArgs__",
-                  "___155",
-                  "___154"
+                  "___225",
+                  "___224"
                 ]
               ],
               [
-                "___157",
+                "___227",
                 [
                   "cls",
-                  "___156"
+                  "___226"
                 ]
               ],
               [
-                "___158",
+                "___228",
                 [
                   "__builtin_return__",
-                  "___157"
+                  "___227"
                 ]
               ]
             ],
@@ -1854,7 +2650,7 @@
       ]
     ],
     [
-      "___159",
+      "___229",
       [
         "__builtin_getattr__",
         "__call__",
@@ -1864,13 +2660,13 @@
       ]
     ],
     [
-      "___160",
+      "___230",
       [
         "__builtin_list__",
         {
           "str": "__call__"
         },
-        "___159"
+        "___229"
       ]
     ],
     [
@@ -1887,7 +2683,7 @@
             "__builtin_let__",
             [
               [
-                "___161",
+                "___231",
                 [
                   "__builtin_getattr__",
                   "self",
@@ -1897,18 +2693,18 @@
                 ]
               ],
               [
-                "___162",
+                "___232",
                 [
                   "__builtin_getitem__",
-                  "___161",
+                  "___231",
                   "op_name"
                 ]
               ],
               [
-                "___163",
+                "___233",
                 [
                   "__builtin_return__",
-                  "___162"
+                  "___232"
                 ]
               ]
             ],
@@ -1921,7 +2717,7 @@
       ]
     ],
     [
-      "___164",
+      "___234",
       [
         "__builtin_getattr__",
         "_get_class",
@@ -1931,66 +2727,66 @@
       ]
     ],
     [
-      "___165",
+      "___235",
       [
         "__builtin_list__",
         {
           "str": "_get_class"
         },
-        "___164"
+        "___234"
       ]
     ],
     [
-      "___166",
+      "___236",
       [
         "__builtin_list__"
       ]
     ],
     [
-      "___167",
+      "___237",
       [
         "__builtin_list__",
-        "___144",
-        "___160",
-        "___165"
+        "___214",
+        "___230",
+        "___235"
       ]
     ],
     [
-      "___168",
+      "___238",
       [
         "__builtin_PackedArgs__",
-        "___166",
-        "___167"
+        "___236",
+        "___237"
       ]
     ],
     [
-      "___169",
+      "___239",
       [
         "BuiltinSerializableAttrMap",
-        "___168"
+        "___238"
       ]
     ],
     [
-      "___170",
+      "___240",
       [
         "type",
         {
           "str": "OpIndexTranslatorFactory"
         },
-        "___135",
-        "___169"
+        "___203",
+        "___239"
       ]
     ],
     [
       "OpIndexTranslatorFactory",
       [
         "__builtin_identity__",
-        "___170"
+        "___240"
       ]
     ]
   ],
   [
     "__builtin_identity__",
-    "___170"
+    "___240"
   ]
 ]

@@ -335,113 +335,33 @@ class DownSpiderLoadFromGlobalAccessTopoPass(access_topo_drr.DrrPass):
     )
 
 
+# @access_topo_drr.register_drr_pass("down_spider_up_spider", tag="default")
+class DownSpiderUpSpiderAccessTopoPass(access_topo_drr.DrrPass):
+
+  def source_pattern(self, o, t):
+    o.down_spider_op = o.ap_native_op("ap_op.down_spider")
+    o.down_spider_op(
+      [t.input],
+      [t.tmp0]
+    )
+    o.up_spider_op = o.ap_native_op("ap_op.up_spider")
+    o.up_spider_op(
+      [t.tmp0, t.input],
+      []
+    )
+
+  def result_pattern(self, o, t):
+    pass
+
+
 @access_topo_drr.register_drr_pass("down_spider_add", tag="default")
 class DownSpiderAddAccessTopoPass(access_topo_drr.DrrPass):
 
   def source_pattern(self, o, t):
-    o.spider0 = o.ap_native_op("ap_op.down_spider")
-    o.spider0(
-      [t.input],
-      [t.tmp0]
-    )
-    o.spider1 = o.ap_native_op("ap_op.down_spider")
-    o.spider1(
-      [t.input],
-      [t.tmp1]
-    )
-    o.add = o.ap_native_op("pd_op.add")
-    o.add(
-      [t.tmp0, t.tmp1],
-      [t.output]
-    )
-
-  def result_pattern(self, o, t):
-    o.fustion_op = o.ap_native_op("ap_op.down_spider")
-    o.fustion_op(
-      [t.input],
-      [t.output]
-    )
-
-
-@access_topo_drr.register_drr_pass("down_spider_expand_add", tag="default")
-class DownSpiderExpandAddAccessTopoPass(access_topo_drr.DrrPass):
-
-  def source_pattern(self, o, t):
     o.spider = o.ap_native_op("ap_op.down_spider")
     o.spider(
       [t.input0],
       [t.tmp0]
-    )
-    o.expand = o.ap_native_op("pd_op.expand")
-    o.expand(
-      [t.input1, t.input2],
-      [t.tmp1]
-    )
-    o.add = o.ap_native_op("pd_op.add")
-    o.add(
-      [t.tmp0, t.tmp1],
-      [t.output]
-    )
-
-  def result_pattern(self, o, t):
-    o.down_spider = o.ap_native_op("ap_op.down_spider")
-    o.down_spider(
-      [t.input0],
-      [t.output]
-    )
-    o.up_spider = o.ap_native_op("ap_op.up_spider")
-    o.up_spider(
-      [t.input0, t.tmp1],
-      []
-    )
-
-
-@access_topo_drr.register_drr_pass("down_spider_data_add", tag="default")
-class DownSpiderExpandAddAccessTopoPass(access_topo_drr.DrrPass):
-
-  def source_pattern(self, o, t):
-    o.spider = o.ap_native_op("ap_op.down_spider")
-    o.spider(
-      [t.input0],
-      [t.tmp0]
-    )
-    o.data_op = o.ap_native_op("pd_op.data")
-    o.data_op(
-      [],
-      [t.tmp1]
-    )
-    o.add = o.ap_native_op("pd_op.add")
-    o.add(
-      [t.tmp0, t.tmp1],
-      [t.output]
-    )
-
-  def result_pattern(self, o, t):
-    o.down_spider = o.ap_native_op("ap_op.down_spider")
-    o.down_spider(
-      [t.input0],
-      [t.output]
-    )
-    o.up_spider = o.ap_native_op("ap_op.up_spider")
-    o.up_spider(
-      [t.input0, t.tmp1],
-      []
-    )
-
-
-@access_topo_drr.register_drr_pass("down_spider_load_from_global_add", tag="default")
-class DownSpiderLoadFromGlobalAddAccessTopoPass(access_topo_drr.DrrPass):
-
-  def source_pattern(self, o, t):
-    o.spider = o.ap_native_op("ap_op.down_spider")
-    o.spider(
-      [t.input0],
-      [t.tmp0]
-    )
-    o.load_from_global_op = o.ap_native_op("ap_op.load_from_global")
-    o.load_from_global_op(
-      [t.data_output],
-      [t.tmp1]
     )
     o.add = o.ap_native_op("pd_op.add")
     o.add(
@@ -469,6 +389,60 @@ class ExpandUpSpiderAccessTopoPass(access_topo_drr.DrrPass):
     o.expand = o.ap_native_op("pd_op.expand")
     o.expand(
       [t.input1, t.input2],
+      [t.expanded_input]
+    )
+    o.up_spider = o.ap_native_op("ap_op.up_spider")
+    o.up_spider(
+      [t.input0, t.expanded_input],
+      []
+    )
+
+  def constraint(self, o, t):
+    input_shape = t.input1.symbolic_shape_to_list()
+    output_shape = t.expanded_input.symbolic_shape_to_list()
+    rank_diff = len(output_shape) - len(input_shape)
+    return rank_diff > 0
+    TODO
+    def GetInnerExpaned_axes(i):
+      if input_shape[i] == output_shape[i + rank_diff]:
+        return []
+      else:
+        return [i]
+    inner_expanded_axes = flat_map(GetInnerExpaned_axes, range(input_rank))
+    return rank_diff > 0 and len(inner_expanded_axes) == 0
+
+  def result_pattern(self, o, t):
+    t.declare_internal_native_ir_value("reduced_input")
+    o.sum = o.ap_native_op("pd_op.sum")
+    o.sum.axis = self.get_axis
+    o.sum.keepdim = self.get_keepdim
+    o.sum(
+      [t.input0],
+      [t.reduced_input]
+    )
+    o.up_spider = o.ap_native_op("ap_op.up_spider")
+    o.up_spider(
+      [t.reduced_input, t.input1],
+      []
+    )
+
+  def get_keepdim(self, o, t):
+      return pir.a_bool(False)
+
+  def get_axis(self, o, t):
+    input_rank = len(t.input1.symbolic_shape_to_list())
+    output_rank = len(t.expanded_input.symbolic_shape_to_list())
+    axes = range(output_rank - input_rank)
+    return pir.a_intarray(axes)
+    
+
+@access_topo_drr.register_drr_pass("cinn_broadcast_up_spider", tag="default")
+class CinnBroadcastUpSpiderAccessTopoPass(access_topo_drr.DrrPass):
+
+  def source_pattern(self, o, t):
+    o.broadcast_op = o.ap_native_op("cinn_op.broadcast")
+    o.broadcast_op(
+      [t.input1],
       [t.expanded_input]
     )
     o.up_spider = o.ap_native_op("ap_op.up_spider")
