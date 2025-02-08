@@ -19,7 +19,6 @@ sys.path.append(dirname(__file__))
 
 import unittest
 
-import numpy as np
 import utils
 
 import paddle
@@ -83,45 +82,7 @@ class TestAPMatmulBinary(unittest.TestCase):
         cinn_out = self.eval_symbolic(use_cinn=True, profile=profile)
         dy_out = self.eval_symbolic(use_cinn=False, profile=profile)
         if not profile:
-            self.check_result(cinn_out.numpy(), dy_out.numpy())
-
-    def check_result(self, out_1, out_2, check_equal=False):
-        out_1_flatten = out_1.flatten()
-        out_2_flatten = out_2.flatten()
-
-        diff = np.abs(out_1_flatten - out_2_flatten)
-        max_atol_idx = np.argmax(diff)
-        print(
-            f"-- max difference     : {np.max(diff)}, {out_1_flatten[max_atol_idx]} vs {out_2_flatten[max_atol_idx]}"
-        )
-
-        relative_error = np.abs(diff / out_2_flatten)
-        max_rtol_idx = np.nanargmax(relative_error)
-        print(
-            f"-- max relative error : {np.nanmax(relative_error)}, {out_1_flatten[max_rtol_idx]} vs {out_2_flatten[max_rtol_idx]}"
-        )
-
-        if check_equal:
-            num_diffs = 0
-            for i in range(out_1.size):
-                if num_diffs >= 10:
-                    break
-
-                if out_1_flatten[i] != out_2_flatten[i]:
-                    print(f"-- {i}: {out_1_flatten[i]} vs {out_2_flatten[i]}")
-                    num_diffs += 1
-            np.testing.assert_array_equal(out_1, out_2)
-        else:
-            if self.dtype == "float16":
-                atol, rtol = 1e-2, 1e-2
-            else:
-                atol, rtol = 1e-5, 1e-5
-            np.testing.assert_allclose(
-                out_1,
-                out_2,
-                atol=atol,
-                rtol=rtol,
-            )
+            utils.check_result(self.dtype, cinn_out.numpy(), dy_out.numpy())
 
 
 if __name__ == "__main__":

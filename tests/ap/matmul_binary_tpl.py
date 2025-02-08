@@ -1,14 +1,15 @@
-import ap_tpl_codegen
 import low_level_ir_code_gen_ctx_util
 import kernel_arg_translator_util
 
+
 def make_kernel_arg_translator():
-    return kernel_arg_translator_util.KernelArgTranslator(
-        param_struct_name="args"
-    )
+    return kernel_arg_translator_util.KernelArgTranslator(param_struct_name="args")
+
 
 def get_anchor_iter_var_names():
-    return ["coord.j", "coord.k"]
+    # return ["coord.j", "coord.k"]
+    return ["i", "j"]
+
 
 class MatmulBinaryTemplate:
     def __init__(
@@ -34,8 +35,7 @@ class MatmulBinaryTemplate:
     def _register_name(self, pair):
         registry = self.mut_kernel_arg_id_lazy_ctx
         registry.get_or_create_kernel_arg_id_manul_var_name(
-            kernel_arg_id=pair[0],
-            cpp_var_name=pair[1]
+            kernel_arg_id=pair[0], cpp_var_name=pair[1]
         )
 
     def compile(
@@ -53,15 +53,15 @@ class MatmulBinaryTemplate:
                 [input_karg, "input"],
                 [weight_karg, "weight"],
                 [output_karg, "output"],
-                [m_karg,      "m"],
-                [n_karg,      "n"],
-                [k_karg,      "k"],
-            ]
+                [m_karg, "m"],
+                [n_karg, "n"],
+                [k_karg, "k"],
+            ],
         )
         mut_lir_code_gen_ctx = low_level_ir_code_gen_ctx_util.CudaLikeIrCodeGenCtx()
         self.program_translator.translate(
             mut_kernel_arg_id_lazy_ctx=self.mut_kernel_arg_id_lazy_ctx,
-            mut_lir_code_gen_ctx=mut_lir_code_gen_ctx
+            mut_lir_code_gen_ctx=mut_lir_code_gen_ctx,
         )
         trivial_code_str = mut_lir_code_gen_ctx.get_stmts_joined_str()
         print("matmul_binary_epilogue_code:\n", trivial_code_str)
@@ -89,14 +89,15 @@ class MatmulBinaryTemplate:
         all_kernel_arg_id_and_unique_names = (
             self.mut_kernel_arg_id_lazy_ctx.all_kernel_arg_id2unique_name.items()
         )
-        return map(lambda pair: pair[0].runtime_getter, all_kernel_arg_id_and_unique_names)
+        return map(
+            lambda pair: pair[0].runtime_getter, all_kernel_arg_id_and_unique_names
+        )
 
     def get_kernel_arg_types(self):
         all_kernel_arg_id_and_unique_names = (
             self.mut_kernel_arg_id_lazy_ctx.all_kernel_arg_id2unique_name.items()
         )
         return map(lambda pair: pair[0].type, all_kernel_arg_id_and_unique_names)
-
 
     def get_kernel_arg_id_var_name(self, kernel_arg_id):
         all_kernel_arg_id2unique_name = (
@@ -108,10 +109,13 @@ class MatmulBinaryTemplate:
         def declare_epilogue_arguments_field(pair):
             kernel_arg_id = pair[0]
             var_name = pair[1]
-            field_name = self.kernel_arg_translator.get_param_struct_field_name(var_name)
+            field_name = self.kernel_arg_translator.get_param_struct_field_name(
+                var_name
+            )
             dtype = kernel_arg_id.type
             type_name = self.dtype2type_name[dtype]
             return f"{type_name} {field_name}"
+
         all_kernel_arg_id_and_names = (
             self.mut_kernel_arg_id_lazy_ctx.all_kernel_arg_id2unique_name.items()
         )
@@ -123,10 +127,13 @@ class MatmulBinaryTemplate:
         def declare_epilogue_arguments_field(pair):
             kernel_arg_id = pair[0]
             var_name = pair[1]
-            field_name = self.kernel_arg_translator.get_param_struct_field_name(var_name)
+            field_name = self.kernel_arg_translator.get_param_struct_field_name(
+                var_name
+            )
             dtype = kernel_arg_id.type
             type_name = self.dtype2type_name[dtype]
             return f"    {type_name} {field_name};"
+
         generated_kernel_arg_id_and_names = (
             self.mut_kernel_arg_id_lazy_ctx.generated_kernel_arg_id2unique_name.items()
         )
@@ -138,15 +145,18 @@ class MatmulBinaryTemplate:
         def declare_epilogue_arguments_assign(pair):
             kernel_arg_id = pair[0]
             var_name = pair[1]
-            field_name = self.kernel_arg_translator.get_param_struct_field_name(var_name)
+            field_name = self.kernel_arg_translator.get_param_struct_field_name(
+                var_name
+            )
             return f"  {param_obj_name}.{field_name} = {var_name};"
+
         generated_kernel_arg_id_and_names = (
             self.mut_kernel_arg_id_lazy_ctx.generated_kernel_arg_id2unique_name.items()
         )
         return "\n".join(
             map(declare_epilogue_arguments_assign, generated_kernel_arg_id_and_names)
         )
-    
+
     def make_project(
         self,
         trivial_code_str,
@@ -163,19 +173,20 @@ class MatmulBinaryTemplate:
 #include <cuda.h>
 #include <cuda_fp16.h>
 
-#include "native_matmul.cuh"
+#include "epilogue_op.h"
+#include "cutlass_matmul.cuh"
 
 namespace ap {
 
-template <typename T, int NumIns = 1, int NumOuts = 1>
-struct AddFunctor {
+template <typename T>
+struct VariadicEpilogueFunctor {
   struct Arguments {
 EPILOGUE_ARGUMENTS_FIELDS
   };
 
   // Note: need to support vectorized operation
   __forceinline__ __host__ __device__
-  T operator()(T x, const Arguments& args, const MatrixCoord& coord) const {
+  T operator()(T x, const Arguments& args, int i, int j) const {
     T out;
     AP_GENERATED_BINARY_EPILOGUE_STRING;
     return out;
@@ -202,11 +213,11 @@ void MatmulBinaryKernel(void* stream_ptr, AP_KERNEL_ARGS_DECLARE) {
   cudaStream_t* cuda_stream_ptr = reinterpret_cast<cudaStream_t*>(stream_ptr);
   params.stream = *cuda_stream_ptr;
 
-  typename ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>::Arguments epilogue_args;
+  typename ap::VariadicEpilogueFunctor<float>::Arguments epilogue_args;
 
 EPILOGUE_ARGUMENTS_INIT
 
-  ap::NativeMatmulAdd<AP_GENERATED_ELEMENT_DTYPE, ap::AddFunctor<AP_GENERATED_ELEMENT_DTYPE, 1, 1>>(params, epilogue_args);
+  ap::CutlassMatmulAddVariadic<AP_GENERATED_ELEMENT_DTYPE, float, ap::VariadicEpilogueFunctor>(params, epilogue_args);
 }
 }
 
@@ -218,8 +229,13 @@ EPILOGUE_ARGUMENTS_INIT
             )
             .replace("AP_GENERATED_ELEMENT_DTYPE", output_dtype)
             .replace("AP_KERNEL_ARGS_DECLARE", self.get_kernel_arg_list_str())
-            .replace("EPILOGUE_ARGUMENTS_FIELDS", self.get_epilogue_arguments_fields_str())
-            .replace("EPILOGUE_ARGUMENTS_INIT", self.get_epilogue_arguments_init_str("epilogue_args"))
+            .replace(
+                "EPILOGUE_ARGUMENTS_FIELDS", self.get_epilogue_arguments_fields_str()
+            )
+            .replace(
+                "EPILOGUE_ARGUMENTS_INIT",
+                self.get_epilogue_arguments_init_str("epilogue_args"),
+            )
             .replace("$input", self.get_kernel_arg_id_var_name(input_karg))
             .replace("$weight", self.get_kernel_arg_id_var_name(weight_karg))
             .replace("$output", self.get_kernel_arg_id_var_name(output_karg))
@@ -228,8 +244,8 @@ EPILOGUE_ARGUMENTS_INIT
             .replace("$k", self.get_kernel_arg_id_var_name(k_karg))
         )
 
-        source_dir = "/workspace/Athena/tests/ap/matmul"
-        cutlass_dir = "/workspace/Athena/tests/ap/matmul/cutlass"
+        source_dir = "/work/abstract_pass/Athena/tests/ap/matmul"
+        cutlass_dir = "/work/abstract_pass/Athena/tests/ap/matmul/cutlass"
         compile_cmd = (
             "nvcc -std=c++17 -O3 -Xcompiler=-fPIC -arch=sm_80 --expt-relaxed-constexpr"
         )
@@ -249,10 +265,7 @@ EPILOGUE_ARGUMENTS_INIT
             FuncDeclare(
                 DataType.void,
                 "MatmulBinaryKernel",
-                [
-                    PointerType.void_ptr,
-                    *self.get_kernel_arg_types()
-                ],
+                [PointerType.void_ptr, *self.get_kernel_arg_types()],
             ),
             Project(
                 nested_files=Project.Directory(
