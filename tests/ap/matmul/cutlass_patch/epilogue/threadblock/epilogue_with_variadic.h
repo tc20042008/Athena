@@ -29,11 +29,11 @@
 #include "cutlass/epilogue/threadblock/epilogue_base_streamk.h"
 #include "cutlass/epilogue/threadblock/predicated_tile_iterator.h"
 
+#include "cutlass_patch/trace_device.h"
 
 namespace cutlass {
 namespace epilogue {
 namespace threadblock {
-
 
 
 /// Epilogue operator
@@ -187,9 +187,6 @@ public:
       const typename OutputTileIterator::Index extent_row = output_iterator.extent_row();
       const typename OutputTileIterator::Index extent_column = output_iterator.extent_column();
 
-      CUTLASS_TRACE_DEVICE_MORE("thread_start_row: %d, thread_start_column: %d, extent_row: %d, extent_column: %d", thread_start_row, thread_start_column, static_cast<int>(extent_row), static_cast<int>(extent_column));
-      __syncthreads();
-
       using ThreadMap = typename OutputTileIterator::ThreadMap;
 
       CUTLASS_PRAGMA_UNROLL
@@ -261,9 +258,6 @@ public:
 
       const typename OutputTileIterator::Index extent_row = output_iterator.extent_row();
       const typename OutputTileIterator::Index extent_column = output_iterator.extent_column();
-
-      CUTLASS_TRACE_DEVICE_MORE("thread_start_row: %d, thread_start_column: %d, extent_row: %d, extent_column: %d", thread_start_row, thread_start_column, static_cast<int>(extent_row), static_cast<int>(extent_column));
-      __syncthreads();
 
       using ThreadMap = typename OutputTileIterator::ThreadMap;
 

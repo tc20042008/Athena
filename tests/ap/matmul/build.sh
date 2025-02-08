@@ -11,7 +11,7 @@ ENABLE_PROFILE=0
 
 #SO_NAME=matmul_add_unary_kernel
 SO_NAME=matmul_kernel
-TEST_NAME=test_main_matmul
+TEST_NAME=test_main_matmul_binary
 
 rm -rf lib${SO_NAME}.so
 rm -rf test_main
