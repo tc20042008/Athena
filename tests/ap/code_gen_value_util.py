@@ -8,7 +8,6 @@ class CodeGenValue:
   def get_dtype(self):
     def convert_to_dtype(pir_dtype, shape, data_layout):
       return pir_dtype.convert_to_dtype()
-    print("type(self.pir_type):", type(self.pir_type))
     return self.pir_type.match(t_dtensor=convert_to_dtype)
 
   def is_dense_tensor_type(self):

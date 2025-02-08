@@ -87,7 +87,6 @@ class IndexProgramTranslator:
       kernel_arg_translator=self.kernel_arg_translator,
       anchor_iter_var_names=self.anchor_iter_var_names
     )
-    print("index_op_translator:", index_op_translator)
     inputs = map(self._get_translated_value, op_property.input_value_indexes)
     outputs = index_op_translator(
       inputs,

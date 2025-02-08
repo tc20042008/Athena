@@ -120,7 +120,7 @@
                   "__builtin_setattr__",
                   "self",
                   {
-                    "str": "kernel_arg_id2unique_name"
+                    "str": "all_kernel_arg_id2unique_name"
                   }
                 ]
               ],
@@ -129,7 +129,7 @@
                 [
                   "___11",
                   {
-                    "str": "kernel_arg_id2unique_name"
+                    "str": "all_kernel_arg_id2unique_name"
                   },
                   "___10"
                 ]
@@ -254,7 +254,7 @@
                   "__builtin_getattr__",
                   "self",
                   {
-                    "str": "kernel_arg_id2unique_name"
+                    "str": "all_kernel_arg_id2unique_name"
                   }
                 ]
               ],
@@ -513,7 +513,7 @@
                             "__builtin_getattr__",
                             "self",
                             {
-                              "str": "kernel_arg_id2unique_name"
+                              "str": "all_kernel_arg_id2unique_name"
                             }
                           ]
                         ],

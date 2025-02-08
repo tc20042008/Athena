@@ -61,7 +61,7 @@ class TestAPMatmulBinary(unittest.TestCase):
         self.y = paddle.randn(self.y_shape, dtype=self.dtype)
         self.y.stop_gradient = False
 
-        self.b_shape = [256, 512]
+        self.b_shape = [512]
         self.b = paddle.randn(self.b_shape, dtype=self.dtype)
         self.b.stop_gradient = False
 

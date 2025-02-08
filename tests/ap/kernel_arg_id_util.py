@@ -5,14 +5,14 @@ class KernelArgIdNameLazyContext:
     self.tensor_match_ctx = tensor_match_ctx
     self.name_prefix = name_prefix
     self.generated_kernel_arg_id2unique_name = MutableOrderedDict()
-    self.kernel_arg_id2unique_name = MutableOrderedDict()
+    self.all_kernel_arg_id2unique_name = MutableOrderedDict()
     self.in_tensor_data_ptr_seq_no = 0
     self.out_tensor_data_ptr_seq_no = 0
     self.dim_expr_seq_no = 0
 
   def get_or_create_kernel_arg_id_manul_var_name(self, kernel_arg_id, cpp_var_name):
     create = lambda: cpp_var_name
-    return self.kernel_arg_id2unique_name.get_or_create(kernel_arg_id, create)
+    return self.all_kernel_arg_id2unique_name.get_or_create(kernel_arg_id, create)
 
   def get_in_tensor_data_ptr_var_name(self, in_ir_value_name):
     ir_value = getattr(self.tensor_match_ctx, in_ir_value_name)
@@ -21,7 +21,7 @@ class KernelArgIdNameLazyContext:
     return self.generated_kernel_arg_id2unique_name.get_or_create(kernel_arg_id, create)
 
   def _get_creator(self, kernel_arg_id, backend_creator):
-    return lambda: self.kernel_arg_id2unique_name.get_or_create(kernel_arg_id, backend_creator)
+    return lambda: self.all_kernel_arg_id2unique_name.get_or_create(kernel_arg_id, backend_creator)
 
   def _create_in_tensor_data_ptr_var_name(self):
     name = f"{self.name_prefix}in_ptr_{self.in_tensor_data_ptr_seq_no}"

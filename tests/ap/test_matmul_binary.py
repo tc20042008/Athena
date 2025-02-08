@@ -297,9 +297,7 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
             matched_pattern_mut_list=removed_programs
         )
         pass_manager.add_pass(rm_broadcast_ir_pass)
-        print("before-remove-input-full-index-program:", full_index_program)
         pass_manager.run(full_index_program)
-        print("after-remove-input-full-index-program:", full_index_program)
         def Converter(program):
           return [dst_input_name, self._simplify_index_program(program)]
         return map(Converter, removed_programs)
@@ -351,17 +349,14 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
     mut_program = ir_tools.copy_fused_ops_to_program(
       o.trivial_op, tensor_match_ctx=t
     )
-    print("yiqun-mut_program:", mut_program)
     self._insert_load_from_global(
       mut_program,
       input_names=["mm_out", "input2"]
     )
-    print("yiqun-after-_insert_load_from_global:", mut_program)
     self._insert_store_to_global(
       mut_program,
       output_names=["output"]
     )
-    print("yiqun-after-_insert_store_to_global:", mut_program)
     kernel_arg_translator = self._make_kernel_arg_translator()
     index_func_unique_id2index_program = self._make_index_func_unique_id2index_program(
       mut_program,
@@ -375,19 +370,17 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
       kernel_arg_translator=kernel_arg_translator,
       anchor_iter_var_names=matmul_binary_tpl.get_anchor_iter_var_names()
     )
-    print("mut_program:", mut_program)
     self._replace_with_load_from_register(
       mut_program,
       load_ir_value_name="mm_out",
       register_var_name="x"
     )
-    print("mut_program after _replace_with_load_from_register:", mut_program)
     self._replace_with_store_to_register(
       mut_program,
       store_ir_value_name="output",
       register_var_name="out"
     )
-    print("mut_program after _replace_with_store_to_register:", mut_program)
+    print("mut_program:", mut_program)
     op_compute_translator_maker = op_compute_translator_util.OpComputeTranslatorFactory()
     program_translator = program_translator_util.ProgramTranslator(
       program_property=mut_program.copy_to_const_program_data(),
@@ -408,12 +401,9 @@ class MatmulBinaryFusion(abstract_drr.DrrPass):
       program_translator=program_translator,
       mut_kernel_arg_id_lazy_ctx=mut_kernel_arg_id_lazy_ctx,
     )
-    dtypes = [t.input0.dtype, t.input1.dtype, t.input2.dtype, t.output.dtype]
     return template_module.compile(
-        dtype_of_ptr_args=dtypes,
-        input0_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input0),
-        input1_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input1),
-        input2_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input2),
+        input_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input0),
+        weight_karg=ctx.in_tensor_data_ptr_kernel_arg_id(t.input1),
         output_karg=ctx.out_tensor_data_ptr_kernel_arg_id(t.output),
         m_karg=ctx.dim_expr_kernel_arg_id(t.input0.symbolic_shape_to_list()[0]),
         n_karg=ctx.dim_expr_kernel_arg_id(t.input1.symbolic_shape_to_list()[1]),

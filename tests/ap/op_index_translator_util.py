@@ -38,8 +38,10 @@ class PdOpFullIntArrayCodeGen:
     out = index_code_gen_value_util.IndexCodeGenValue(None)
     def get_int64(attr):
       return attr.match(a_i64=lambda x:x)
+    def convert_list(lst):
+      return map(get_int64, lst)
     out.const_data = self.op_property.attributes.value.match(
-      a_array=lambda lst: map(get_int64, lst)
+      a_array=convert_list
     )
     return [out]
 
@@ -61,7 +63,7 @@ class PdOpSumCodeGen:
   def __call__(self, inputs, mut_kernel_arg_id_lazy_ctx, mut_lir_code_gen_ctx):
     input_iter_var_names = inputs[0].iter_var_names
     reduced_axes_set = OrderedDict(
-      map(lambda x: [x, True], inputs[1].const_data)
+      map(lambda x: [int(x), True], inputs[1].const_data)
     )
     non_reduced_axes = filter(
       lambda x: reduced_axes_set.contains(x) == False,

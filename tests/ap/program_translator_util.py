@@ -24,7 +24,6 @@ class ProgramTranslator:
     map(TranslateOp, self.program_property.ops)
 
   def _translate_op(self, op_property, mut_kernel_arg_id_lazy_ctx, mut_lir_code_gen_ctx):
-    print("op_property:", op_property)
     op_translator = self.op_translator_maker(
       op_property=op_property,
       input_properties=map(self._get_value_property, op_property.input_value_indexes),
