@@ -21,21 +21,22 @@ struct AddFunctor {
   };
 
   __forceinline__ __host__ __device__
-  T Load(const Arguments& args, const GemmCoord3d& coord, int idx) const {
+  T Load(const Arguments& args, const MatrixCoord& coord, int idx) const {
     // Specially for the case of out_shape_len = 2
     size_t offset = coord.j * args.out_shape[1] + coord.k;
     return reinterpret_cast<const T*>(args.ins[idx].ptr)[offset];
   }
 
   __forceinline__ __host__ __device__
-  T LoadWithBroadcast(const Arguments& args, const GemmCoord3d& coord, int idx) const {
+  T LoadWithBroadcast(const Arguments& args, const MatrixCoord& coord, int idx) const {
     // Specially for the bias case
     size_t offset = coord.k;
     return reinterpret_cast<const T*>(args.ins[idx].ptr)[offset];
   }
 
+  // Note: need to support vectorized operation
   __forceinline__ __host__ __device__
-  T operator()(T x, const Arguments& args, const GemmCoord3d& coord) const {
+  T operator()(T x, const Arguments& args, const MatrixCoord& coord) const {
     T y = args.ins[0].need_broadcast ? LoadWithBroadcast(args, coord, 0) : Load(args, coord, 0);
     return x + y;
   }

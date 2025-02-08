@@ -33,7 +33,7 @@
 
 namespace ap {
 
-struct GemmCoord3d {
+struct MatrixCoord {
   size_t i; // batch id
   size_t j; // row id
   size_t k; // column id

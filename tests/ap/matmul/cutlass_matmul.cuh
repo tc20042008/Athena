@@ -1,11 +1,14 @@
 #pragma once
 
 #include "cutlass/epilogue/thread/linear_combination_bias_elementwise.h"
-#include "cutlass_epilogue/thread/linear_combination_unary.h"
 #include "cutlass/util/device_memory.h"
 
 #include "cutlass/gemm/device/gemm_universal.h"
 #include "cutlass/gemm/device/gemm_universal_with_broadcast.h"
+
+#include "cutlass_patch/epilogue/thread/linear_combination_unary.h"
+#include "cutlass_patch/epilogue/thread/linear_combination_variadic.h"
+#include "cutlass_patch/gemm/device/gemm_universal_with_variadic.h"
 
 #include "matmul.h"
 
@@ -224,7 +227,7 @@ void CutlassMatmulAddUnary(const GemmEpilogueParams& params, const typename Unar
 }
 
 template <typename ElementT, typename ElementComputeT>
-void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
+void CutlassMatmulAddBroadcast(const GemmBroadcastEpilogueParams& params) {
   using ElementAccumulator = typename CutlassDataType<ElementComputeT>::Type; // <- data type of accumulator
   using ElementComputeEpilogue = ElementAccumulator;              // <- data type of epilogue operations
   using ElementInputA = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix A
@@ -323,6 +326,92 @@ void CutlassMatmulAddBinary(const GemmBroadcastEpilogueParams& params) {
       gemm_shape_args.ldd,
       ldr_broadcast,                        // <- ldr, must be zero
       problem_size.n()                      // <- ldt
+  };
+
+  size_t workspace_size = GemmFunc::get_workspace_size(arguments);
+  void* workspace = workspace_size > 0 ? GetWorkspace(workspace_size) : nullptr;
+
+  GemmFunc device_gemm;
+
+  CHECK_CUTLASS(device_gemm.can_implement(arguments));
+  CHECK_CUTLASS(device_gemm.initialize(arguments, workspace, params.stream));
+
+  //
+  // Run the GEMM
+  //
+  CHECK_CUTLASS(device_gemm(params.stream));
+}
+
+template <typename ElementT,
+          typename ElementComputeT,
+          template<typename T> class VariadicFunctor>
+void CutlassMatmulAddVariadic(const GemmEpilogueParams& params, const typename VariadicFunctor<ElementComputeT>::Arguments& variadic_args) {
+  using ElementAccumulator = typename CutlassDataType<ElementComputeT>::Type; // <- data type of accumulator
+  using ElementComputeEpilogue = ElementAccumulator;              // <- data type of epilogue operations
+  using ElementInputA = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix A
+  using ElementInputB = typename CutlassDataType<ElementT>::Type; // <- data type of elements in input matrix B
+  using ElementOutput = typename CutlassDataType<ElementT>::Type;// <- data type of elements in output matrix D
+
+  // Epilogue operation as LinearCombination:
+  //  alpha * accumulator + beta * source
+  using EpilogueOutputOp = cutlass::epilogue::thread::LinearCombinationVariadic<
+      VariadicFunctor,
+      ElementOutput,
+      128 / cutlass::sizeof_bits<ElementOutput>::value,
+      ElementAccumulator,
+      ElementComputeEpilogue,
+      cutlass::epilogue::thread::ScaleType::NoBetaScaling>; // <- alpha x C + bias
+
+  using GemmFunc = cutlass::gemm::device::GemmUniversalWithVariadic<
+      ElementInputA,
+      cutlass::layout::RowMajor,
+      ElementInputB,
+      cutlass::layout::RowMajor,
+      ElementOutput,
+      cutlass::layout::RowMajor,
+      ElementAccumulator,
+      cutlass::arch::OpClassTensorOp,
+      cutlass::arch::Sm80,
+      typename GemmTuningConfig<ElementT>::TShape,
+      typename GemmTuningConfig<ElementT>::WShape,
+      typename GemmTuningConfig<ElementT>::IShape,
+      EpilogueOutputOp,
+      typename GemmTuningConfig<ElementT>::SwizzleThreadBlock,
+      GemmTuningConfig<ElementT>::NumStages,
+      128 / cutlass::sizeof_bits<ElementInputA>::value, // AlignA
+      128 / cutlass::sizeof_bits<ElementInputB>::value, // AlignB
+      typename GemmOperation<ElementT>::Type  // Operation performed by GEMM
+  >;
+
+  /// Arguments
+  cutlass::gemm::GemmCoord problem_size{params.m, params.n, params.k};
+  GemmShapeArguments<false, false> gemm_shape_args(problem_size, params.is_B_weight, params.is_C_bias);
+
+  const ElementInputA *input = reinterpret_cast<const ElementInputA *>(params.input);
+  const ElementInputB *weight = reinterpret_cast<const ElementInputB *>(params.weight);
+  const ElementOutput *bias = reinterpret_cast<const ElementOutput *>(params.bias);
+  ElementOutput *output = reinterpret_cast<ElementOutput *>(params.output);
+
+  ElementComputeEpilogue alpha = static_cast<ElementComputeEpilogue>(1);
+  ElementComputeEpilogue beta = bias ? static_cast<ElementComputeEpilogue>(1) : static_cast<ElementComputeEpilogue>(0);
+
+  typename GemmFunc::Arguments arguments{
+      GetGemmMode(params.batch_count),
+      problem_size,                         // <- problem size of matrix multiplication
+      params.batch_count,                   // <- batch_count or k-dimension split factor
+      {alpha, beta, variadic_args},         // <- epilogue params, alpha, beta
+      input,                                // <- input, ptr_A, A, shape={M, K}
+      weight,                               // <- input, ptr_B, B, shape={K, N}
+      bias,                                 // <- input, ptr_C, shape={M, N} or {1, N}
+      output,                               // <- output, ptr_D, Z, shape={M, N}
+      gemm_shape_args.batch_stride_A,
+      gemm_shape_args.batch_stride_B,
+      gemm_shape_args.batch_stride_C,
+      gemm_shape_args.batch_stride_D,
+      gemm_shape_args.lda,
+      gemm_shape_args.ldb,
+      gemm_shape_args.ldc_bias,
+      gemm_shape_args.ldd
   };
 
   size_t workspace_size = GemmFunc::get_workspace_size(arguments);

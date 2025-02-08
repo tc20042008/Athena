@@ -12,10 +12,15 @@
 
 template <typename T>
 void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
-  int batch_count = 4;
-  int m = 65536;
-  int n = 32;
-  int k = 128;
+  // int batch_count = 4;
+  // int m = 65536;
+  // int n = 32;
+  // int k = 128;
+
+  int batch_count = 1;
+  int m = 256;
+  int n = 512;
+  int k = 256;
 
   bool transpose_b = false;
 
@@ -27,7 +32,7 @@ void TestMatmulAddUnary(cudaStream_t stream, bool add_bias) {
     std::vector<float> bias_ref;
     bias_ref.resize(n);
     for (size_t i = 0; i < bias_ref.size(); ++i) {
-      bias_ref[i] = static_cast<float>(1000 * (i % 10));
+      bias_ref[i] = static_cast<float>(1000 * (i % 11));
     }
     bias = AllocateAndInit<T>(stream, n, false, 0., bias_ref);
   }
@@ -57,10 +62,12 @@ int main(int argc, const char *arg[]) {
   cudaStream_t stream;
   CHECK_CUDA(cudaStreamCreate(&stream));
 
+  bool add_bias = true;
+
 #if USE_FLOAT16
-  TestMatmulAddUnary<half>(stream, false);
+  TestMatmulAddUnary<half>(stream, add_bias);
 #else
-  TestMatmulAddUnary<float>(stream, false);
+  TestMatmulAddUnary<float>(stream, add_bias);
 #endif
 
   CHECK_CUDA(cudaStreamDestroy(stream));
