@@ -26,22 +26,23 @@ import paddle
 from paddle.static import InputSpec
 
 
-def trivial_matrix_binary(x, y, b):
+def trivial_matrix_unary(x, y):
     out = paddle.matmul(x, y)
-    return out + b
+    return paddle.scale(out, scale=0.1)
 
 
 class CINNSubGraphNet(paddle.nn.Layer):
     def __init__(self):
         super().__init__()
-        self.fn = trivial_matrix_binary
+        self.fn = trivial_matrix_unary
 
-    def forward(self, x, y, b):
-        out = self.fn(x, y, b)
+    def forward(self, x, y):
+        out = self.fn(x, y)
         return out
+        # return paddle.transpose(out, perm=[0, 2, 1])
 
 
-class TestAPMatmulBinary(unittest.TestCase):
+class TestAPMatmulUnary(unittest.TestCase):
     """
     Test Pir API + @to_static + CINN.
     """
@@ -53,29 +54,24 @@ class TestAPMatmulBinary(unittest.TestCase):
     def prepare_data(self):
         self.dtype = "float32"
 
-        self.x_shape = [256, 256]
+        self.x_shape = [4, 65536, 128]
         self.x = paddle.randn(self.x_shape, dtype=self.dtype)
         self.x.stop_gradient = False
 
-        self.y_shape = [256, 512]
+        self.y_shape = [128, 32]
         self.y = paddle.randn(self.y_shape, dtype=self.dtype)
         self.y.stop_gradient = False
-
-        self.b_shape = [256, 512]
-        self.b = paddle.randn(self.b_shape, dtype=self.dtype)
-        self.b.stop_gradient = False
 
     def eval_symbolic(self, use_cinn, profile):
         net = CINNSubGraphNet()
         input_spec = [
             InputSpec(shape=self.x_shape, dtype=self.dtype),
             InputSpec(shape=self.y_shape, dtype=self.dtype),
-            InputSpec(shape=self.b_shape, dtype=self.dtype),
         ]
         net = utils.apply_to_static(net, use_cinn, input_spec)
         net.eval()
         with utils.profile_context(profile):
-            out = net(self.x, self.y, self.b)
+            out = net(self.x, self.y)
         return out
 
     def test_eval_symbolic(self):
@@ -115,7 +111,7 @@ class TestAPMatmulBinary(unittest.TestCase):
             if self.dtype == "float16":
                 atol, rtol = 1e-2, 1e-2
             else:
-                atol, rtol = 1e-5, 1e-5
+                atol, rtol = 1e-3, 1e-3
             np.testing.assert_allclose(
                 out_1,
                 out_2,

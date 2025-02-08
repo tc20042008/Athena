@@ -29,7 +29,6 @@ def trivial_reduce_trivial(x):
     y = paddle.exp(x)
     z = y - x
     z = z + y
-    z = z + y
     return z.sum()
 
 
@@ -57,11 +56,6 @@ class TestCinnSubGraphBase(unittest.TestCase):
         self.x = paddle.randn(self.shape, dtype="float32")
         self.x.stop_gradient = False
 
-    def test_eval_symbolic(self):
-        pass
-
-
-class TestCinnExpSubGraph(TestCinnSubGraphBase):
     def eval_symbolic(self, use_cinn):
         net = CINNSubGraphNet()
         input_spec = [InputSpec(shape=[None], dtype='float32')]
