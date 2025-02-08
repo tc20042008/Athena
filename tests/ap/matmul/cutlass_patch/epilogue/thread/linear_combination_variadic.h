@@ -1,6 +1,5 @@
 /*! \file
   \brief Functor performing linear combination operations used by epilogues.
-  It is modified from LinearCombinationGeneric.
 */
 
 #pragma once
@@ -18,26 +17,26 @@ namespace epilogue {
 namespace thread {
 
 
-template <class UnaryOp, class = void>
-struct GenericUnaryTraits {
+template <class VariadicOp, class = void>
+struct GenericVariadicTraits {
   static constexpr bool IsArgumentsNeeded = false;
   struct Arguments {};
 };
 
-template <class UnaryOp>
-struct GenericUnaryTraits<UnaryOp, decltype(typename UnaryOp::Arguments(), void())> {
+template <class VariadicOp>
+struct GenericVariadicTraits<VariadicOp, decltype(typename VariadicOp::Arguments(), void())> {
   static constexpr bool IsArgumentsNeeded = true;
-  using Arguments = typename UnaryOp::Arguments;
+  using Arguments = typename VariadicOp::Arguments;
 };
 
-/// Applies a linear combination operator followed by an unary function to an array of elements.
+/// Applies a linear combination operator to an array of elements.
 ///
-/// D = unary_op(alpha * accumulator + beta * source)
+/// D = VariadicOp(alpha * accumulator + beta * source)
 ///
 template <
-  template<typename T> class UnaryOp,
+  template<typename T> class VariadicOp,
   typename ElementOutput_,                             ///< Data type used to load and store tensors
-  int ElementsPerAccess,                               ///< Number of elements computed per operation
+  int ElementsPerAccess,                               ///< Number of elements computed per operation.
                                                        ///< Usually it is 128/sizeof_bits<ElementOutput_>,
                                                        ///< but we use 64 or 32 sometimes when there are not enough data to store
   typename ElementAccumulator_ = ElementOutput_,       ///< Accumulator data type
@@ -46,13 +45,13 @@ template <
   FloatRoundStyle Round = FloatRoundStyle::round_to_nearest,
   bool IsHeavy = false
 >
-class LinearCombinationUnary {
+class LinearCombinationVariadic {
 public:
 
   using ElementOutput = ElementOutput_;
   using ElementAccumulator = ElementAccumulator_;
   using ElementCompute = ElementCompute_;
-  using UnaryArguments = typename GenericUnaryTraits<UnaryOp<ElementCompute>>::Arguments;
+  using VariadicArguments = typename GenericVariadicTraits<VariadicOp<ElementCompute>>::Arguments;
 
   static bool const kIsHeavy = IsHeavy;
   static int const kElementsPerAccess = ElementsPerAccess;
@@ -67,36 +66,27 @@ public:
   static FloatRoundStyle const kRound = Round;
 
   /// Host-constructable parameters structure
-  struct Params {
-    ElementCompute alpha;                  ///< scales accumulators
-    ElementCompute beta;                   ///< scales source tensor
-    ElementCompute const *alpha_ptr;       ///< pointer to accumulator scalar - if not null, loads it from memory
-    ElementCompute const *beta_ptr;        ///< pointer to source scalar - if not null, loads it from memory
-    UnaryArguments unary_args; 
+  struct Params
+  {
+    ElementCompute alpha;                         ///< scales accumulators
+    ElementCompute beta;                          ///< scales source tensor
+    ElementCompute const *alpha_ptr;              ///< pointer to accumulator scalar - if not null, loads it from memory
+    ElementCompute const *beta_ptr;               ///< pointer to source scalar - if not null, loads it from memory
+    VariadicArguments variadic_args;
 
-    //
-    // Methods
-    //
-  
     CUTLASS_HOST_DEVICE
     Params():
       alpha(ElementCompute(1)),
       beta(ElementCompute(0)),
       alpha_ptr(nullptr),
       beta_ptr(nullptr) { }
-  
+
     CUTLASS_HOST_DEVICE
     Params(
       ElementCompute alpha,
-      ElementCompute beta = ElementCompute(0),
-      UnaryArguments unary_args_ = UnaryArguments{}
-    ): alpha(alpha), beta(beta), alpha_ptr(nullptr), beta_ptr(nullptr), unary_args(unary_args_) {}
-  
-    CUTLASS_HOST_DEVICE
-    Params(
-      ElementCompute const *alpha_ptr,
-      ElementCompute const *beta_ptr = nullptr
-    ): alpha(0), beta(0), alpha_ptr(alpha_ptr), beta_ptr(beta_ptr) { }
+      ElementCompute beta,
+      VariadicArguments variadic_args_ = VariadicArguments{}
+    ) : alpha(alpha), beta(beta), alpha_ptr(nullptr), beta_ptr(nullptr), variadic_args(variadic_args_) {}
   };
 
 private:
@@ -112,7 +102,7 @@ public:
 
   /// Constructs the function object, possibly loading from pointers in host memory
   CUTLASS_HOST_DEVICE
-  LinearCombinationUnary(Params const &params) {
+  LinearCombinationVariadic(Params const &params) {
     params_ = params;
     params_.alpha = (params.alpha_ptr ? *params.alpha_ptr : params.alpha);
     params_.beta = (params.beta_ptr ? *params.beta_ptr : params.beta);
@@ -143,13 +133,15 @@ public:
     }
   }
 
-  /// Computes linear scaling: D = alpha * accumulator + beta * source
+  /// Computes linear scaling with source: D = alpha * accumulator + beta * source
   CUTLASS_HOST_DEVICE
   FragmentOutput operator()(
-    FragmentAccumulator const &accumulator,
-    FragmentOutput const &source) const {
+      FragmentAccumulator const &accumulator,
+      FragmentSource const &source,
+      int row_offset,
+      int column_offset) const {
 
-    // Convert source to interal compute numeric type
+    // Convert source to internal compute numeric type
     NumericArrayConverter<ElementCompute, ElementOutput, kElementsPerAccess, Round> source_converter;
     NumericArrayConverter<ElementCompute, ElementAccumulator, kElementsPerAccess, Round> accumulator_converter;
 
@@ -161,30 +153,30 @@ public:
 
     multiplies<FragmentCompute> mul_add_source;
     multiply_add<FragmentCompute> mul_add_accumulator;
-    UnaryOp<ElementCompute> unary_op;
+    VariadicOp<ElementCompute> variadic_op;
 
     if (Scale == ScaleType::NoBetaScaling) {
       intermediate = converted_source;
-      intermediate = mul_add_accumulator(params_.alpha, converted_accumulator, intermediate);    // D = alpha * Accum + X
-    }  else if (Scale == ScaleType::Nothing) {
+      intermediate = mul_add_accumulator(params_.alpha, converted_accumulator, intermediate); // D = alpha * Accum + X
+    } else if (Scale == ScaleType::Nothing) {
       intermediate = converted_accumulator;
     } else {
-      intermediate = mul_add_source(params_.beta, converted_source);                             // X =  beta * C + uniform
-      intermediate = mul_add_accumulator(params_.alpha, converted_accumulator, intermediate);    // D = alpha * Accum + X
+      intermediate = mul_add_source(params_.beta, converted_source);                          // X =  beta * C + uniform
+      intermediate = mul_add_accumulator(params_.alpha, converted_accumulator, intermediate); // D = alpha * Accum + X
     }
 
-    if constexpr (GenericUnaryTraits<UnaryOp<ElementCompute>>::IsArgumentsNeeded) {
+    if constexpr (GenericVariadicTraits<VariadicOp<ElementCompute>>::IsArgumentsNeeded) {
       if (!skip_elementwise_) {
         CUTLASS_PRAGMA_UNROLL
         for (int i = 0; i < kElementsPerAccess; ++i) {
-          intermediate[i] = unary_op(intermediate[i], params_.unary_args);
+          intermediate[i] = variadic_op(intermediate[i], params_.variadic_args, row_offset, column_offset + i);
         }
       }
     } else {
       if (!skip_elementwise_) {
         CUTLASS_PRAGMA_UNROLL
         for (int i = 0; i < kElementsPerAccess; ++i) {
-          intermediate[i] = unary_op(intermediate[i]);
+          intermediate[i] = variadic_op(intermediate[i]);
         }
       }
     }
@@ -198,7 +190,7 @@ public:
   /// Computes linear scaling: D = alpha * accumulator
   CUTLASS_HOST_DEVICE
   FragmentOutput operator()(
-    FragmentAccumulator const &accumulator) const {
+      FragmentAccumulator const &accumulator, int row_offset, int column_offset) const {
 
     // Convert source to interal compute numeric type
     NumericArrayConverter<ElementCompute, ElementAccumulator, kElementsPerAccess, Round> accumulator_converter;
@@ -208,33 +200,33 @@ public:
     // Perform binary operations
     FragmentCompute intermediate;
 
-    multiplies<FragmentCompute> mul_add_accumulator;
-    UnaryOp<ElementCompute> unary_op;
+    multiplies<FragmentCompute> mul_accumulator;
+    VariadicOp<ElementCompute> variadic_op;
 
     if (Scale == ScaleType::Nothing) {
       intermediate = converted_accumulator;
     } else {
-      intermediate = mul_add_accumulator(params_.alpha, converted_accumulator);    // D = alpha * Accum
+      intermediate = mul_accumulator(params_.alpha, converted_accumulator);    // D = alpha * Accum
     }
 
-    if constexpr (GenericUnaryTraits<UnaryOp<FragmentCompute>>::IsArgumentsNeeded) {
+    if constexpr (GenericVariadicTraits<VariadicOp<FragmentCompute>>::IsArgumentsNeeded) {
       if (!skip_elementwise_) {
         CUTLASS_PRAGMA_UNROLL
         for (int i = 0; i < kElementsPerAccess; ++i) {
-          intermediate[i] = unary_op(intermediate[i], params_.unary_args);
+          intermediate[i] = variadic_op(intermediate[i], params_.variadic_args, row_offset, column_offset + i);
         }
       }
     } else {
       if (!skip_elementwise_) {
         CUTLASS_PRAGMA_UNROLL
         for (int i = 0; i < kElementsPerAccess; ++i) {
-          intermediate[i] = unary_op(intermediate[i]);
+          intermediate[i] = variadic_op(intermediate[i]);
         }
       }
     }
 
     // Convert to destination numeric type
-    NumericArrayConverter<ElementOutput, ElementCompute, kElementsPerAccess, Round> destination_converter;
+    NumericArrayConverter<ElementOutput, ElementCompute, kCount, Round> destination_converter;
 
     return destination_converter(intermediate);
   }

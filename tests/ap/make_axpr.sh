@@ -1,21 +1,36 @@
-python3 ../../athena/advanced_pass/py_to_json.py index_code_gen_value_util.py index_code_gen_value_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py index_drr_pass_util.py index_drr_pass_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py kernel_arg_translator_util.py kernel_arg_translator_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py index_program_translator_util.py index_program_translator_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py low_level_ir_code_gen_ctx_util.py low_level_ir_code_gen_ctx_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py kernel_arg_id_util.py kernel_arg_id_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py code_gen_value_util.py code_gen_value_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py op_index_translator_util.py op_index_translator_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py op_compute_translator_util.py op_compute_translator_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py program_translator_util.py program_translator_util.py.json
-python3 ../../athena/advanced_pass/py_to_json.py __main__.py __main__.py.json
-python3 ../../athena/advanced_pass/py_to_json.py topo_drr_pass.py topo_drr_pass.py.json
-python3 ../../athena/advanced_pass/py_to_json.py op_convertion_drr_pass.py op_convertion_drr_pass.py.json
-python3 ../../athena/advanced_pass/py_to_json.py access_topo_drr.py access_topo_drr.py.json
-python3 ../../athena/advanced_pass/py_to_json.py abstract_drr.py abstract_drr.py.json
-python3 ../../athena/advanced_pass/py_to_json.py ap_tpl_codegen.py ap_tpl_codegen.py.json
-python3 ../../athena/advanced_pass/py_to_json.py test_trivial_reduce.py test_trivial_reduce.py.json
-python3 ../../athena/advanced_pass/py_to_json.py test_matmul_binary.py test_matmul_binary.py.json
-python3 ../../athena/advanced_pass/py_to_json.py matmul_binary_tpl.py matmul_binary_tpl.py.json
-python3 ../../athena/advanced_pass/py_to_json.py test_binary_trivial_reduce.py test_binary_trivial_reduce.py.json
-python3 ../../athena/advanced_pass/py_to_json.py trivial_reduce_tpl.py trivial_reduce_tpl.py.json
+#!/bin/bash
+
+TEST_FILENAME=${1:-"test_trivial_reduce"}
+#TEST_FILENAME=${1:-"test_matmul_unary"}
+
+TEST_TPL_FILENAME=`echo ${TEST_FILENAME/test_/}`
+
+echo "-- Write 'import ${TEST_FILENAME}' to __main__.py"
+echo "import ${TEST_FILENAME}" > __main__.py
+
+
+FILENAMES_ARRAY=(
+    "index_code_gen_value_util"
+    "index_drr_pass_util"
+    "kernel_arg_translator_util"
+    "index_program_translator_util"
+    "low_level_ir_code_gen_ctx_util"
+    "kernel_arg_id_util"
+    "code_gen_value_util"
+    "op_index_translator_util"
+    "op_compute_translator_util"
+    "program_translator_util"
+    "__main__"
+    "topo_drr_pass"
+    "op_convertion_drr_pass"
+    "access_topo_drr"
+    "abstract_drr"
+    "ap_tpl_codegen"
+    "${TEST_FILENAME}"
+    "${TEST_TPL_FILENAME}_tpl"
+)
+for filename in "${FILENAMES_ARRAY[@]}"
+do
+    echo "-- Convert ${filename}.py -> ${filename}.py.json"
+    python ../../athena/advanced_pass/py_to_json.py ${filename}.py ${filename}.py.json
+done

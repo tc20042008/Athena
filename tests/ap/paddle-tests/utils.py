@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import contextlib
 from collections import defaultdict
 
 import numpy as np
@@ -22,6 +23,65 @@ import paddle
 JIT_KERNEL_NAME = "jit_kernel"
 __IF_OP_NAME = "pd_op.if"
 __WHILE_OP_NAME = "pd_op.while"
+
+
+@contextlib.contextmanager
+def profile_context(enabled):
+    if enabled:
+        # warmup
+        for i in range(10):
+            yield
+
+        # repeat
+        paddle.base.core.nvprof_start()
+        for i in range(1000):
+            yield
+        paddle.base.core.nvprof_stop()
+    else:
+        yield
+
+
+def check_result(dtype, out_1, out_2, check_equal=False):
+    out_1_flatten = out_1.flatten()
+    out_2_flatten = out_2.flatten()
+
+    diff = np.abs(out_1_flatten - out_2_flatten)
+    max_atol_idx = np.argmax(diff)
+    print(
+        f"-- max difference     : {np.max(diff)}, {out_1_flatten[max_atol_idx]} vs {out_2_flatten[max_atol_idx]}"
+    )
+
+    relative_error = np.abs(diff / out_2_flatten)
+    max_rtol_idx = np.nanargmax(relative_error)
+    print(
+        f"-- max relative error : {np.nanmax(relative_error)}, {out_1_flatten[max_rtol_idx]} vs {out_2_flatten[max_rtol_idx]}"
+    )
+
+    if check_equal:
+        num_diffs = 0
+        for i in range(out_1.size):
+            if num_diffs >= 10:
+                break
+
+            if out_1_flatten[i] != out_2_flatten[i]:
+                print(f"-- {i}: {out_1_flatten[i]} vs {out_2_flatten[i]}")
+                num_diffs += 1
+        np.testing.assert_array_equal(out_1, out_2)
+    else:
+        if dtype == "float32":
+            if os.getenv("NVIDIA_TF32_OVERRIDE", "1") == "0":
+                atol, rtol = 1e-5, 1e-5
+            else:
+                atol, rtol = 1e-3, 1e-3
+        elif dtype == "float16":
+            atol, rtol = 1e-2, 1e-2
+
+        np.testing.assert_allclose(
+            out_1,
+            out_2,
+            atol=atol,
+            rtol=rtol,
+        )
 
 
 def unittest_use_cinn():
@@ -75,7 +135,7 @@ def check_jit_kernel_number(static_fn, expected_number):
     np.testing.assert_equal(jit_kernel_number, expected_number)
 
 
-def get_jit_kernel_structure_helper(block, map_info, if_op_idx='_0'):
+def get_jit_kernel_structure_helper(block, map_info, if_op_idx="_0"):
     """
     Recursivly generate JIT_KERNEL map_info for Static/Dynmaic Shape UT.
     """
@@ -94,12 +154,12 @@ def get_jit_kernel_structure_helper(block, map_info, if_op_idx='_0'):
             get_jit_kernel_structure_helper(
                 op.as_if_op().true_block(),
                 map_info[true_key],
-                if_op_idx + '_' + str(if_count),
+                if_op_idx + "_" + str(if_count),
             )
             get_jit_kernel_structure_helper(
                 op.as_if_op().false_block(),
                 map_info[false_key],
-                if_op_idx + '_' + str(if_count),
+                if_op_idx + "_" + str(if_count),
             )
             if_count += 1
 
